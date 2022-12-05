@@ -12,7 +12,7 @@ void setup()
 void loop()
 {
   
-   int pressure_reading = pressureLoop();
+   float pressure_reading = pressureLoop();
    Serial.print("Pressure: ");
    Serial.print(pressure_reading);
    Serial.println(" mbar");
