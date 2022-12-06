@@ -111,10 +111,10 @@ float PressureSensor::pressureLoop()
     const float temperature = (float)temp / 10;
     const float pressure = (float)p / 10;
 
-
-    Serial.print("Temperature: ");
-    Serial.print(temperature);
-    Serial.println(" °C");
+//
+//    Serial.print("Temperature: ");
+//    Serial.print(temperature);
+//    Serial.println(" °C");
     
 /*
     //Serial.print("temp: ");

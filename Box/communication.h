@@ -1,6 +1,6 @@
 #ifndef COMMUNICATION_H
 #define COMMUNICATION_H
-
+#include "Arduino.h"
 #include <UIPEthernet.h>
 union Data{
   uint8_t myByte[4];
@@ -25,10 +25,11 @@ private:
   void ips_setting(IPAddress Box, IPAddress Console);
 public:
   CommunicationClient(uint8_t pin,int receivesize, int sendsize, IPAddress box, IPAddress console) {
-    this->ips_setting(box, console);
-    this->Init(pin);
-    this->data_received_size = receivesize;
-    this->data_sent_size = sendsize;
+  
+  Serial.println("here");
+  ips_setting(box, console);
+  data_received_size = receivesize;
+  data_sent_size = sendsize;
   }
   void receiveData(uint8_t* acc_frame, uint8_t* thrus_frame);
   void sendData(float *imu_frame,int imu_size,uint8_t* current,int current_size,float pressure,int pressure_size);

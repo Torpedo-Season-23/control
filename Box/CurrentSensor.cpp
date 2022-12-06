@@ -10,5 +10,5 @@ uint8_t CurrentSensor::getCurrent() {
 }
 uint8_t CurrentSensor::Return_current(){
  getCurrent();
- return current;
+ return this->current;
 }
