@@ -18,9 +18,7 @@ class PressureSensor{
 public:
 void pressureInit();
 uint16_t readData(const uint16_t command, const unsigned long recvDelay = 0);
-float pressureLoop();
+uint16_t pressureLoop();
 //float getDepth(float pressure);
 };
-
-
 #endif

@@ -45,7 +45,7 @@ uint16_t PressureSensor::readData(const uint16_t command, const unsigned long re
 }
 
 
-float PressureSensor::pressureLoop()
+uint16_t PressureSensor::pressureLoop()
 {
     const uint16_t word1 = this->readData(0x1D50,0);
     const uint16_t word2 = this->readData(0x1D60,0);

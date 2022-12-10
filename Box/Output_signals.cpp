@@ -45,7 +45,7 @@ void Thrusters::prep_And_apply_signal(){
      int speedChange = map(this->thrustersFrame[i+8],0,255,0,400);
      int speedValue = 1500 + dir * speedChange;
      thrustersSpeeds[i] = speedValue;
-     exponants[i] = this->thrustersFrame[i+16] / 10.0 ; 
+     exponants[i] = (int)thrustersFrame[i+16] / 10.0 ; 
    }
    
  this->apply_signal(thrustersSpeeds ,exponants);
