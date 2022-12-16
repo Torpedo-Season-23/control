@@ -1,9 +1,9 @@
-#ifndef TorpedoMPU_H_
-#define TorpedoMPU_H_
-#include "I2Cdev.h"
-#include "MPU6050_6Axis_MotionApps20.h"
+#ifndef _TorpedoMPU_H_
+#define _TorpedoMPU_H_
+#include <I2Cdev.h>
+#include <MPU6050_6Axis_MotionApps20.h>
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-#include "Wire.h"
+#include <Wire.h>
 #endif
 
 class TorpedoMPU: public MPU6050 {

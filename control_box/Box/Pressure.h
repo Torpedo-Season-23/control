@@ -1,6 +1,8 @@
-#ifndef PRESSURE_H
-#define PRESSURE_H
+#ifndef _PRESSURE_H_
+#define _PRESSURE_H_
 
+#include <Arduino.h>
+#include "SoftSPI.h"
 
 #define D1_SEQUENCE 0x0F40      // pressure measurement sequence
 #define D2_SEQUENCE 0x0F20      // temperature measurement sequence
@@ -13,12 +15,21 @@
 #define CONVERSION_DELAY_MS 35
 #define COMM_FREQUENCY 500000
 
-#define MCLK_PIN 2 // MCLK Pin
-class PressureSensor{
-public:
-void pressureInit();
-uint16_t readData(const uint16_t command, const unsigned long recvDelay = 0);
-uint16_t pressureLoop();
-//float getDepth(float pressure);
+#define MCLK_PIN 11
+#define MISO_PIN 12
+#define MOSI_PIN 8
+#define SCLK_PIN 10
+class PressureSensor {
+  private:
+    float pressure;
+    float depth;
+    float temperature;
+
+  public:
+    PressureSensor();
+    void init();
+    void update();
+    uint16_t readData(const uint16_t command, const unsigned long recvDelay = 0);
+    // float getDepth(float pressure);
 };
 #endif
