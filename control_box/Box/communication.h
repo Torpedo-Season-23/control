@@ -1,7 +1,7 @@
 #ifndef COMMUNICATION_H
 #define COMMUNICATION_H
-#include <UIPEthernet.h>
-#include "Arduino.h"
+#include "lib/UIPEthernet/UIPEthernet.h"
+#include <Arduino.h>
 
 class CommunicationClient {
 private:

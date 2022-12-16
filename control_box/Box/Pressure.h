@@ -2,7 +2,7 @@
 #define _PRESSURE_H_
 
 #include <Arduino.h>
-#include "SoftSPI.h"
+#include "lib/SoftSPI/SoftSPI.cpp"
 
 #define D1_SEQUENCE 0x0F40      // pressure measurement sequence
 #define D2_SEQUENCE 0x0F20      // temperature measurement sequence

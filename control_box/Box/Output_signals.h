@@ -1,7 +1,7 @@
 #ifndef OUT_H
 #define OUT_H
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include <Servo.h>
 
 const int motorsCount = 8; 
