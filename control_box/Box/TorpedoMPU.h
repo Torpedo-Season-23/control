@@ -9,84 +9,29 @@
 class TorpedoMPU : public MPU6050 {
 private:
   Quaternion myQuatOffset;
-  bool dmpReady = false;
-  uint8_t mpuIntStatus;
-  uint8_t devStatus;
-  uint16_t packetSize;
-  uint16_t fifoCount;
+  bool dmpReady;
+  uint8_t mpuIntStatus, devStatus;
+  uint16_t packetSize, fifoCount;
   uint8_t fifoBuffer[64];
   Quaternion q;
   VectorFloat gravity;
   float ypr[3];
-  volatile bool mpuInterrupt = false;
-  boolean stable_1 = false;
-  float myYawOffset = 0.0f;
-  boolean stable_2 = false;
-  long Time = 0;
-  float sinYaw = 0;
-  float cosYaw = 0;
-  float sinPitch = 0;
-  float cosPitch = 0;
-  float sinRoll = 0;
-  float cosRoll = 0;
-  float x2 = 0;
-  float z2 = 0;
+  volatile bool mpuInterrupt;
+  boolean stable_1,stable_2;
+  float myYawOffset;
+  long Time;
+  float sinYaw, cosYaw, sinPitch, cosPitch, sinRoll, cosRoll;
+  float x2, z2;
   float accx, accy, accz;
   float gyrx, gyry, gyrz;
   float roll, pitch, yaw_3;
-
 public:
   int angles[3];
 
 private:
+
   static TorpedoMPU::QuaternionChange(float x, float y, float z) {
     return new Quaternion(x, y, z, 1);
-  }
-
-public:
-  TorpedoMPU() {
-    this->roll = 0;
-    this->pitch = 0;
-    this->yaw_3 = 0;
-  };
-  void TorpedoMPU::start() {
-    mpuInterrupt = true;
-    Wire.begin();
-    Wire.setClock(400000);
-    while (!Serial)
-      ;
-    Serial.println(F("Initializing I2C devices..."));
-    initialize();
-    Serial.println(F("Testing device connections..."));
-    Serial.println(testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
-
-    Serial.println(F("Initializing DMP..."));
-    devStatus = dmpInitialize();
-
-    setXGyroOffset(220);
-    setYGyroOffset(76);
-    setZGyroOffset(-85);
-    setZAccelOffset(1788);
-  }
-  void TorpedoMPU::check() {
-    if (devStatus == 0) {
-      CalibrateAccel(6);
-      CalibrateGyro(6);
-      PrintActiveOffsets();
-      Serial.println(F("Enabling DMP..."));
-      setDMPEnabled(true);
-
-      Serial.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
-      mpuIntStatus = getIntStatus();
-      Serial.println(F("DMP ready! Waiting for first interrupt..."));
-      dmpReady = true;
-      packetSize = dmpGetFIFOPacketSize();
-
-    } else {
-      Serial.print(F("DMP Initialization failed (code "));
-      Serial.print(devStatus);
-      Serial.println(F(")"));
-    }
   }
   void TorpedoMPU::SetOffset(Quaternion *offset, Quaternion *q) {
     offset->w = q->w;
@@ -139,6 +84,66 @@ public:
 #endif
     return q;
   }
+public:
+  TorpedoMPU() {
+    this->roll = 0;
+    this->pitch = 0;
+    this->yaw_3 = 0;
+    this->Time = 0;
+    this->sinYaw = 0;
+    this->cosYaw = 0;
+    this->sinPitch = 0;
+    this->cosPitch = 0;
+    this->sinRoll = 0;
+    this->cosRoll = 0;
+    this->x2 = 0;
+    this->z2 = 0;
+    this->stable_2 = false;
+    this->myYawOffset = 0.0f;
+    this->stable_2 = false;
+    this->mpuInterrupt = false;
+    this->dmpReady = false;
+  };
+  void TorpedoMPU::start() {
+    mpuInterrupt = true;
+    Wire.begin();
+    Wire.setClock(400000);
+    while (!Serial)
+      ;
+    Serial.println(F("Initializing I2C devices..."));
+    initialize();
+    Serial.println(F("Testing device connections..."));
+    Serial.println(testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
+
+    Serial.println(F("Initializing DMP..."));
+    devStatus = dmpInitialize();
+
+    setXGyroOffset(220);
+    setYGyroOffset(76);
+    setZGyroOffset(-85);
+    setZAccelOffset(1788);
+  }
+  void TorpedoMPU::check() {
+    if (devStatus == 0) {
+      CalibrateAccel(6);
+      CalibrateGyro(6);
+      PrintActiveOffsets();
+      Serial.println(F("Enabling DMP..."));
+      setDMPEnabled(true);
+
+      Serial.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
+      mpuIntStatus = getIntStatus();
+      Serial.println(F("DMP ready! Waiting for first interrupt..."));
+      dmpReady = true;
+      packetSize = dmpGetFIFOPacketSize();
+
+    } else {
+      Serial.print(F("DMP Initialization failed (code "));
+      Serial.print(devStatus);
+      Serial.println(F(")"));
+    }
+  }
+
   void TorpedoMPU::calculate() {
     if (!dmpReady)
       return;
@@ -223,7 +228,7 @@ public:
   //      gyrx = getRotationZ();
   //      return gyrz;
   //    }
-  int *TorpedoMPU::communication_data() {
+  int *TorpedoMPU::getangles() {
     calculate();
     return angles;
   }
