@@ -1,0 +1,108 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+#include <Arduino.h>
+
+// GLOBAL
+#define BAUD_RATE 115200
+
+enum DIRECTION {
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT,
+    MOMENT_LEFT,
+    MOMENT_RIGHT,
+    UP,
+    DOWN,
+    STOP
+}
+
+// ROV
+#define SENSOR_COUNT 2
+
+// DEBUG FOR PRINTING
+#define DEBUG 1
+
+enum SENSORS {
+    PRESSURE,
+    IMU
+}
+
+// IMU SENSOR
+#define IMU_SCL 21
+#define IMU_SDA 22
+
+// PRESSURE SENSOR
+#define PRESSURE_MCLK 13
+#define PRESSURE_MISO 12
+#define PRESSURE_MOSI 11
+#define PRESSURE_SCLK 10
+#define D1_SEQUENCE 0x0F40       // pressure measurement sequence
+#define D2_SEQUENCE 0x0F20       // temperature measurement sequence
+#define WORD1_SEQUENCE 0x1D50    // word1 sequence
+#define WORD2_SEQUENCE 0x1D60    // word2 sequence
+#define WORD3_SEQUENCE 0x1D90    // word3 sequence
+#define WORD4_SEQUENCE 0x1DA0    // word4 sequence
+#define RESET_SEQUENCE 0x155540  // reset sequence
+#define CONVERSION_DELAY_MS 35
+#define COMM_FREQUENCY 500000
+
+// MOTOR
+enum MOTOR_ORIENTATION {
+    HOTIZONTAL_FRONT_LEFT,
+    HOTIZONTAL_FRONT_RIGHT,
+    HOTIZONTAL_BACK_LEFT,
+    HOTIZONTAL_BACK_RIGHT,
+    VERTICAL_FRONT,
+    VERTICAL_BACK,
+    VERTICAL_LEFT,
+    VERTICAL_RIGHT
+}
+
+#define HORIZONTAL_FRONT_LEFT_PIN 2
+#define HORIZONTAL_FRONT_LEFT_FACTOR 1
+
+#define HORIZONTAL_FRONT_RIGHT_PIN 3
+#define HORIZONTAL_FRONT_RIGHT_FACTOR 1
+
+#define HORIZONTAL_BACK_LEFT_PIN 4
+#define HORIZONTAL_BACK_LEFT_FACTOR 1
+
+#define HORIZONTAL_BACK_RIGHT_PIN 5
+#define HORIZONTAL_BACK_RIGHT_FACTOR 1
+
+#define VERTICAL_FRONT_PIN 6
+#define VERTICAL_FRONT_FACTOR 1
+
+#define VERTICAL_BACK_PIN 7
+#define VERTICAL_BACK_FACTOR 1
+
+#define VERTICAL_LEFT_PIN 8
+#define VERTICAL_LEFT_FACTOR 1
+
+#define VERTICAL_RIGHT_PIN 9
+#define VERTICAL_RIGHT_FACTOR 1
+
+#define STOP_SPEED 1500
+#define MAX_INTERVAL 400
+
+// ETHERNET
+#define ETHERNET_MAC \
+    { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }
+#define ETHERNET_IP \
+    { 192, 168, 1, 177 }
+#define ETHERNET_DNS \
+    { 8, 8, 8, 8 }
+#define ETHERNET_GATEWAY \
+    { 192, 168, 1, 1 }
+#define ETHERNET_SUBNET \
+    { 255, 255, 255, 0 }
+#define ETHERNET_PORT 80
+
+// PID
+#define PID_KP 0.1
+#define PID_KI 0.1
+#define PID_KD 0.1
+
+#endif
