@@ -4,7 +4,7 @@ ROV rov;
 
 void setup() {
     // put your setup code here, to run once:
-    
+    rov.init();
 }
 
 void loop() {

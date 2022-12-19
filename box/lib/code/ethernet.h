@@ -8,11 +8,13 @@
 
 class EthernetModule : public Communication {
    private:
-    unsigned int mac[MAC_COUNT];
-    unsigned int ip[IP_COUNT];
-    unsigned int console[IP_COUNT];
+    uint8_t mac[MAC_COUNT];
+    IPAddress ip;
+    IPAddress console;
     unsigned int port;
-    // TODO: make frame
+    EthernetUDP udp;
+    uint8_t frameRecieved[FRAME_RECIEVED_SIZE];
+    uint8_t frameSent[FRAME_SENT_SIZE];
     void display();
 
    public:
@@ -20,6 +22,8 @@ class EthernetModule : public Communication {
     virtual void init();
     virtual void update();
     virtual void reset();
+    void setFrameRecieved(uint8_t frame[FRAME_RECIEVED_SIZE]);
+    void setFrameSent(uint8_t frame[FRAME_SENT_SIZE]);
     virtual void recieve();
     virtual void send();
 };

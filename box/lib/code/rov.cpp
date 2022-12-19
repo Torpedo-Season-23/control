@@ -1,24 +1,24 @@
 
 
 ROV::ROV() {
-    this->navigation = new Navigation();
+    this->sensorsManager = new SensorsManager();
     this->motion = new Motion();
     this->communication = new EthernetModule();
 }
 
 void ROV::init() {
-    this->navigation->init();
+    this->sensorsManager->init();
     this->motion->init();
     this->communication->init();
 }
 
 void ROV::update() {
-    this->navigation->update();
+    this->sensorsManager->update();
     this->communication->update();
 }
 
 void ROV::reset() {
-    this->navigation->reset();
+    this->sensorsManager->reset();
     this->motion->reset();
     this->communication->reset();
 }

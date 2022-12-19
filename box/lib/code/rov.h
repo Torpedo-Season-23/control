@@ -9,7 +9,7 @@
 class ROV {
    private:
     DIRECTION direction;
-    Navigation *navigation;
+    SensorsManager *sensorsManager;
     Motion *motion;
     Communication *communication;
 

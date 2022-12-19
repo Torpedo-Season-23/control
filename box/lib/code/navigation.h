@@ -2,16 +2,18 @@
 #define _NAVIGATION_H_
 
 #include "config.h"
+#include "current_sensor.h"
 #include "imu_sensor.h"
 #include "pressure_sensor.h"
 
-class Navigation {
+class SensorsManager {
    private:
     Sensor *sensors[SENSOR_COUNT];
+    Sensor *currentSensors[CURRENT_SENSOR_COUNT];
     bool working;
 
    public:
-    Navigation();
+    SensorsManager();
     void init();
     void update();
     void reset();

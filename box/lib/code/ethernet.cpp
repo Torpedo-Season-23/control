@@ -6,18 +6,13 @@ EthernetModule::EthernetModule() {
     this->mac[3] = ETHERNET_MAC_3;
     this->mac[4] = ETHERNET_MAC_4;
     this->mac[5] = ETHERNET_MAC_5;
-    this->ip[0] = ETHERNET_IP_0;
-    this->ip[1] = ETHERNET_IP_1;
-    this->ip[2] = ETHERNET_IP_2;
-    this->ip[3] = ETHERNET_IP_3;
-    this->console[0] = ETHERNET_CONSOLE_0;
-    this->console[1] = ETHERNET_CONSOLE_1;
-    this->console[2] = ETHERNET_CONSOLE_2;
-    this->console[3] = ETHERNET_CONSOLE_3;
+    this->ip = IPAddress(ETHERNET_IP_0, ETHERNET_IP_1, ETHERNET_IP_2, ETHERNET_IP_3);
+    this->console = IPAddress(ETHERNET_CONSOLE_0, ETHERNET_CONSOLE_1, ETHERNET_CONSOLE_2, ETHERNET_CONSOLE_3);
     this->port = ETHERNET_PORT;
 }
 
 void EthernetModule::init() {
+    Ethernet.begin(this->mac, this->ip);
 }
 
 void EthernetModule::update() {
@@ -32,7 +27,49 @@ void EthernetModule::send() {
 }
 
 void EthernetModule::reset() {
+    for (int i = 0; i < FRAME_RECIEVED_SIZE; i++) {
+        this->frameRecieved[i] = 0;
+    }
+    for (int i = 0; i < FRAME_SENT_SIZE; i++) {
+        this->frameSent[i] = 0;
+    }
 }
 
 void EthernetModule::display() {
+    Serial.print("Ethernet: ");
+    Serial.print("MAC: ");
+    for (int i = 0; i < MAC_COUNT; i++) {
+        Serial.print(this->mac[i]);
+        if (i < MAC_COUNT - 1) {
+            Serial.print(":");
+        }
+    }
+    Serial.print(" IP: ");
+    for (int i = 0; i < IP_COUNT; i++) {
+        Serial.print(this->ip[i]);
+        if (i < IP_COUNT - 1) {
+            Serial.print(".");
+        }
+    }
+    Serial.print(" Console: ");
+    for (int i = 0; i < IP_COUNT; i++) {
+        Serial.print(this->console[i]);
+        if (i < IP_COUNT - 1) {
+            Serial.print(".");
+        }
+    }
+    Serial.print(" Port: ");
+    Serial.println(this->port);
+}
+
+void EthernetModule::setFrameRecieved(uint8_t frame[FRAME_RECIEVED_SIZE]) {
+    for (int i = 0; i < FRAME_RECIEVED_SIZE; i++) {
+        this->frameRecieved[i] = frame[i];
+    }
+}
+
+void EthernetModule::setFrameSent(uint8_t frame[FRAME_SENT_SIZE]) {
+    for (int i = 0; i < FRAME_SENT_SIZE; i++) {
+        this->frameSent[i] = frame[i];
+    }
 }
