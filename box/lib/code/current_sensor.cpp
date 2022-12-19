@@ -1,17 +1,18 @@
 
-CurrentSensor::CurrentSensor(unsigned char pin, CURRENT_SENSORS type) {
+CurrentSensor::CurrentSensor(unsigned char pin, CURRENT_SENSOR_TYPE type) {
     this->pin = pin;
     this->type = type;
     this->current = 0;
 }
 
 void CurrentSensor::init() {
+    pinMode(this->pin, INPUT);
 }
 
 void CurrentSensor::update() {
     float value = 0, samples = 0, avg = 0;
     for (int i = 0; i < 150; i++) {
-        value = analogRead(pin);
+        value = analogRead(this->pin);
         samples = samples + value;
         delay(3);
     }
@@ -30,7 +31,7 @@ void CurrentSensor::reset() {
     this->current = 0;
 }
 
-char const* getType(CURRENT_SENSORS type) {
+char const* getType(CURRENT_SENSOR_TYPE type) {
     switch (type) {
         case CURRENT_SENSOR_BACK_LEFT:
             return "Back Left";
