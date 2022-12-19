@@ -1,4 +1,3 @@
-#include "pressure_sensor.h"
 
 PressureSensor::PressureSensor() {
     this->mclk = PRESSURE_MCLK;
@@ -20,7 +19,7 @@ void PressureSensor::init() {
     analogWriteFreq(32000);
     analogWriteRange(256);
 #endif
-    analogWrite(MCLK_PIN, 128);
+    analogWrite(this->mclk, 128);
 }
 
 uint16_t PressureSensor::readData(const uint16_t command, const unsigned long recvDelay) {
@@ -42,7 +41,7 @@ uint16_t PressureSensor::readData(const uint16_t command, const unsigned long re
     return data;
 }
 
-void PressuerSensor::update() {
+void PressureSensor::update() {
     if (!this->working) return;
     const uint16_t word1 = this->readData(0x1D50, 0);
     const uint16_t word2 = this->readData(0x1D60, 0);

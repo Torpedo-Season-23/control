@@ -1,4 +1,4 @@
-#include "motion.h"
+
 
 Motion::Motion() {
     this->motors[HOTIZONTAL_FRONT_LEFT] = new T200Motor(HORIZONTAL_FRONT_LEFT_PIN);
@@ -113,5 +113,11 @@ void Motion::setSpeed(int speed) {
 void Motion::reset() {
     for (int i = 0; i < MOTOR_COUNT; i++) {
         motors[i]->reset();
+    }
+}
+
+void Motion::stop() {
+    for (int i = 0; i < MOTOR_COUNT; i++) {
+        motors[i]->stop();
     }
 }

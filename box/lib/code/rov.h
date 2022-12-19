@@ -11,7 +11,7 @@ class ROV {
     DIRECTION direction;
     Navigation *navigation;
     Motion *motion;
-    Commuincation *communication;
+    Communication *communication;
 
    public:
     ROV();
@@ -23,5 +23,9 @@ class ROV {
     void send();
     void recieve();
 };
+
+#ifndef _ROV_CPP_
+#include "rov.cpp"
+#endif
 
 #endif

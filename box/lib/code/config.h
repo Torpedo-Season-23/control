@@ -16,7 +16,7 @@ enum DIRECTION {
     UP,
     DOWN,
     STOP
-}
+};
 
 // ROV
 #define SENSOR_COUNT 2
@@ -27,11 +27,12 @@ enum DIRECTION {
 enum SENSORS {
     PRESSURE,
     IMU
-}
+};
 
 // IMU SENSOR
 #define IMU_SCL 21
 #define IMU_SDA 22
+#define IMU_ADDRESS 0x68
 
 // PRESSURE SENSOR
 #define PRESSURE_MCLK 13
@@ -58,7 +59,9 @@ enum MOTOR_ORIENTATION {
     VERTICAL_BACK,
     VERTICAL_LEFT,
     VERTICAL_RIGHT
-}
+};
+
+#define MOTOR_COUNT 8
 
 #define HORIZONTAL_FRONT_LEFT_PIN 2
 #define HORIZONTAL_FRONT_LEFT_FACTOR 1
@@ -88,16 +91,25 @@ enum MOTOR_ORIENTATION {
 #define MAX_INTERVAL 400
 
 // ETHERNET
-#define ETHERNET_MAC \
-    { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }
-#define ETHERNET_IP \
-    { 192, 168, 1, 177 }
-#define ETHERNET_DNS \
-    { 8, 8, 8, 8 }
-#define ETHERNET_GATEWAY \
-    { 192, 168, 1, 1 }
-#define ETHERNET_SUBNET \
-    { 255, 255, 255, 0 }
+#define MAC_COUNT 6
+#define IP_COUNT 4
+#define DNS_COUNT 4
+#define GATEWAY_COUNT 4
+#define SUBNET_COUNT 4
+#define ETHERNET_MAC_0 0xDE
+#define ETHERNET_MAC_1 0xAD
+#define ETHERNET_MAC_2 0xBE
+#define ETHERNET_MAC_3 0xEF
+#define ETHERNET_MAC_4 0xFE
+#define ETHERNET_MAC_5 0xED
+#define ETHERNET_IP_0 192
+#define ETHERNET_IP_1 168
+#define ETHERNET_IP_2 1
+#define ETHERNET_IP_3 7
+#define ETHERNET_CONSOLE_0 192
+#define ETHERNET_CONSOLE_1 168
+#define ETHERNET_CONSOLE_2 1
+#define ETHERNET_CONSOLE_3 9
 #define ETHERNET_PORT 80
 
 // PID

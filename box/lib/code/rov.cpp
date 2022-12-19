@@ -1,9 +1,9 @@
-#include "rov.h"
+
 
 ROV::ROV() {
     this->navigation = new Navigation();
     this->motion = new Motion();
-    this->communication = new Ethernet();
+    this->communication = new EthernetModule();
 }
 
 void ROV::init() {

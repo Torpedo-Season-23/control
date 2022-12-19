@@ -4,19 +4,26 @@
 #include "config.h"
 
 class ServoROVMotor {
-   public:
+   protected:
     unsigned char pin;
     DIRECTION direction;
     float speed;
     float factor;
+
+   public:
     ServoROVMotor(unsigned char pin);
-    virtual void init() = 0;
-    virtual void reset() = 0;
-    virtual void forward() = 0;
-    virtual void backward() = 0;
+    virtual void init();
+    virtual void reset();
+    virtual void forward();
+    virtual void backward();
+    virtual void stop();
     virtual void setDirection(DIRECTION direction);
     virtual void setSpeed(float speed);
     virtual void setFactor(float factor);
 };
+
+#ifndef _SERVO_ROV_MOTOR_CPP_
+#include "servo_rov_motor.cpp"
+#endif
 
 #endif

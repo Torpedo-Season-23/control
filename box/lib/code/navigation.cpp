@@ -1,29 +1,29 @@
-#include "navigation.h"
 
-NAVIGATION::NAVIGATION() {
+
+Navigation::Navigation() {
     this->sensors[PRESSURE] = new PressureSensor();
     this->sensors[IMU] = new IMUSensor();
 }
 
-void NAVIGATION::init() {
+void Navigation::init() {
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->init();
     }
 }
 
-void NAVIGATION::update() {
+void Navigation::update() {
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->update();
     }
 }
 
-void NAVIGATION::reset() {
+void Navigation::reset() {
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->reset();
     }
     this->working = false;
 }
 
-void NAVIGATION::toggleWorking() {
+void Navigation::toggleWorking() {
     this->working = !this->working;
 }

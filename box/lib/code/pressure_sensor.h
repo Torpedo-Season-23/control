@@ -1,8 +1,8 @@
 #ifndef _PRESSURE_SENSOR_H_
 #define _PRESSURE_SENSOR_H_
 
+#include "../SoftSPi/SoftSPI.h"
 #include "config.h"
-#include "lib/SoftSPi/SoftSPI.cpp"
 #include "sensor.h"
 
 class PressureSensor : public Sensor {
@@ -26,5 +26,9 @@ class PressureSensor : public Sensor {
     float getDepth();
     float getPressure();
 };
+
+#ifndef _PRESSURE_SENSOR_CPP_
+#include "pressure_sensor.cpp"
+#endif
 
 #endif

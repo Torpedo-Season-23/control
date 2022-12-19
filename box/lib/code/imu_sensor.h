@@ -1,6 +1,7 @@
 #ifndef _IMU_SENSOR_H_
 #define _IMU_SENSOR_H_
 
+#include <Wire.h>
 #include "sensor.h"
 #include "config.h"
 
@@ -26,5 +27,9 @@ class IMUSensor : public Sensor {
     virtual void update();
     virtual void reset();
 };
+
+#ifndef _IMU_SENSOR_CPP_
+#include "imu_sensor.cpp"
+#endif
 
 #endif

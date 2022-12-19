@@ -18,4 +18,8 @@ class Navigation {
     void toggleWorking();
 };
 
+#ifndef _NAVIGATION_CPP_
+#include "navigation.cpp"
+#endif
+
 #endif
