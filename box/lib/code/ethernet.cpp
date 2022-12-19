@@ -73,3 +73,11 @@ void EthernetModule::setFrameSent(uint8_t frame[FRAME_SENT_SIZE]) {
         this->frameSent[i] = frame[i];
     }
 }
+
+uint8_t* EthernetModule::getFrameRecieved() {
+    return this->frameRecieved;
+}
+
+uint8_t* EthernetModule::getFrameSent() {
+    return this->frameSent;
+}

@@ -24,6 +24,8 @@ class EthernetModule : public Communication {
     virtual void reset();
     void setFrameRecieved(uint8_t frame[FRAME_RECIEVED_SIZE]);
     void setFrameSent(uint8_t frame[FRAME_SENT_SIZE]);
+    uint8_t* getFrameRecieved();
+    uint8_t* getFrameSent();
     virtual void recieve();
     virtual void send();
 };

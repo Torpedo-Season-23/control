@@ -22,12 +22,12 @@ void ServoROVMotor::setFactor(float factor) {
     this->factor = factor;
 }
 
-void ServoROVMotor::forward() {
+void ServoROVMotor::clockWise() {
     this->direction = FORWARD;
     // TODO: implement
 }
 
-void ServoROVMotor::backward() {
+void ServoROVMotor::antiClockWise() {
     this->direction = BACKWARD;
     // TODO: implement
 }

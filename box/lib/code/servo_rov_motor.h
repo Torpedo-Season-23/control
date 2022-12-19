@@ -14,8 +14,8 @@ class ServoROVMotor {
     ServoROVMotor(unsigned char pin);
     virtual void init();
     virtual void reset();
-    virtual void forward();
-    virtual void backward();
+    virtual void clockWise();
+    virtual void antiClockWise();
     virtual void stop();
     virtual void setDirection(DIRECTION direction);
     virtual void setSpeed(float speed);

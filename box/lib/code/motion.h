@@ -8,6 +8,7 @@
 class Motion {
    private:
     ServoROVMotor *motors[MOTOR_COUNT];
+    DIRECTION direction;
     void forward();
     void backward();
     void left();

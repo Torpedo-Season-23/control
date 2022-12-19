@@ -1,6 +1,7 @@
 
 
 Motion::Motion() {
+    this->direction = STOP;
     this->motors[HOTIZONTAL_FRONT_LEFT] = new T200Motor(HORIZONTAL_FRONT_LEFT_PIN);
     this->motors[HOTIZONTAL_FRONT_RIGHT] = new T200Motor(HORIZONTAL_FRONT_RIGHT_PIN);
     this->motors[HOTIZONTAL_BACK_LEFT] = new T200Motor(HORIZONTAL_BACK_LEFT_PIN);
@@ -49,64 +50,78 @@ void Motion::move(DIRECTION direction) {
 }
 
 void Motion::forward() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->forward();
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->forward();
-    this->motors[HOTIZONTAL_BACK_LEFT]->forward();
-    this->motors[HOTIZONTAL_BACK_RIGHT]->forward();
+    this->direction = FORWARD;
+    this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise();
+    this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise();
+    this->motors[HOTIZONTAL_BACK_LEFT]->clockWise();
+    this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise();
 }
 
 void Motion::backward() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->backward();
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->backward();
-    this->motors[HOTIZONTAL_BACK_LEFT]->backward();
-    this->motors[HOTIZONTAL_BACK_RIGHT]->backward();
+    this->direction = BACKWARD;
+    this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise();
+    this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise();
+    this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise();
+    this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise();
 }
 
 void Motion::left() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->backward();
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->forward();
-    this->motors[HOTIZONTAL_BACK_LEFT]->backward();
-    this->motors[HOTIZONTAL_BACK_RIGHT]->forward();
+    this->direction = LEFT;
+    this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise();
+    this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise();
+    this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise();
+    this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise();
 }
 
 void Motion::right() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->forward();
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->backward();
-    this->motors[HOTIZONTAL_BACK_LEFT]->forward();
-    this->motors[HOTIZONTAL_BACK_RIGHT]->backward();
+    this->direction = RIGHT;
+    this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise();
+    this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise();
+    this->motors[HOTIZONTAL_BACK_LEFT]->clockWise();
+    this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise();
 }
 
 void Motion::momentLeft() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->backward();
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->forward();
-    this->motors[HOTIZONTAL_BACK_LEFT]->forward();
-    this->motors[HOTIZONTAL_BACK_RIGHT]->backward();
+    this->direction = MOMENT_LEFT;
+    this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise();
+    this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise();
+    this->motors[HOTIZONTAL_BACK_LEFT]->clockWise();
+    this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise();
 }
 
 void Motion::momentRight() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->forward();
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->backward();
-    this->motors[HOTIZONTAL_BACK_LEFT]->backward();
-    this->motors[HOTIZONTAL_BACK_RIGHT]->forward();
+    this->direction = MOMENT_RIGHT;
+    this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise();
+    this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise();
+    this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise();
+    this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise();
 }
 
 void Motion::up() {
-    this->motors[VERTICAL_FRONT]->forward();
-    this->motors[VERTICAL_BACK]->forward();
-    this->motors[VERTICAL_LEFT]->forward();
-    this->motors[VERTICAL_RIGHT]->forward();
+    this->direction = UP;
+    this->motors[VERTICAL_FRONT]->clockWise();
+    this->motors[VERTICAL_BACK]->clockWise();
+    this->motors[VERTICAL_LEFT]->clockWise();
+    this->motors[VERTICAL_RIGHT]->clockWise();
 }
 
 void Motion::down() {
-    this->motors[VERTICAL_FRONT]->backward();
-    this->motors[VERTICAL_BACK]->backward();
-    this->motors[VERTICAL_LEFT]->backward();
-    this->motors[VERTICAL_RIGHT]->backward();
+    this->direction = DOWN;
+    this->motors[VERTICAL_FRONT]->antiClockWise();
+    this->motors[VERTICAL_BACK]->antiClockWise();
+    this->motors[VERTICAL_LEFT]->antiClockWise();
+    this->motors[VERTICAL_RIGHT]->antiClockWise();
 }
 
 void Motion::setSpeed(int speed) {
-    for (int i = 0; i < MOTOR_COUNT; i++) {
-        motors[i]->setSpeed(speed);
+    if (this->direction != STOP) {
+        for (int i = 0; i < MOTOR_COUNT; i++) {
+            motors[i]->setSpeed(speed);
+        }
+    } else {
+        for (int i = 0; i < MOTOR_COUNT; i++) {
+            motors[i]->setSpeed(STOP_SPEED);
+        }
     }
 }
 

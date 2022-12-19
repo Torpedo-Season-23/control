@@ -4,7 +4,7 @@
 #include "config.h"
 #include "ethernet.h"
 #include "motion.h"
-#include "navigation.h"
+#include "sensors_manager.h"
 
 class ROV {
    private:
