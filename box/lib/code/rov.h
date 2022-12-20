@@ -5,10 +5,13 @@
 #include "ethernet.h"
 #include "motion.h"
 #include "sensors_manager.h"
+#include "mapper.h"
 
 class ROV {
    private:
     DIRECTION direction;
+    float speed;
+    uint8_t *accessories;
     SensorsManager *sensorsManager;
     Motion *motion;
     Communication *communication;
@@ -18,7 +21,6 @@ class ROV {
     void init();
     void update();
     void reset();
-    void move(DIRECTION direction);
     void setSpeed(int speed);
     void send();
     void recieve();

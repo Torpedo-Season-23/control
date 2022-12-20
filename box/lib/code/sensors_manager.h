@@ -10,7 +10,9 @@ class SensorsManager {
    private:
     Sensor *sensors[SENSOR_COUNT];
     Sensor *currentSensors[CURRENT_SENSOR_COUNT];
+    uint8_t sensorsData[SENSORS_DATA_SIZE];
     bool working;
+    void prepareSensorsData();
 
    public:
     SensorsManager();
@@ -18,10 +20,11 @@ class SensorsManager {
     void update();
     void reset();
     void toggleWorking();
+    uint8_t *getSensorsData();
 };
 
 #ifndef _NAVIGATION_CPP_
-#include "navigation.cpp"
+#include "sensors_manager.cpp"
 #endif
 
 #endif

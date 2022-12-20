@@ -6,24 +6,13 @@ EthernetModule::EthernetModule() {
     this->mac[3] = ETHERNET_MAC_3;
     this->mac[4] = ETHERNET_MAC_4;
     this->mac[5] = ETHERNET_MAC_5;
-    this->ip = IPAddress(ETHERNET_IP_0, ETHERNET_IP_1, ETHERNET_IP_2, ETHERNET_IP_3);
-    this->console = IPAddress(ETHERNET_CONSOLE_0, ETHERNET_CONSOLE_1, ETHERNET_CONSOLE_2, ETHERNET_CONSOLE_3);
+    this->ip = IPAddress(IP_0, IP_1, IP_2, ETHERNET_BOX_3);
+    this->console = IPAddress(IP_0, IP_1, IP_2, ETHERNET_CONSOLE_3);
     this->port = ETHERNET_PORT;
 }
 
 void EthernetModule::init() {
     Ethernet.begin(this->mac, this->ip);
-}
-
-void EthernetModule::update() {
-    this->recieve();
-    this->send();
-}
-
-void EthernetModule::recieve() {
-}
-
-void EthernetModule::send() {
 }
 
 void EthernetModule::reset() {
@@ -44,28 +33,22 @@ void EthernetModule::display() {
             Serial.print(":");
         }
     }
-    Serial.print(" IP: ");
+    Serial.print(" | IP: ");
     for (int i = 0; i < IP_COUNT; i++) {
         Serial.print(this->ip[i]);
         if (i < IP_COUNT - 1) {
             Serial.print(".");
         }
     }
-    Serial.print(" Console: ");
+    Serial.print(" | Console: ");
     for (int i = 0; i < IP_COUNT; i++) {
         Serial.print(this->console[i]);
         if (i < IP_COUNT - 1) {
             Serial.print(".");
         }
     }
-    Serial.print(" Port: ");
+    Serial.print(" | Port: ");
     Serial.println(this->port);
-}
-
-void EthernetModule::setFrameRecieved(uint8_t frame[FRAME_RECIEVED_SIZE]) {
-    for (int i = 0; i < FRAME_RECIEVED_SIZE; i++) {
-        this->frameRecieved[i] = frame[i];
-    }
 }
 
 void EthernetModule::setFrameSent(uint8_t frame[FRAME_SENT_SIZE]) {
@@ -80,4 +63,10 @@ uint8_t* EthernetModule::getFrameRecieved() {
 
 uint8_t* EthernetModule::getFrameSent() {
     return this->frameSent;
+}
+
+void EthernetModule::recieve() {
+}
+
+void EthernetModule::send() {
 }

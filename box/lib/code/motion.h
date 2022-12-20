@@ -9,6 +9,7 @@ class Motion {
    private:
     ServoROVMotor *motors[MOTOR_COUNT];
     DIRECTION direction;
+    float speed;
     void forward();
     void backward();
     void left();
@@ -23,7 +24,8 @@ class Motion {
     Motion();
     void init();
     void reset();
-    void move(DIRECTION direction);
+    void update(DIRECTION direction, float speed);
+    void move();
     void setSpeed(int speed);
 };
 

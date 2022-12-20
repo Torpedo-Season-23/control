@@ -18,8 +18,14 @@ void Motion::init() {
     }
 }
 
-void Motion::move(DIRECTION direction) {
-    switch (direction) {
+void Motion::update(DIRECTION direction, float speed) {
+    this->direction = direction;
+    this->setSpeed(speed);
+    this->move();
+}
+
+void Motion::move() {
+    switch (this->direction) {
         case FORWARD:
             this->forward();
             break;
@@ -114,6 +120,7 @@ void Motion::down() {
 }
 
 void Motion::setSpeed(int speed) {
+    this->speed = speed;
     if (this->direction != STOP) {
         for (int i = 0; i < MOTOR_COUNT; i++) {
             motors[i]->setSpeed(speed);

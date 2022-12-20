@@ -7,6 +7,9 @@ SensorsManager::SensorsManager() {
     this->currentSensors[CURRENT_SENSOR_FRONT_RIGHT] = new CurrentSensor(CURRENT_SENSOR_FRONT_RIGHT_PIN, CURRENT_SENSOR_FRONT_RIGHT);
     this->currentSensors[CURRENT_SENSOR_BACK_LEFT] = new CurrentSensor(CURRENT_SENSOR_BACK_LEFT_PIN, CURRENT_SENSOR_BACK_LEFT);
     this->currentSensors[CURRENT_SENSOR_BACK_RIGHT] = new CurrentSensor(CURRENT_SENSOR_BACK_RIGHT_PIN, CURRENT_SENSOR_BACK_RIGHT);
+    for (int i = 0; i < SENSORS_DATA_SIZE; i++) {
+        this->sensorsData[i] = 0;
+    }
 }
 
 void SensorsManager::init() {
@@ -39,4 +42,13 @@ void SensorsManager::reset() {
 
 void SensorsManager::toggleWorking() {
     this->working = !this->working;
+}
+
+void SensorsManager::prepareSensorsData() {
+    // TODO: implement
+}
+
+uint8_t* SensorsManager::getSensorsData() {
+    this->prepareSensorsData();
+    return this->sensorsData;
 }

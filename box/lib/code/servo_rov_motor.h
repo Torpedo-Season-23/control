@@ -8,7 +8,6 @@ class ServoROVMotor {
     unsigned char pin;
     DIRECTION direction;
     float speed;
-    float factor;
 
    public:
     ServoROVMotor(unsigned char pin);
@@ -18,8 +17,7 @@ class ServoROVMotor {
     virtual void antiClockWise();
     virtual void stop();
     virtual void setDirection(DIRECTION direction);
-    virtual void setSpeed(float speed);
-    virtual void setFactor(float factor);
+    virtual void setSpeed(float speed, float factor = 1);
 };
 
 #ifndef _SERVO_ROV_MOTOR_CPP_

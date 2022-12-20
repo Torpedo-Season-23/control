@@ -20,12 +20,10 @@ class EthernetModule : public Communication {
    public:
     EthernetModule();
     virtual void init();
-    virtual void update();
     virtual void reset();
-    void setFrameRecieved(uint8_t frame[FRAME_RECIEVED_SIZE]);
-    void setFrameSent(uint8_t frame[FRAME_SENT_SIZE]);
-    uint8_t* getFrameRecieved();
-    uint8_t* getFrameSent();
+    virtual void setFrameSent(uint8_t frame[FRAME_SENT_SIZE]);
+    virtual uint8_t* getFrameRecieved();
+    virtual uint8_t* getFrameSent();
     virtual void recieve();
     virtual void send();
 };
