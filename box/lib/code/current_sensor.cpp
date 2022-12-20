@@ -7,6 +7,7 @@ CurrentSensor::CurrentSensor(unsigned char pin, CURRENT_SENSOR_TYPE type) {
 
 void CurrentSensor::init() {
     pinMode(this->pin, INPUT);
+    // TODO: check if right
 }
 
 void CurrentSensor::update() {

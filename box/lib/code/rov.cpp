@@ -6,38 +6,24 @@ ROV::ROV() {
     this->sensorsManager = new SensorsManager();
     this->motion = new Motion();
     this->communication = new EthernetModule();
+    this->accessories = new Accessories();
 }
 
 void ROV::init() {
-    this->sensorsManager->init();
     this->motion->init();
+    this->accessories->init();
+    this->sensorsManager->init();
     this->communication->init();
 }
 
-void ROV::update() {
-    // * 1. Recieve data
+void ROV::work() {
     this->communication->recieve();
 
-    // * 2. Take data from communication
-    uint8_t *frame = this->communication->getFrameRecieved();
+    this->data = this->communication->getFrameRecieved();
+    this->setMotion(data);
+    this->setAccessories(data);
+    this->update();
 
-    // * 3. Convert communication frame to motor and accessories data
-    this->direction = Mapper::getDirection(frame);
-    this->speed = Mapper::getSpeed(frame);
-    this->accessories = Mapper::getAccessories(frame);
-
-    // * 4. Put direction and speed on motion -> Update motion
-    this->motion->update(this->direction, this->speed);
-
-    // TODO: 5. Update accessories
-
-    // * 6. Update sensors
-    this->sensorsManager->update();
-
-    // * 7. Take sensors data
-    this->communication->setFrameSent(this->sensorsManager->getSensorsData());
-
-    // * 8. Send it to communication
     this->communication->send();
 }
 
@@ -45,16 +31,21 @@ void ROV::reset() {
     this->sensorsManager->reset();
     this->motion->reset();
     this->communication->reset();
+    this->accessories->reset();
 }
 
-void ROV::setSpeed(int speed) {
-    this->motion->setSpeed(speed);
+void ROV::setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]) {
+    this->direction = Mapper::getDirection(frame);
+    this->speed = Mapper::getSpeed(frame);
 }
 
-void ROV::send() {
-    this->communication->send();
+void ROV::setAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]) {
+    this->accessories->setAccessories(Mapper::getAccessories(frame));
 }
 
-void ROV::recieve() {
-    this->communication->recieve();
+void ROV::update() {
+    this->motion->update(this->direction, this->speed);
+    this->accessories->update();
+    this->sensorsManager->update();
+    this->communication->setFrameSent(this->sensorsManager->getSensorsData());
 }

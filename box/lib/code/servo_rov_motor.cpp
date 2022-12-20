@@ -1,30 +1,33 @@
 
-ServoROVMotor::ServoROVMotor(unsigned char pin) {
+ServoROVMotor::ServoROVMotor(unsigned char pin, MOTOR_ORIENTATION type) {
     this->pin = pin;
     this->direction = STOP;
+    this->type = type;
     this->speed = STOP_SPEED;
+    this->servo = new Servo();
 }
 
-void ServoROVMotor::setSpeed(float speed, float factor = 1) {
-    speed = speed * factor > MAX_INTERVAL ? MAX_INTERVAL : speed;
-    if (this->direction == FORWARD) {
-        this->speed = STOP_SPEED + speed;
-    } else {
-        this->speed = STOP_SPEED - speed;
+void ServoROVMotor::setSpeed(float speed) {
+    if (speed == STOP_SPEED) {
+        this->stop();
+        return;
     }
+    speed = speed > MAX_INTERVAL ? MAX_INTERVAL : speed;
+    if (this->direction == FORWARD)
+        this->speed = STOP_SPEED + speed;
+    else
+        this->speed = STOP_SPEED - speed;
 }
 
-void ServoROVMotor::setDirection(DIRECTION direction) {
-    this->direction = direction;
-}
-
-void ServoROVMotor::clockWise() {
+void ServoROVMotor::clockWise(float speed) {
     this->direction = FORWARD;
+    this->setSpeed(speed);
     // TODO: implement
 }
 
-void ServoROVMotor::antiClockWise() {
+void ServoROVMotor::antiClockWise(float speed) {
     this->direction = BACKWARD;
+    this->setSpeed(this->speed);
     // TODO: implement
 }
 
@@ -35,11 +38,6 @@ void ServoROVMotor::stop() {
 }
 
 void ServoROVMotor::init() {
-    pinMode(this->pin, OUTPUT);
-    // TODO: implement
-}
-
-void ServoROVMotor::reset() {
-    this->direction = STOP;
-    this->speed = STOP_SPEED;
+    this->servo->attach(this->pin);
+    this->servo->writeMicroseconds(STOP_SPEED);
 }

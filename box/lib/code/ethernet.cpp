@@ -13,6 +13,7 @@ EthernetModule::EthernetModule() {
 
 void EthernetModule::init() {
     Ethernet.begin(this->mac, this->ip);
+    // TODO: implement
 }
 
 void EthernetModule::reset() {
@@ -66,7 +67,9 @@ uint8_t* EthernetModule::getFrameSent() {
 }
 
 void EthernetModule::recieve() {
+    // TODO: implement
 }
 
 void EthernetModule::send() {
+    // TODO: Implement
 }

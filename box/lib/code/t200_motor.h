@@ -5,7 +5,7 @@
 
 class T200Motor : public ServoROVMotor {
    public:
-    T200Motor(unsigned char pin);
+    T200Motor(unsigned char pin, MOTOR_ORIENTATION type);
 };
 
 #ifndef _T200_MOTOR_CPP_

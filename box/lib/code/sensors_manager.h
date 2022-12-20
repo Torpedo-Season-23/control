@@ -1,5 +1,5 @@
-#ifndef _NAVIGATION_H_
-#define _NAVIGATION_H_
+#ifndef _SENSORS_MANAGER_H_
+#define _SENSORS_MANAGER_H_
 
 #include "config.h"
 #include "current_sensor.h"
@@ -23,7 +23,7 @@ class SensorsManager {
     uint8_t *getSensorsData();
 };
 
-#ifndef _NAVIGATION_CPP_
+#ifndef _SENSORS_MANAGER_CPP_
 #include "sensors_manager.cpp"
 #endif
 

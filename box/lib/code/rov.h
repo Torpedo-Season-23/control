@@ -1,29 +1,31 @@
 #ifndef _ROV_H_
 #define _ROV_H_
 
+#include "accessories.h"
 #include "config.h"
 #include "ethernet.h"
+#include "mapper.h"
 #include "motion.h"
 #include "sensors_manager.h"
-#include "mapper.h"
 
 class ROV {
    private:
     DIRECTION direction;
     float speed;
-    uint8_t *accessories;
+    uint8_t *data;
     SensorsManager *sensorsManager;
     Motion *motion;
     Communication *communication;
+    Accessories *accessories;
+    void setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]);
+    void setAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]);
+    void update();
 
    public:
     ROV();
     void init();
-    void update();
+    void work();
     void reset();
-    void setSpeed(int speed);
-    void send();
-    void recieve();
 };
 
 #ifndef _ROV_CPP_

@@ -18,7 +18,6 @@ class Motion {
     void momentRight();
     void up();
     void down();
-    void stop();
 
    public:
     Motion();
@@ -26,7 +25,6 @@ class Motion {
     void reset();
     void update(DIRECTION direction, float speed);
     void move();
-    void setSpeed(int speed);
 };
 
 #ifndef _MOTION_CPP_
