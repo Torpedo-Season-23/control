@@ -7,7 +7,7 @@ CurrentSensor::CurrentSensor(unsigned char pin, CURRENT_SENSOR_TYPE type) {
 
 void CurrentSensor::init() {
     pinMode(this->pin, INPUT);
-    // TODO: check if right
+    // TODO: check
 }
 
 void CurrentSensor::update() {
@@ -20,7 +20,7 @@ void CurrentSensor::update() {
     avg = samples / 150.0;
     this->current = (2.5 - (avg * (5.0 / 1024.0))) / 0.185;
 
-    if (DEBUG)
+    if (DEBUG_SENSORS)
         this->display();
 }
 
@@ -32,24 +32,9 @@ void CurrentSensor::reset() {
     this->current = 0;
 }
 
-char const* getType(CURRENT_SENSOR_TYPE type) {
-    switch (type) {
-        case CURRENT_SENSOR_BACK_LEFT:
-            return "Back Left";
-        case CURRENT_SENSOR_BACK_RIGHT:
-            return "Back Right";
-        case CURRENT_SENSOR_FRONT_LEFT:
-            return "Front Left";
-        case CURRENT_SENSOR_FRONT_RIGHT:
-            return "Front Right";
-        default:
-            return "Unknown";
-    }
-}
-
 void CurrentSensor::display() {
     Serial.print("Sensor: ");
-    Serial.print(getType(this->type));
+    Serial.print(Helper::getCurrentSensorType(this->type));
     Serial.print(" | Current: ");
     Serial.print(this->current);
     Serial.println(" A");

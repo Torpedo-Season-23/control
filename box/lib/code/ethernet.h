@@ -4,7 +4,6 @@
 #include <UIPEthernet.h>
 
 #include "communication.h"
-#include "config.h"
 
 class EthernetModule : public Communication {
    private:
@@ -13,8 +12,6 @@ class EthernetModule : public Communication {
     IPAddress console;
     unsigned int port;
     EthernetUDP udp;
-    uint8_t frameRecieved[FRAME_RECIEVED_SIZE];
-    uint8_t frameSent[FRAME_SENT_SIZE];
     void display();
 
    public:

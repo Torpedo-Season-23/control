@@ -83,7 +83,7 @@ void PressureSensor::update() {
     this->pressure = (float)p / 10;
     this->depth = (this->pressure * 100) / (1000 * 9.81);
 
-    if (DEBUG)
+    if (DEBUG_SENSORS)
         this->display();
 }
 

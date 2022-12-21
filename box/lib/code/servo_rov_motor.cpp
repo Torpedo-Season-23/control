@@ -7,7 +7,7 @@ ServoROVMotor::ServoROVMotor(unsigned char pin, MOTOR_ORIENTATION type) {
     this->servo = new Servo();
 }
 
-void ServoROVMotor::setSpeed(float speed) {
+void ServoROVMotor::setSpeed(uint8_t speed) {
     if (speed == STOP_SPEED) {
         this->stop();
         return;
@@ -19,13 +19,19 @@ void ServoROVMotor::setSpeed(float speed) {
         this->speed = STOP_SPEED - speed;
 }
 
-void ServoROVMotor::clockWise(float speed) {
+void ServoROVMotor::reset() {
+    this->direction = STOP;
+    this->init();
+    this->stop();
+}
+
+void ServoROVMotor::clockWise(uint8_t speed) {
     this->direction = FORWARD;
     this->setSpeed(speed);
     // TODO: implement
 }
 
-void ServoROVMotor::antiClockWise(float speed) {
+void ServoROVMotor::antiClockWise(uint8_t speed) {
     this->direction = BACKWARD;
     this->setSpeed(this->speed);
     // TODO: implement

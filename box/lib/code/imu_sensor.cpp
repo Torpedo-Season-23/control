@@ -21,6 +21,9 @@ void IMUSensor::init() {
 
 void IMUSensor::update() {
     // TODO: implement
+
+    if (DEBUG_SENSORS)
+        this->display();
 }
 
 void IMUSensor::reset() {

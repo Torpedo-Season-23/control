@@ -1,6 +1,5 @@
 #include "lib/code/rov.h"
 
-
 ROV rov;
 
 void setup() {
@@ -9,5 +8,5 @@ void setup() {
 }
 
 void loop() {
-    rov.work();
+    rov.update();
 }

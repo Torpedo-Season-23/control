@@ -10,8 +10,6 @@
 
 class ROV {
    private:
-    DIRECTION direction;
-    float speed;
     uint8_t *data;
     SensorsManager *sensorsManager;
     Motion *motion;
@@ -19,12 +17,12 @@ class ROV {
     Accessories *accessories;
     void setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]);
     void setAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]);
-    void update();
+    void setSensors();
 
    public:
     ROV();
     void init();
-    void work();
+    void update();
     void reset();
 };
 

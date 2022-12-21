@@ -23,6 +23,7 @@ void EthernetModule::reset() {
     for (int i = 0; i < FRAME_SENT_SIZE; i++) {
         this->frameSent[i] = 0;
     }
+    this->init();
 }
 
 void EthernetModule::display() {

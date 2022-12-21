@@ -13,12 +13,14 @@ Accessories::Accessories() {
 }
 
 void Accessories::init() {
+    // TODO: check
     for (uint8_t i = 0; i < ACCESSORIES_COUNT; i++) {
         pinMode(this->pins[i], OUTPUT);
     }
 }
 
 void Accessories::update() {
+    // TODO: check
     for (uint8_t i = 0; i < ACCESSORIES_COUNT; i++) {
         digitalWrite(pins[i], data[i]);
     }

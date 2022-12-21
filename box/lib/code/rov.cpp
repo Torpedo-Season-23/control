@@ -1,8 +1,6 @@
 
 
 ROV::ROV() {
-    this->direction = STOP;
-    this->speed = STOP_SPEED;
     this->sensorsManager = new SensorsManager();
     this->motion = new Motion();
     this->communication = new EthernetModule();
@@ -14,15 +12,16 @@ void ROV::init() {
     this->accessories->init();
     this->sensorsManager->init();
     this->communication->init();
+    this->motion->stop();
 }
 
-void ROV::work() {
+void ROV::update() {
     this->communication->recieve();
 
     this->data = this->communication->getFrameRecieved();
     this->setMotion(data);
     this->setAccessories(data);
-    this->update();
+    this->setSensors();
 
     this->communication->send();
 }
@@ -35,17 +34,17 @@ void ROV::reset() {
 }
 
 void ROV::setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]) {
-    this->direction = Mapper::getDirection(frame);
-    this->speed = Mapper::getSpeed(frame);
+    this->motion->setDirection(Mapper::getDirection(frame));
+    this->motion->setSpeed(Mapper::getSpeed(frame));
+    this->motion->update();
 }
 
 void ROV::setAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]) {
     this->accessories->setAccessories(Mapper::getAccessories(frame));
+    this->accessories->update();
 }
 
-void ROV::update() {
-    this->motion->update(this->direction, this->speed);
-    this->accessories->update();
+void ROV::setSensors() {
     this->sensorsManager->update();
     this->communication->setFrameSent(this->sensorsManager->getSensorsData());
 }

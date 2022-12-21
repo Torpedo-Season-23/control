@@ -6,7 +6,7 @@
 class Mapper {
    public:
     static DIRECTION getDirection(uint8_t *frame);
-    static float getSpeed(uint8_t *frame);
+    static uint8_t *getSpeed(uint8_t *frame);
     static uint8_t *getAccessories(uint8_t *frame);
 };
 
