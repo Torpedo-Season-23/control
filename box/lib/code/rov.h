@@ -5,7 +5,7 @@
 #include "config.h"
 #include "ethernet.h"
 #include "mapper.h"
-#include "motion.h"
+#include "motion8.h"
 #include "sensors_manager.h"
 
 class ROV {

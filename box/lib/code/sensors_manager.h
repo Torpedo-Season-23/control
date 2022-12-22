@@ -8,8 +8,8 @@
 
 class SensorsManager {
    private:
-    Sensor *sensors[SENSOR_COUNT];
-    Sensor *currentSensors[CURRENT_SENSOR_COUNT];
+    Sensor **sensors;
+    Sensor **currentSensors;
     uint8_t sensorsData[SENSORS_DATA_SIZE];
     bool working;
     void prepareSensorsData();
@@ -19,6 +19,9 @@ class SensorsManager {
     void init();
     void update();
     void reset();
+    void startWorking();
+    void stopWorking();
+    void toggleSensorWorking(SENSOR_TYPE sensor);
     void toggleWorking();
     uint8_t *getSensorsData();
 };

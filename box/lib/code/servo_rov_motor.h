@@ -1,8 +1,9 @@
 #ifndef _SERVO_ROV_MOTOR_H_
 #define _SERVO_ROV_MOTOR_H_
 
-#include "config.h"
 #include <Servo.h>
+
+#include "config.h"
 
 class ServoROVMotor {
    protected:

@@ -2,26 +2,25 @@
 #define _IMU_SENSOR_H_
 
 #include <Wire.h>
-#include "sensor.h"
+
 #include "config.h"
+#include "sensor.h"
 
 class IMUSensor : public Sensor {
-  private:
-    unsigned char scl;
-    unsigned char sda;
-    float accel_x;
-    float accel_y;
-    float accel_z;
-    float gyro_x;
-    float gyro_y;
-    float gyro_z;
-    float mag_x;
-    float mag_y;
-    float mag_z;
-    float temp;
+   private:
+    uint8_t accelX;
+    uint8_t accelY;
+    uint8_t accelZ;
+    uint8_t gyroX;
+    uint8_t gyroY;
+    uint8_t gyroZ;
+    uint8_t magX;
+    uint8_t magY;
+    uint8_t magZ;
+    uint8_t temp;
     virtual void display();
 
-  public:
+   public:
     IMUSensor();
     virtual void init();
     virtual void update();

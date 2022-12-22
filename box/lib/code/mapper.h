@@ -5,9 +5,10 @@
 
 class Mapper {
    public:
-    static DIRECTION getDirection(uint8_t *frame);
-    static uint8_t *getSpeed(uint8_t *frame);
-    static uint8_t *getAccessories(uint8_t *frame);
+    static DIRECTION getDirection(uint8_t *communicationFrame);
+    static uint8_t *getSpeed(uint8_t *communicationFrame);
+    static uint8_t getAccessories(uint8_t *communicationFrame);
+    static SENSOR_TYPE getSensorToToggle(uint8_t accessoriesFrame);
 };
 
 #ifndef _MAPPER_CPP_

@@ -5,13 +5,19 @@ class Sensor {
    public:
     bool working;
     Sensor() {
-        working = false;
+        this->working = false;
     };
     virtual void init() = 0;
     virtual void update() = 0;
     virtual void reset() = 0;
+    virtual void startWorking() {
+        this->working = true;
+    };
+    virtual void stopWorking() {
+        this->working = false;
+    };
     virtual void toggleWorking() {
-        working = !working;
+        this->working = !this->working;
     };
 };
 

@@ -2,38 +2,30 @@
 #define _MOTION_H_
 
 #include "config.h"
-#include "helper.h"
-#include "t100_motor.h"
-#include "t200_motor.h"
+#include "servo_rov_motor.h"
 
 class Motion {
-   private:
-    ServoROVMotor *motors[MOTOR_COUNT];
-    uint8_t *speed;
+   protected:
+    ServoROVMotor **motors;
     DIRECTION direction;
-    void forward();
-    void backward();
-    void left();
-    void right();
-    void momentLeft();
-    void momentRight();
-    void up();
-    void down();
-    void display();
+    uint8_t *speed;
+    virtual void forward() = 0;
+    virtual void backward() = 0;
+    virtual void left() = 0;
+    virtual void right() = 0;
+    virtual void momentLeft() = 0;
+    virtual void momentRight() = 0;
+    virtual void up() = 0;
+    virtual void down() = 0;
 
    public:
-    Motion();
-    void init();
-    void reset();
-    void update();
-    void setDirection(DIRECTION direction);
-    void setSpeed(uint8_t *speed);
-    void move();
-    void stop();
+    virtual void init() = 0;
+    virtual void reset() = 0;
+    virtual void update() = 0;
+    virtual void setDirection(DIRECTION direction) = 0;
+    virtual void setSpeed(uint8_t *speed) = 0;
+    virtual void move() = 0;
+    virtual void stop() = 0;
 };
-
-#ifndef _MOTION_CPP_
-#include "motion.cpp"
-#endif
 
 #endif

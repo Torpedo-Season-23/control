@@ -1,5 +1,5 @@
 
-Motion::Motion() {
+Motion8::Motion8() {
     this->direction = STOP;
     this->motors[HOTIZONTAL_FRONT_LEFT] = new T200Motor(HORIZONTAL_FRONT_LEFT_PIN, HOTIZONTAL_FRONT_LEFT);
     this->motors[HOTIZONTAL_FRONT_RIGHT] = new T200Motor(HORIZONTAL_FRONT_RIGHT_PIN, HOTIZONTAL_FRONT_RIGHT);
@@ -11,19 +11,19 @@ Motion::Motion() {
     this->motors[VERTICAL_RIGHT] = new T100Motor(VERTICAL_RIGHT_PIN, VERTICAL_RIGHT);
 }
 
-void Motion::init() {
+void Motion8::init() {
     for (int i = 0; i < MOTOR_COUNT; i++) {
         motors[i]->init();
     }
 }
 
-void Motion::update() {
+void Motion8::update() {
     this->move();
     if (DEBUG_MOTION)
         this->display();
 }
 
-void Motion::move() {
+void Motion8::move() {
     switch (this->direction) {
         case FORWARD:
             this->forward();
@@ -49,12 +49,15 @@ void Motion::move() {
         case DOWN:
             this->down();
             break;
+        case STOP:
+            this->stop();
+            break;
         default:
             break;
     }
 }
 
-void Motion::forward() {
+void Motion8::forward() {
     this->direction = FORWARD;
     this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
@@ -62,7 +65,7 @@ void Motion::forward() {
     this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
 }
 
-void Motion::backward() {
+void Motion8::backward() {
     this->direction = BACKWARD;
     this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
@@ -70,7 +73,7 @@ void Motion::backward() {
     this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
 }
 
-void Motion::left() {
+void Motion8::left() {
     this->direction = LEFT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
@@ -78,7 +81,7 @@ void Motion::left() {
     this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
 }
 
-void Motion::right() {
+void Motion8::right() {
     this->direction = RIGHT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
@@ -86,7 +89,7 @@ void Motion::right() {
     this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
 }
 
-void Motion::momentLeft() {
+void Motion8::momentLeft() {
     this->direction = MOMENT_LEFT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
@@ -94,7 +97,7 @@ void Motion::momentLeft() {
     this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
 }
 
-void Motion::momentRight() {
+void Motion8::momentRight() {
     this->direction = MOMENT_RIGHT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
@@ -102,7 +105,7 @@ void Motion::momentRight() {
     this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
 }
 
-void Motion::up() {
+void Motion8::up() {
     this->direction = UP;
     this->motors[VERTICAL_FRONT]->clockWise(this->speed[VERTICAL_FRONT]);
     this->motors[VERTICAL_BACK]->clockWise(this->speed[VERTICAL_BACK]);
@@ -110,7 +113,7 @@ void Motion::up() {
     this->motors[VERTICAL_RIGHT]->clockWise(this->speed[VERTICAL_RIGHT]);
 }
 
-void Motion::down() {
+void Motion8::down() {
     this->direction = DOWN;
     this->motors[VERTICAL_FRONT]->antiClockWise(this->speed[VERTICAL_FRONT]);
     this->motors[VERTICAL_BACK]->antiClockWise(this->speed[VERTICAL_BACK]);
@@ -118,32 +121,32 @@ void Motion::down() {
     this->motors[VERTICAL_RIGHT]->antiClockWise(this->speed[VERTICAL_RIGHT]);
 }
 
-void Motion::stop() {
+void Motion8::stop() {
     this->direction = STOP;
     for (int i = 0; i < MOTOR_COUNT; i++) {
         motors[i]->stop();
     }
 }
 
-void Motion::reset() {
-    this->stop();
+void Motion8::reset() {
     this->direction = STOP;
     for (int i = 0; i < MOTOR_COUNT; i++) {
         motors[i]->reset();
     }
+    this->init();
 }
 
-void Motion::display() {
+void Motion8::display() {
     Serial.print("Direction: ");
     Serial.print(Helper::getDirection(this->direction));
 }
 
-void Motion::setSpeed(uint8_t *speed) {
+void Motion8::setSpeed(uint8_t *speed) {
     for (int i = 0; i < MOTOR_COUNT; i++) {
-        this->speed[i] = speed;
+        this->speed[i] = speed[i];
     }
 }
 
-void Motion::setDirection(DIRECTION direction) {
+void Motion8::setDirection(DIRECTION direction) {
     this->direction = direction;
 }

@@ -6,11 +6,12 @@ CurrentSensor::CurrentSensor(unsigned char pin, CURRENT_SENSOR_TYPE type) {
 }
 
 void CurrentSensor::init() {
+    this->working = true;
     pinMode(this->pin, INPUT);
-    // TODO: check
 }
 
 void CurrentSensor::update() {
+    if (!this->working) return;
     float value = 0, samples = 0, avg = 0;
     for (int i = 0; i < 150; i++) {
         value = analogRead(this->pin);

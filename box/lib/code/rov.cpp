@@ -2,7 +2,7 @@
 
 ROV::ROV() {
     this->sensorsManager = new SensorsManager();
-    this->motion = new Motion();
+    this->motion = new Motion8();
     this->communication = new EthernetModule();
     this->accessories = new Accessories();
 }
@@ -12,17 +12,14 @@ void ROV::init() {
     this->accessories->init();
     this->sensorsManager->init();
     this->communication->init();
-    this->motion->stop();
 }
 
 void ROV::update() {
     this->communication->recieve();
-
     this->data = this->communication->getFrameRecieved();
     this->setMotion(data);
     this->setAccessories(data);
     this->setSensors();
-
     this->communication->send();
 }
 
@@ -42,6 +39,7 @@ void ROV::setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]) {
 void ROV::setAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]) {
     this->accessories->setAccessories(Mapper::getAccessories(frame));
     this->accessories->update();
+    this->sensorsManager->toggleSensorWorking(Mapper::getSensorToToggle(this->accessories->getAccessories()));
 }
 
 void ROV::setSensors() {

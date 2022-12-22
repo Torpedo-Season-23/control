@@ -1,16 +1,22 @@
-
-static DIRECTION Mapper::getDirection(uint8_t frame[FRAME_RECIEVED_SIZE]) {
+static DIRECTION Mapper::getDirection(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
     // TODO: Implement
     return STOP;
 }
-static uint8_t *Mapper::getSpeed(uint8_t frame[FRAME_RECIEVED_SIZE]) {
-    // TODO: Implement
-    uint8_t *x = {0};
-    return x;
+static uint8_t *Mapper::getSpeed(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
+    uint8_t speed[MOTOR_COUNT];
+    uint8_t i = 0, j = SPEED_INDEX_START;
+    while (i < MOTOR_COUNT) {
+        speed[i++] = communicationFrame[j++] + communicationFrame[j++];
+    }
+    return speed;
 }
 
-static uint8_t *Mapper::getAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]) {
-    // TODO: Implement
-    uint8_t *x = {0};
-    return x;
+static uint8_t Mapper::getAccessories(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
+    return communicationFrame[ACCESSORIES_INDEX];
+}
+
+static SENSOR_TYPE Mapper::getSensorToToggle(uint8_t accessoriesFrame) {
+    // TODO: Check
+    return accessoriesFrame << IMU_TOGGLE == 1 ? IMU : accessoriesFrame << PRESSURE_TOGGLE == 1 ? PRESSURE
+                                                                                                : NO_SENSOR;
 }

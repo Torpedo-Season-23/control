@@ -19,9 +19,11 @@ void SensorsManager::init() {
     for (int i = 0; i < CURRENT_SENSOR_COUNT; i++) {
         currentSensors[i]->init();
     }
+    this->working = true;
 }
 
 void SensorsManager::update() {
+    if (!this->working) return;
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->update();
     }
@@ -37,11 +39,31 @@ void SensorsManager::reset() {
     for (int i = 0; i < CURRENT_SENSOR_COUNT; i++) {
         currentSensors[i]->reset();
     }
+}
+
+void SensorsManager::startWorking() {
+    this->working = true;
+}
+
+void SensorsManager::stopWorking() {
     this->working = false;
 }
 
 void SensorsManager::toggleWorking() {
     this->working = !this->working;
+}
+
+void SensorsManager::toggleSensorWorking(SENSOR_TYPE sensor) {
+    switch (sensor) {
+        case IMU:
+            this->sensors[IMU]->toggleWorking();
+            break;
+        case PRESSURE:
+            this->sensors[PRESSURE]->toggleWorking();
+            break;
+        default:
+            break;
+    }
 }
 
 void SensorsManager::prepareSensorsData() {

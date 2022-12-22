@@ -11,6 +11,7 @@ PressureSensor::PressureSensor() {
 }
 
 void PressureSensor::init() {
+    this->working = true;
     this->spi->begin();
     pinMode(this->mclk, OUTPUT);
 #ifdef __AVR__
