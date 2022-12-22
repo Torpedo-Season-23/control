@@ -1,4 +1,4 @@
-IMUSensor::IMUSensor() {
+MPU6050Sensor::MPU6050Sensor() {
     this->accelX = 0;
     this->accelY = 0;
     this->accelZ = 0;
@@ -9,39 +9,22 @@ IMUSensor::IMUSensor() {
     this->magY = 0;
     this->magZ = 0;
     this->temp = 0;
+    this->mpu = new MPU6050();
 }
 
-void IMUSensor::init() {
+void MPU6050Sensor::init() {
     this->working = true;
-    Wire.begin();
-    Wire.beginTransmission(IMU_ADDRESS);
-    Wire.setWireTimeout(IMU_TIMEOUT, true);
-    Wire.write(IMU_WRITE_REG_INIT);
-    Wire.write(ZERO_REG);
-    Wire.endTransmission(true);
+    this->mpu->initialize();
 }
 
-void IMUSensor::update() {
-    Wire.beginTransmission(IMU_ADDRESS);
-    Wire.write(IMU_WRITE_REG_UPDATE);
-    Wire.endTransmission(false);
-    Wire.requestFrom(IMU_ADDRESS, IMU_REQUEST, true);
-    this->accelX = Wire.read() << 8 | Wire.read();
-    this->accelY = Wire.read() << 8 | Wire.read();
-    this->accelZ = Wire.read() << 8 | Wire.read();
-    this->temp = Wire.read() << 8 | Wire.read();
-    this->gyroX = Wire.read() << 8 | Wire.read();
-    this->gyroY = Wire.read() << 8 | Wire.read();
-    this->gyroZ = Wire.read() << 8 | Wire.read();
-    this->magX = Wire.read() << 8 | Wire.read();
-    this->magY = Wire.read() << 8 | Wire.read();
-    this->magZ = Wire.read() << 8 | Wire.read();
+void MPU6050Sensor::update() {
+    this->mpu->getMotion6(&this->accelX, &this->accelY, &this->accelZ, &this->gyroX, &this->gyroY, &this->gyroZ);
     this->data = this->accelX;
     if (DEBUG_SENSORS)
         this->display();
 }
 
-void IMUSensor::reset() {
+void MPU6050Sensor::reset() {
     this->accelX = 0;
     this->accelY = 0;
     this->accelZ = 0;
@@ -52,9 +35,10 @@ void IMUSensor::reset() {
     this->magY = 0;
     this->magZ = 0;
     this->temp = 0;
+    this->init();
 }
 
-void IMUSensor::display() {
+void MPU6050Sensor::display() {
     Serial.print("Accel X: ");
     Serial.print(this->accelX);
     Serial.print(" | Accel Y: ");
@@ -75,4 +59,30 @@ void IMUSensor::display() {
     Serial.print(this->magY);
     Serial.print(" | Mag Z: ");
     Serial.println(this->magZ);
+}
+
+void wireImplInit() {
+    // Wire.begin();
+    // Wire.beginTransmission(IMU_ADDRESS);
+    // Wire.setWireTimeout(IMU_TIMEOUT, true);
+    // Wire.write(IMU_WRITE_REG_INIT);
+    // Wire.write(ZERO_REG);
+    // Wire.endTransmission(true);
+}
+
+void wireImplUpdate() {
+    // Wire.beginTransmission(IMU_ADDRESS);
+    // Wire.write(IMU_WRITE_REG_UPDATE);
+    // Wire.endTransmission(false);
+    // Wire.requestFrom(IMU_ADDRESS, IMU_REQUEST, true);
+    // this->accelX = Wire.read() << 8 | Wire.read();
+    // this->accelY = Wire.read() << 8 | Wire.read();
+    // this->accelZ = Wire.read() << 8 | Wire.read();
+    // this->temp = Wire.read() << 8 | Wire.read();
+    // this->gyroX = Wire.read() << 8 | Wire.read();
+    // this->gyroY = Wire.read() << 8 | Wire.read();
+    // this->gyroZ = Wire.read() << 8 | Wire.read();
+    // this->magX = Wire.read() << 8 | Wire.read();
+    // this->magY = Wire.read() << 8 | Wire.read();
+    // this->magZ = Wire.read() << 8 | Wire.read();
 }

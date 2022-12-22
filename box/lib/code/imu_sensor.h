@@ -3,25 +3,30 @@
 
 #include <Wire.h>
 
+#include "../MPU6050/MPU6050.h"
+#include "../MPU6050/helper_3dmath.h"
 #include "config.h"
 #include "sensor.h"
 
-class IMUSensor : public Sensor {
+class MPU6050Sensor : public Sensor {
    private:
-    uint8_t accelX;
-    uint8_t accelY;
-    uint8_t accelZ;
-    uint8_t gyroX;
-    uint8_t gyroY;
-    uint8_t gyroZ;
-    uint8_t magX;
-    uint8_t magY;
-    uint8_t magZ;
-    uint8_t temp;
+    int16_t accelX;
+    int16_t accelY;
+    int16_t accelZ;
+    int16_t gyroX;
+    int16_t gyroY;
+    int16_t gyroZ;
+    int16_t magX;
+    int16_t magY;
+    int16_t magZ;
+    int16_t temp;
+    unsigned long currentTime;
+    unsigned long previousTime;
+    MPU6050 *mpu;
     virtual void display();
 
    public:
-    IMUSensor();
+    MPU6050Sensor();
     virtual void init();
     virtual void update();
     virtual void reset();
