@@ -9,7 +9,6 @@
 class SensorsManager {
    private:
     Sensor **sensors;
-    Sensor **currentSensors;
     uint8_t sensorsData[SENSORS_DATA_SIZE];
     bool working;
     void prepareSensorsData();

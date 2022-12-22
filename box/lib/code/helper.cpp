@@ -23,7 +23,7 @@ static char const* Helper::getDirection(DIRECTION direction) {
     }
 }
 
-static char const* Helper::getCurrentSensorType(CURRENT_SENSOR_TYPE type) {
+static char const* Helper::getCurrentSensorType(SENSOR_TYPE type) {
     switch (type) {
         case CURRENT_SENSOR_BACK_LEFT:
             return "Back Left";

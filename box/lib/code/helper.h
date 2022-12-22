@@ -6,7 +6,7 @@
 class Helper {
    public:
     static char const* getDirection(DIRECTION direction);
-    static char const* getCurrentSensorType(CURRENT_SENSOR_TYPE type);
+    static char const* getCurrentSensorType(SENSOR_TYPE type);
 };
 
 #ifndef _HELPER_CPP_

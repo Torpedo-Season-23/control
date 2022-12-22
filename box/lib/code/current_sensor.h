@@ -8,11 +8,11 @@ class CurrentSensor : public Sensor {
    private:
     unsigned char pin;
     float current;
-    CURRENT_SENSOR_TYPE type;
+    SENSOR_TYPE type;
     void display();
 
    public:
-    CurrentSensor(unsigned char pin, CURRENT_SENSOR_TYPE type);
+    CurrentSensor(unsigned char pin, SENSOR_TYPE type);
     virtual void init();
     virtual void update();
     virtual void reset();

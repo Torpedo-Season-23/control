@@ -1,5 +1,4 @@
-
-CurrentSensor::CurrentSensor(unsigned char pin, CURRENT_SENSOR_TYPE type) {
+CurrentSensor::CurrentSensor(unsigned char pin, SENSOR_TYPE type) {
     this->pin = pin;
     this->type = type;
     this->current = 0;
