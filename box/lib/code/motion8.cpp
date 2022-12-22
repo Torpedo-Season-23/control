@@ -12,7 +12,7 @@ Motion8::Motion8() {
 }
 
 void Motion8::init() {
-    for (int i = 0; i < MOTOR_COUNT; i++) {
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
         motors[i]->init();
     }
 }
@@ -52,13 +52,15 @@ void Motion8::move() {
         case STOP:
             this->stop();
             break;
+        case GENERIC:
+            this->generic();
+            break;
         default:
             break;
     }
 }
 
 void Motion8::forward() {
-    this->direction = FORWARD;
     this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
     this->motors[HOTIZONTAL_BACK_LEFT]->clockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
@@ -66,7 +68,6 @@ void Motion8::forward() {
 }
 
 void Motion8::backward() {
-    this->direction = BACKWARD;
     this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
     this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
@@ -74,7 +75,6 @@ void Motion8::backward() {
 }
 
 void Motion8::left() {
-    this->direction = LEFT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
     this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
@@ -82,7 +82,6 @@ void Motion8::left() {
 }
 
 void Motion8::right() {
-    this->direction = RIGHT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
     this->motors[HOTIZONTAL_BACK_LEFT]->clockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
@@ -90,7 +89,6 @@ void Motion8::right() {
 }
 
 void Motion8::momentLeft() {
-    this->direction = MOMENT_LEFT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
     this->motors[HOTIZONTAL_BACK_LEFT]->clockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
@@ -98,7 +96,6 @@ void Motion8::momentLeft() {
 }
 
 void Motion8::momentRight() {
-    this->direction = MOMENT_RIGHT;
     this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
     this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
     this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
@@ -106,7 +103,6 @@ void Motion8::momentRight() {
 }
 
 void Motion8::up() {
-    this->direction = UP;
     this->motors[VERTICAL_FRONT]->clockWise(this->speed[VERTICAL_FRONT]);
     this->motors[VERTICAL_BACK]->clockWise(this->speed[VERTICAL_BACK]);
     this->motors[VERTICAL_LEFT]->clockWise(this->speed[VERTICAL_LEFT]);
@@ -114,23 +110,28 @@ void Motion8::up() {
 }
 
 void Motion8::down() {
-    this->direction = DOWN;
     this->motors[VERTICAL_FRONT]->antiClockWise(this->speed[VERTICAL_FRONT]);
     this->motors[VERTICAL_BACK]->antiClockWise(this->speed[VERTICAL_BACK]);
     this->motors[VERTICAL_LEFT]->antiClockWise(this->speed[VERTICAL_LEFT]);
     this->motors[VERTICAL_RIGHT]->antiClockWise(this->speed[VERTICAL_RIGHT]);
 }
 
+void Motion8::generic() {
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
+        this->motors[i]->putSpeed(this->speed[i]);
+    }
+}
+
 void Motion8::stop() {
     this->direction = STOP;
-    for (int i = 0; i < MOTOR_COUNT; i++) {
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
         motors[i]->stop();
     }
 }
 
 void Motion8::reset() {
     this->direction = STOP;
-    for (int i = 0; i < MOTOR_COUNT; i++) {
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
         motors[i]->reset();
     }
     this->init();
@@ -142,8 +143,14 @@ void Motion8::display() {
 }
 
 void Motion8::setSpeed(uint8_t *speed) {
-    for (int i = 0; i < MOTOR_COUNT; i++) {
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
         this->speed[i] = speed[i];
+    }
+}
+
+void Motion8::setExponent(uint8_t *exponent) {
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
+        this->motors[i]->setExponent(exponent[i]);
     }
 }
 

@@ -36,6 +36,7 @@ void IMUSensor::update() {
     this->magX = Wire.read() << 8 | Wire.read();
     this->magY = Wire.read() << 8 | Wire.read();
     this->magZ = Wire.read() << 8 | Wire.read();
+    this->data = this->accelX;
     if (DEBUG_SENSORS)
         this->display();
 }

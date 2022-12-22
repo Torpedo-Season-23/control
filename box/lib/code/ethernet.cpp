@@ -1,22 +1,31 @@
 
-EthernetModule::EthernetModule() {
+BoxEthernet::BoxEthernet() {
     this->mac[0] = ETHERNET_BOX_MAC_0;
     this->mac[1] = ETHERNET_BOX_MAC_1;
     this->mac[2] = ETHERNET_BOX_MAC_2;
     this->mac[3] = ETHERNET_BOX_MAC_3;
     this->mac[4] = ETHERNET_BOX_MAC_4;
     this->mac[5] = ETHERNET_BOX_MAC_5;
-    this->ip = IPAddress(IP_0, IP_1, IP_2, ETHERNET_BOX_3);
-    this->console = IPAddress(IP_0, IP_1, IP_2, ETHERNET_CONSOLE_3);
-    this->port = ETHERNET_PORT;
+    this->boxIp = IPAddress(IP_0, IP_1, IP_2, BOX_IP_3);
+    this->consoleIp = IPAddress(IP_0, IP_1, IP_2, CONSOLE_IP_3);
+    this->boxPort = BOX_PORT;
+    this->consolePort = CONSOLE_PORT;
+    this->udp = new EthernetUDP();
+    this->packetSize = 0;
+    for (uint8_t i = 0; i < FRAME_RECIEVED_SIZE; i++) {
+        this->frameRecieved[i] = 0;
+    }
+    for (uint8_t i = 0; i < FRAME_SENT_SIZE; i++) {
+        this->frameSent[i] = 0;
+    }
 }
 
-void EthernetModule::init() {
-    Ethernet.begin(this->mac, this->ip);
-    // TODO: implement
+void BoxEthernet::init() {
+    Ethernet.begin(this->mac, this->boxIp);
+    this->udp->begin(this->boxPort);
 }
 
-void EthernetModule::reset() {
+void BoxEthernet::reset() {
     for (int i = 0; i < FRAME_RECIEVED_SIZE; i++) {
         this->frameRecieved[i] = 0;
     }
@@ -26,7 +35,34 @@ void EthernetModule::reset() {
     this->init();
 }
 
-void EthernetModule::display() {
+void BoxEthernet::setFrameSent(uint8_t frame[FRAME_SENT_SIZE]) {
+    for (int i = 0; i < FRAME_SENT_SIZE; i++) {
+        this->frameSent[i] = frame[i];
+    }
+}
+
+uint8_t* BoxEthernet::getFrameRecieved() {
+    return this->frameRecieved;
+}
+
+uint8_t* BoxEthernet::getFrameSent() {
+    return this->frameSent;
+}
+
+void BoxEthernet::recieve() {
+    this->packetSize = this->udp->parsePacket();
+    if (this->packetSize == FRAME_RECIEVED_SIZE) {
+        udp->read(this->frameRecieved, this->packetSize);
+    }
+}
+
+void BoxEthernet::send() {
+    this->udp->beginPacket(this->consoleIp, this->consolePort);
+    this->udp->write(this->frameSent, FRAME_SENT_SIZE);
+    this->udp->endPacket();
+}
+
+void BoxEthernet::display() {
     Serial.print("Ethernet: ");
     Serial.print("MAC: ");
     for (int i = 0; i < MAC_COUNT; i++) {
@@ -37,40 +73,18 @@ void EthernetModule::display() {
     }
     Serial.print(" | IP: ");
     for (int i = 0; i < IP_COUNT; i++) {
-        Serial.print(this->ip[i]);
+        Serial.print(this->boxIp[i]);
         if (i < IP_COUNT - 1) {
             Serial.print(".");
         }
     }
     Serial.print(" | Console: ");
     for (int i = 0; i < IP_COUNT; i++) {
-        Serial.print(this->console[i]);
+        Serial.print(this->consoleIp[i]);
         if (i < IP_COUNT - 1) {
             Serial.print(".");
         }
     }
     Serial.print(" | Port: ");
-    Serial.println(this->port);
-}
-
-void EthernetModule::setFrameSent(uint8_t frame[FRAME_SENT_SIZE]) {
-    for (int i = 0; i < FRAME_SENT_SIZE; i++) {
-        this->frameSent[i] = frame[i];
-    }
-}
-
-uint8_t* EthernetModule::getFrameRecieved() {
-    return this->frameRecieved;
-}
-
-uint8_t* EthernetModule::getFrameSent() {
-    return this->frameSent;
-}
-
-void EthernetModule::recieve() {
-    // TODO: implement
-}
-
-void EthernetModule::send() {
-    // TODO: Implement
+    Serial.println(this->boxPort);
 }

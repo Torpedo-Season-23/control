@@ -3,6 +3,7 @@
 
 #include <Servo.h>
 
+#include "../SoftStart/softstart.h"
 #include "config.h"
 
 class ServoROVMotor {
@@ -11,6 +12,7 @@ class ServoROVMotor {
     MOTOR_ORIENTATION type;
     DIRECTION direction;
     uint8_t speed;
+    float exponent;
     Servo *servo;
     virtual void setSpeed(uint8_t speed);
 
@@ -19,6 +21,8 @@ class ServoROVMotor {
     virtual void init();
     virtual void clockWise(uint8_t speed);
     virtual void antiClockWise(uint8_t speed);
+    virtual void setExponent(float exponent);
+    virtual void putSpeed(uint8_t speed);
     virtual void reset();
     virtual void stop();
 };

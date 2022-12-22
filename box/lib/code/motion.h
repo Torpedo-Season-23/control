@@ -9,6 +9,7 @@ class Motion {
     ServoROVMotor **motors;
     DIRECTION direction;
     uint8_t *speed;
+    uint8_t *exponent;
     virtual void forward() = 0;
     virtual void backward() = 0;
     virtual void left() = 0;
@@ -17,6 +18,7 @@ class Motion {
     virtual void momentRight() = 0;
     virtual void up() = 0;
     virtual void down() = 0;
+    virtual void generic() = 0;
 
    public:
     virtual void init() = 0;
@@ -24,6 +26,7 @@ class Motion {
     virtual void update() = 0;
     virtual void setDirection(DIRECTION direction) = 0;
     virtual void setSpeed(uint8_t *speed) = 0;
+    virtual void setExponent(uint8_t *exponent) = 0;
     virtual void move() = 0;
     virtual void stop() = 0;
 };

@@ -58,7 +58,9 @@ void SensorsManager::toggleSensorWorking(SENSOR_TYPE sensor) {
 }
 
 void SensorsManager::prepareSensorsData() {
-    // TODO: implement
+    for (uint8_t i = 0; i < SENSOR_COUNT; i++) {
+        this->sensorsData[i] = this->sensors[i]->getData();
+    }
 }
 
 uint8_t* SensorsManager::getSensorsData() {

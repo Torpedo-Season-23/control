@@ -17,6 +17,7 @@ class Motion8 : public Motion {
     virtual void momentRight();
     virtual void up();
     virtual void down();
+    virtual void generic();
     virtual void display();
 
    public:
@@ -26,6 +27,7 @@ class Motion8 : public Motion {
     virtual void update();
     virtual void setDirection(DIRECTION direction);
     virtual void setSpeed(uint8_t *speed);
+    virtual void setExponent(uint8_t *exponent);
     virtual void move();
     virtual void stop();
 };

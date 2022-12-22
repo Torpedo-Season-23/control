@@ -5,17 +5,21 @@
 
 #include "communication.h"
 
-class EthernetModule : public Communication {
+class BoxEthernet : public Communication {
    private:
     uint8_t mac[MAC_COUNT];
-    IPAddress ip;
-    IPAddress console;
-    unsigned int port;
-    EthernetUDP udp;
+    IPAddress boxIp;
+    IPAddress consoleIp;
+    uint8_t boxPort;
+    uint8_t consolePort;
+    EthernetUDP* udp;
+    uint8_t packetSize;
+    uint8_t frameSent[FRAME_SENT_SIZE];
+    uint8_t frameRecieved[FRAME_RECIEVED_SIZE];
     void display();
 
    public:
-    EthernetModule();
+    BoxEthernet();
     virtual void init();
     virtual void reset();
     virtual void setFrameSent(uint8_t frame[FRAME_SENT_SIZE]);

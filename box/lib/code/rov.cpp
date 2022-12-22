@@ -3,7 +3,7 @@
 ROV::ROV() {
     this->sensorsManager = new SensorsManager();
     this->motion = new Motion8();
-    this->communication = new EthernetModule();
+    this->communication = new BoxEthernet();
     this->accessories = new Accessories();
 }
 
@@ -33,6 +33,7 @@ void ROV::reset() {
 void ROV::setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]) {
     this->motion->setDirection(Mapper::getDirection(frame));
     this->motion->setSpeed(Mapper::getSpeed(frame));
+    this->motion->setExponent(Mapper::getExponent(frame));
     this->motion->update();
 }
 
