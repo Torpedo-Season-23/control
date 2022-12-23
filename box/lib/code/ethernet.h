@@ -14,8 +14,6 @@ class BoxEthernet : public Communication {
     uint8_t consolePort;
     EthernetUDP* udp;
     uint8_t packetSize;
-    uint8_t frameSent[FRAME_SENT_SIZE];
-    uint8_t frameRecieved[FRAME_RECIEVED_SIZE];
     void display();
 
    public:

@@ -1,4 +1,3 @@
-
 Motion8::Motion8() {
     this->direction = STOP;
     this->motors[HOTIZONTAL_FRONT_LEFT] = new T200Motor(HORIZONTAL_FRONT_LEFT_PIN, HOTIZONTAL_FRONT_LEFT);
@@ -140,6 +139,12 @@ void Motion8::reset() {
 void Motion8::display() {
     Serial.print("Direction: ");
     Serial.print(Helper::getDirection(this->direction));
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
+        Serial.print(" | Motor: ");
+        Serial.print(Helper::getMotorType(this->motors[i]->getType()));
+        Serial.print(" | Speed: ");
+        Serial.print(this->motors[i]->getSpeed());
+    }
 }
 
 void Motion8::setSpeed(uint8_t *speed) {

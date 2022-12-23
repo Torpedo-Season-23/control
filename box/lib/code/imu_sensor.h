@@ -4,7 +4,6 @@
 #include <Wire.h>
 
 #include "../MPU6050/MPU6050.h"
-#include "../MPU6050/helper_3dmath.h"
 #include "config.h"
 #include "sensor.h"
 

@@ -2,11 +2,13 @@
 #define _ACCESSORIES_H_
 
 #include "config.h"
+#include "helper.h"
 
 class Accessories {
    private:
     uint8_t pins[ACCESSORIES_COUNT];
     uint8_t data;
+    void display();
 
    public:
     Accessories();

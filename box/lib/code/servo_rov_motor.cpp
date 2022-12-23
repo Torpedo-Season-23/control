@@ -58,3 +58,11 @@ void ServoROVMotor::putSpeed(uint8_t speed) {
 void ServoROVMotor::setExponent(float exponent) {
     this->exponent = exponent;
 }
+
+MOTOR_ORIENTATION ServoROVMotor::getType() {
+    return this->type;
+}
+
+uint8_t ServoROVMotor::getSpeed() {
+    return this->speed;
+}

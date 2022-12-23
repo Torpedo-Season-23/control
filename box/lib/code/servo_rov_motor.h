@@ -23,6 +23,8 @@ class ServoROVMotor {
     virtual void antiClockWise(uint8_t speed);
     virtual void setExponent(float exponent);
     virtual void putSpeed(uint8_t speed);
+    virtual MOTOR_ORIENTATION getType();
+    virtual uint8_t getSpeed();
     virtual void reset();
     virtual void stop();
 };
