@@ -25,13 +25,13 @@ static char const* Helper::getDirection(DIRECTION direction) {
 
 static char const* Helper::getMotorType(MOTOR_ORIENTATION type) {
     switch (type) {
-        case HOTIZONTAL_FRONT_LEFT:
+        case HORIZONTAL_FRONT_LEFT:
             return "Horizontal Front Left";
-        case HOTIZONTAL_FRONT_RIGHT:
+        case HORIZONTAL_FRONT_RIGHT:
             return "Horizontal Front Right";
-        case HOTIZONTAL_BACK_LEFT:
+        case HORIZONTAL_BACK_LEFT:
             return "Horizontal Back Left";
-        case HOTIZONTAL_BACK_RIGHT:
+        case HORIZONTAL_BACK_RIGHT:
             return "Horizontal Back Right";
         case VERTICAL_BACK:
             return "Vertical Back";

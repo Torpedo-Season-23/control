@@ -13,10 +13,10 @@ BoxEthernet::BoxEthernet() {
     this->udp = new EthernetUDP();
     this->packetSize = 0;
     for (uint8_t i = 0; i < FRAME_RECIEVED_SIZE; i++) {
-        this->frameRecieved[i] = 0;
+        this->frameRecieved[i] = -5;
     }
     for (uint8_t i = 0; i < FRAME_SENT_SIZE; i++) {
-        this->frameSent[i] = 0;
+        this->frameSent[i] = -10;
     }
 }
 
@@ -62,8 +62,12 @@ void BoxEthernet::send() {
     this->udp->endPacket();
 }
 
+void BoxEthernet::update() {
+    this->recieve();
+    this->send();
+}
+
 void BoxEthernet::display() {
-    Serial.print("Ethernet: ");
     Serial.print("MAC: ");
     for (int i = 0; i < MAC_COUNT; i++) {
         Serial.print(this->mac[i]);
@@ -78,6 +82,9 @@ void BoxEthernet::display() {
             Serial.print(".");
         }
     }
+    Serial.print(" | Box Port: ");
+    Serial.println(this->boxPort);
+
     Serial.print(" | Console: ");
     for (int i = 0; i < IP_COUNT; i++) {
         Serial.print(this->consoleIp[i]);
@@ -85,6 +92,23 @@ void BoxEthernet::display() {
             Serial.print(".");
         }
     }
-    Serial.print(" | Port: ");
-    Serial.println(this->boxPort);
+    Serial.print(" | Console Port: ");
+    Serial.println(this->consolePort);
+
+    Serial.print(" | Frame recieved: ");
+    for (int i = 0; i < FRAME_RECIEVED_SIZE; i++) {
+        Serial.print(this->frameRecieved[i]);
+        if (i < FRAME_RECIEVED_SIZE - 1) {
+            Serial.print(" ");
+        }
+    }
+
+    Serial.print(" | Frame sent: ");
+    for (int i = 0; i < FRAME_SENT_SIZE; i++) {
+        Serial.print(this->frameSent[i]);
+        if (i < FRAME_SENT_SIZE - 1) {
+            Serial.print(" ");
+        }
+    }
+    Serial.println();
 }

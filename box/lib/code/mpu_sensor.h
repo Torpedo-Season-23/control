@@ -22,17 +22,17 @@ class MPU6050Sensor : public Sensor {
     unsigned long currentTime;
     unsigned long previousTime;
     MPU6050 *mpu;
-    virtual void display();
 
    public:
     MPU6050Sensor();
     virtual void init();
     virtual void update();
     virtual void reset();
+    virtual void display();
 };
 
 #ifndef _IMU_SENSOR_CPP_
-#include "imu_sensor.cpp"
+#include "mpu_sensor.cpp"
 #endif
 
 #endif

@@ -20,6 +20,7 @@ class BoxEthernet : public Communication {
     BoxEthernet();
     virtual void init();
     virtual void reset();
+    virtual void update();
     virtual void setFrameSent(uint8_t frame[FRAME_SENT_SIZE]);
     virtual uint8_t* getFrameRecieved();
     virtual uint8_t* getFrameSent();

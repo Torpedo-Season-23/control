@@ -27,6 +27,8 @@ class ServoROVMotor {
     virtual uint8_t getSpeed();
     virtual void reset();
     virtual void stop();
+    virtual void update();
+    virtual void display();
 };
 
 #ifndef _SERVO_ROV_MOTOR_CPP_

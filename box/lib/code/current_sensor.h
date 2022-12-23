@@ -9,7 +9,6 @@ class CurrentSensor : public Sensor {
     unsigned char pin;
     float current;
     SENSOR_TYPE type;
-    void display();
 
    public:
     CurrentSensor(unsigned char pin, SENSOR_TYPE type);
@@ -17,6 +16,7 @@ class CurrentSensor : public Sensor {
     virtual void update();
     virtual void reset();
     float getCurrent();
+    virtual void display();
 };
 
 #ifndef _CURRENT_SENSOR_CPP_

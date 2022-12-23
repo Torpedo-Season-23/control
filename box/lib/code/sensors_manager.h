@@ -3,7 +3,7 @@
 
 #include "config.h"
 #include "current_sensor.h"
-#include "imu_sensor.h"
+#include "mpu_sensor.h"
 #include "pressure_sensor.h"
 
 class SensorsManager {
@@ -23,6 +23,7 @@ class SensorsManager {
     void toggleSensorWorking(SENSOR_TYPE sensor);
     void toggleWorking();
     uint8_t *getSensorsData();
+    void display();
 };
 
 #ifndef _SENSORS_MANAGER_CPP_

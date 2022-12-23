@@ -1,9 +1,9 @@
 Motion8::Motion8() {
     this->direction = STOP;
-    this->motors[HOTIZONTAL_FRONT_LEFT] = new T200Motor(HORIZONTAL_FRONT_LEFT_PIN, HOTIZONTAL_FRONT_LEFT);
-    this->motors[HOTIZONTAL_FRONT_RIGHT] = new T200Motor(HORIZONTAL_FRONT_RIGHT_PIN, HOTIZONTAL_FRONT_RIGHT);
-    this->motors[HOTIZONTAL_BACK_LEFT] = new T200Motor(HORIZONTAL_BACK_LEFT_PIN, HOTIZONTAL_BACK_LEFT);
-    this->motors[HOTIZONTAL_BACK_RIGHT] = new T200Motor(HORIZONTAL_BACK_RIGHT_PIN, HOTIZONTAL_BACK_RIGHT);
+    this->motors[HORIZONTAL_FRONT_LEFT] = new T200Motor(HORIZONTAL_FRONT_LEFT_PIN, HORIZONTAL_FRONT_LEFT);
+    this->motors[HORIZONTAL_FRONT_RIGHT] = new T200Motor(HORIZONTAL_FRONT_RIGHT_PIN, HORIZONTAL_FRONT_RIGHT);
+    this->motors[HORIZONTAL_BACK_LEFT] = new T200Motor(HORIZONTAL_BACK_LEFT_PIN, HORIZONTAL_BACK_LEFT);
+    this->motors[HORIZONTAL_BACK_RIGHT] = new T200Motor(HORIZONTAL_BACK_RIGHT_PIN, HORIZONTAL_BACK_RIGHT);
     this->motors[VERTICAL_FRONT] = new T200Motor(VERTICAL_FRONT_PIN, VERTICAL_FRONT);
     this->motors[VERTICAL_BACK] = new T200Motor(VERTICAL_BACK_PIN, VERTICAL_BACK);
     this->motors[VERTICAL_LEFT] = new T100Motor(VERTICAL_LEFT_PIN, VERTICAL_LEFT);
@@ -60,45 +60,45 @@ void Motion8::move() {
 }
 
 void Motion8::forward() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
-    this->motors[HOTIZONTAL_BACK_LEFT]->clockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
-    this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
+    this->motors[HORIZONTAL_FRONT_LEFT]->clockWise(this->speed[HORIZONTAL_FRONT_LEFT]);
+    this->motors[HORIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HORIZONTAL_FRONT_RIGHT]);
+    this->motors[HORIZONTAL_BACK_LEFT]->clockWise(this->speed[HORIZONTAL_BACK_LEFT]);
+    this->motors[HORIZONTAL_BACK_RIGHT]->clockWise(this->speed[HORIZONTAL_BACK_RIGHT]);
 }
 
 void Motion8::backward() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
-    this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
-    this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
+    this->motors[HORIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HORIZONTAL_FRONT_LEFT]);
+    this->motors[HORIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HORIZONTAL_FRONT_RIGHT]);
+    this->motors[HORIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HORIZONTAL_BACK_LEFT]);
+    this->motors[HORIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HORIZONTAL_BACK_RIGHT]);
 }
 
 void Motion8::left() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
-    this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
-    this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
+    this->motors[HORIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HORIZONTAL_FRONT_LEFT]);
+    this->motors[HORIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HORIZONTAL_FRONT_RIGHT]);
+    this->motors[HORIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HORIZONTAL_BACK_LEFT]);
+    this->motors[HORIZONTAL_BACK_RIGHT]->clockWise(this->speed[HORIZONTAL_BACK_RIGHT]);
 }
 
 void Motion8::right() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
-    this->motors[HOTIZONTAL_BACK_LEFT]->clockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
-    this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
+    this->motors[HORIZONTAL_FRONT_LEFT]->clockWise(this->speed[HORIZONTAL_FRONT_LEFT]);
+    this->motors[HORIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HORIZONTAL_FRONT_RIGHT]);
+    this->motors[HORIZONTAL_BACK_LEFT]->clockWise(this->speed[HORIZONTAL_BACK_LEFT]);
+    this->motors[HORIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HORIZONTAL_BACK_RIGHT]);
 }
 
 void Motion8::momentLeft() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
-    this->motors[HOTIZONTAL_BACK_LEFT]->clockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
-    this->motors[HOTIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
+    this->motors[HORIZONTAL_FRONT_LEFT]->antiClockWise(this->speed[HORIZONTAL_FRONT_LEFT]);
+    this->motors[HORIZONTAL_FRONT_RIGHT]->clockWise(this->speed[HORIZONTAL_FRONT_RIGHT]);
+    this->motors[HORIZONTAL_BACK_LEFT]->clockWise(this->speed[HORIZONTAL_BACK_LEFT]);
+    this->motors[HORIZONTAL_BACK_RIGHT]->antiClockWise(this->speed[HORIZONTAL_BACK_RIGHT]);
 }
 
 void Motion8::momentRight() {
-    this->motors[HOTIZONTAL_FRONT_LEFT]->clockWise(this->speed[HOTIZONTAL_FRONT_LEFT]);
-    this->motors[HOTIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HOTIZONTAL_FRONT_RIGHT]);
-    this->motors[HOTIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HOTIZONTAL_BACK_LEFT]);
-    this->motors[HOTIZONTAL_BACK_RIGHT]->clockWise(this->speed[HOTIZONTAL_BACK_RIGHT]);
+    this->motors[HORIZONTAL_FRONT_LEFT]->clockWise(this->speed[HORIZONTAL_FRONT_LEFT]);
+    this->motors[HORIZONTAL_FRONT_RIGHT]->antiClockWise(this->speed[HORIZONTAL_FRONT_RIGHT]);
+    this->motors[HORIZONTAL_BACK_LEFT]->antiClockWise(this->speed[HORIZONTAL_BACK_LEFT]);
+    this->motors[HORIZONTAL_BACK_RIGHT]->clockWise(this->speed[HORIZONTAL_BACK_RIGHT]);
 }
 
 void Motion8::up() {
@@ -137,13 +137,12 @@ void Motion8::reset() {
 }
 
 void Motion8::display() {
+    Serial.print("Motion8: ");
     Serial.print("Direction: ");
     Serial.print(Helper::getDirection(this->direction));
     for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
-        Serial.print(" | Motor: ");
-        Serial.print(Helper::getMotorType(this->motors[i]->getType()));
-        Serial.print(" | Speed: ");
-        Serial.print(this->motors[i]->getSpeed());
+        this->motors[i]->display();
+        Serial.print(" | ");
     }
 }
 

@@ -24,6 +24,8 @@ void SensorsManager::update() {
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->update();
     }
+    if(DEBUG_SENSORS)
+        this->display();
 }
 
 void SensorsManager::reset() {
@@ -66,4 +68,11 @@ void SensorsManager::prepareSensorsData() {
 uint8_t* SensorsManager::getSensorsData() {
     this->prepareSensorsData();
     return this->sensorsData;
+}
+
+void SensorsManager::display() {
+    for (int i = 0; i < SENSOR_COUNT; i++) {
+        sensors[i]->display();
+        Serial.print(" | ");
+    }
 }

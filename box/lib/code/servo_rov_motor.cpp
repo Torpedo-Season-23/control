@@ -3,6 +3,7 @@ ServoROVMotor::ServoROVMotor(unsigned char pin, MOTOR_ORIENTATION type) {
     this->direction = STOP;
     this->type = type;
     this->speed = STOP_SPEED;
+    this->exponent = EXPONENT_INITAL;
     this->servo = new Servo();
 }
 
@@ -65,4 +66,24 @@ MOTOR_ORIENTATION ServoROVMotor::getType() {
 
 uint8_t ServoROVMotor::getSpeed() {
     return this->speed;
+}
+
+void ServoROVMotor::display() {
+    Serial.print("Motor: ");
+    Serial.print(Helper::getMotorType(this->type));
+    Serial.print(" | Direction: ");
+    Serial.print(Helper::getDirection(this->direction));
+    Serial.print(" | Speed: ");
+    Serial.println(this->speed);
+}
+
+void ServoROVMotor::update() {
+    if (this->direction == STOP)
+        this->stop();
+    else if (this->direction == GENERIC)
+        this->putSpeed(STOP_SPEED + 100);
+    else if (this->direction == FORWARD)
+        this->clockWise(STOP_SPEED + 100);
+    else if (this->direction == BACKWARD)
+        this->antiClockWise(STOP_SPEED + 100);
 }

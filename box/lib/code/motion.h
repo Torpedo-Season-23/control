@@ -19,6 +19,7 @@ class Motion {
     virtual void up() = 0;
     virtual void down() = 0;
     virtual void generic() = 0;
+    virtual void display() = 0;
 
    public:
     virtual void init() = 0;
