@@ -108,7 +108,7 @@ void PressureSensor::display() {
     Serial.print(this->temperature);
     Serial.print(" °C | Depth: ");
     Serial.print(this->depth);
-    Serial.println(" m");
+    Serial.print(" m");
 }
 
 float PressureSensor::getDepth() {

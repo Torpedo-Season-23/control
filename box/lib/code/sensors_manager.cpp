@@ -23,9 +23,14 @@ void SensorsManager::update() {
     if (!this->working) return;
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->update();
+        this->sensorsData[i] = this->sensors[i]->getData();
     }
-    if(DEBUG_SENSORS)
+    if (DEBUG_SENSORS)
         this->display();
+}
+
+uint8_t* SensorsManager::getSensorsData() {
+    return this->sensorsData;
 }
 
 void SensorsManager::reset() {
@@ -59,20 +64,10 @@ void SensorsManager::toggleSensorWorking(SENSOR_TYPE sensor) {
     }
 }
 
-void SensorsManager::prepareSensorsData() {
-    for (uint8_t i = 0; i < SENSOR_COUNT; i++) {
-        this->sensorsData[i] = this->sensors[i]->getData();
-    }
-}
-
-uint8_t* SensorsManager::getSensorsData() {
-    this->prepareSensorsData();
-    return this->sensorsData;
-}
-
 void SensorsManager::display() {
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->display();
         Serial.print(" | ");
     }
+    Serial.println();
 }

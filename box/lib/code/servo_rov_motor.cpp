@@ -22,7 +22,7 @@ void ServoROVMotor::setSpeed(uint8_t speed) {
     else if (this->direction == GENERIC)
         this->speed = speed;
     else
-        this->speed = STOP;
+        this->speed = STOP_SPEED;
 }
 
 void ServoROVMotor::reset() {
@@ -74,7 +74,7 @@ void ServoROVMotor::display() {
     Serial.print(" | Direction: ");
     Serial.print(Helper::getDirection(this->direction));
     Serial.print(" | Speed: ");
-    Serial.println(this->speed);
+    Serial.print(this->speed);
 }
 
 void ServoROVMotor::update() {

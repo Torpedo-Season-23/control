@@ -20,6 +20,8 @@ void Accessories::update() {
     for (uint8_t i = 0; i < ACCESSORIES_COUNT; i++) {
         digitalWrite(this->pins[i], this->data << i == 1 ? HIGH : LOW);
     }
+    if (DEBUG_ACCESSORIES)
+        this->display();
 }
 
 void Accessories::reset() {
@@ -43,4 +45,5 @@ void Accessories::display() {
         if (i < ACCESSORIES_COUNT - 1)
             Serial.print(" | ");
     }
+    Serial.println();
 }

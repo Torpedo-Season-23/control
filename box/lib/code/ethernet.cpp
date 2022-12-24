@@ -65,6 +65,8 @@ void BoxEthernet::send() {
 void BoxEthernet::update() {
     this->recieve();
     this->send();
+    if (DEBUG_ETHERNET)
+        this->display();
 }
 
 void BoxEthernet::display() {

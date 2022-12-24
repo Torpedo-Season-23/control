@@ -53,12 +53,6 @@ void MPU6050Sensor::display() {
     Serial.print(this->gyroY);
     Serial.print(" | Gyro Z: ");
     Serial.print(this->gyroZ);
-    Serial.print(" | Mag X: ");
-    Serial.print(this->magX);
-    Serial.print(" | Mag Y: ");
-    Serial.print(this->magY);
-    Serial.print(" | Mag Z: ");
-    Serial.println(this->magZ);
 }
 
 void wireImplInit() {

@@ -1,4 +1,4 @@
-float exponent = 0;
+float exponent = 2.0;
 
 int dir = SOFT_START_UP;
 long int time1[8], time2[8], speed_counter[8] = {0};

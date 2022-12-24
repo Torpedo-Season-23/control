@@ -144,6 +144,7 @@ void Motion8::display() {
         this->motors[i]->display();
         Serial.print(" | ");
     }
+    Serial.println();
 }
 
 void Motion8::setSpeed(uint8_t *speed) {

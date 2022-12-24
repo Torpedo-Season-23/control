@@ -14,7 +14,7 @@ static uint8_t* Mapper::getExponent(uint8_t communicationFrame[FRAME_RECIEVED_SI
     uint8_t exponent[MOTOR_COUNT];
     uint8_t i = 0, j = EXPONENT_INDEX_START;
     while (i < MOTOR_COUNT) {
-        exponent[i++] = communicationFrame[j++] + communicationFrame[j++];
+        exponent[i++] = communicationFrame[j++];
     }
     return exponent;
 }

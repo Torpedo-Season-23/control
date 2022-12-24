@@ -35,5 +35,5 @@ void CurrentSensor::display() {
     Serial.print(Helper::getSensorType(this->type));
     Serial.print(" | Current: ");
     Serial.print(this->current);
-    Serial.println(" A");
+    Serial.print(" A");
 }
