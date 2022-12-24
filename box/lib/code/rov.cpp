@@ -1,5 +1,3 @@
-
-
 ROV::ROV() {
     this->sensorsManager = new SensorsManager();
     this->motion = new Motion8();

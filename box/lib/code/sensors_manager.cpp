@@ -1,5 +1,3 @@
-
-
 SensorsManager::SensorsManager() {
     this->sensors[PRESSURE] = new PressureSensor();
     this->sensors[IMU] = new MPU6050Sensor();

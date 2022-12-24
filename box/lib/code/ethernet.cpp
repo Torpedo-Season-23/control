@@ -1,4 +1,3 @@
-
 BoxEthernet::BoxEthernet() {
     this->mac[0] = ETHERNET_BOX_MAC_0;
     this->mac[1] = ETHERNET_BOX_MAC_1;

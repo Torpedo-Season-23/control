@@ -1,4 +1,3 @@
-
 PressureSensor::PressureSensor() {
     this->mclk = PRESSURE_MCLK;
     this->miso = PRESSURE_MISO;
