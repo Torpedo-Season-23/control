@@ -1,22 +1,22 @@
 static char const* Helper::getDirection(DIRECTION direction) {
     switch (direction) {
-        case FORWARD:
+        case DIRECTION::FORWARD:
             return "Forward";
-        case BACKWARD:
+        case DIRECTION::BACKWARD:
             return "Backward";
-        case LEFT:
+        case DIRECTION::LEFT:
             return "Left";
-        case RIGHT:
+        case DIRECTION::RIGHT:
             return "Right";
-        case MOMENT_LEFT:
+        case DIRECTION::MOMENT_LEFT:
             return "Moment Left";
-        case MOMENT_RIGHT:
+        case DIRECTION::MOMENT_RIGHT:
             return "Moment Right";
-        case UP:
+        case DIRECTION::UP:
             return "Up";
-        case DOWN:
+        case DIRECTION::DOWN:
             return "Down";
-        case STOP:
+        case DIRECTION::STOP:
             return "Stop";
         default:
             return "Unknown";
@@ -25,21 +25,21 @@ static char const* Helper::getDirection(DIRECTION direction) {
 
 static char const* Helper::getMotorType(MOTOR_ORIENTATION type) {
     switch (type) {
-        case HORIZONTAL_FRONT_LEFT:
+        case MOTOR_ORIENTATION::HORIZONTAL_FRONT_LEFT:
             return "Horizontal Front Left";
-        case HORIZONTAL_FRONT_RIGHT:
+        case MOTOR_ORIENTATION::HORIZONTAL_FRONT_RIGHT:
             return "Horizontal Front Right";
-        case HORIZONTAL_BACK_LEFT:
+        case MOTOR_ORIENTATION::HORIZONTAL_BACK_LEFT:
             return "Horizontal Back Left";
-        case HORIZONTAL_BACK_RIGHT:
+        case MOTOR_ORIENTATION::HORIZONTAL_BACK_RIGHT:
             return "Horizontal Back Right";
-        case VERTICAL_BACK:
+        case MOTOR_ORIENTATION::VERTICAL_BACK:
             return "Vertical Back";
-        case VERTICAL_FRONT:
+        case MOTOR_ORIENTATION::VERTICAL_FRONT:
             return "Vertical Front";
-        case VERTICAL_LEFT:
+        case MOTOR_ORIENTATION::VERTICAL_LEFT:
             return "Vertical Left";
-        case VERTICAL_RIGHT:
+        case MOTOR_ORIENTATION::VERTICAL_RIGHT:
             return "Vertical Right";
         default:
             return "Unknown";
@@ -48,17 +48,17 @@ static char const* Helper::getMotorType(MOTOR_ORIENTATION type) {
 
 static char const* Helper::getSensorType(SENSOR_TYPE type) {
     switch (type) {
-        case IMU:
+        case SENSOR_TYPE::IMU:
             return "IMU";
-        case CURRENT_SENSOR_BACK_LEFT:
+        case SENSOR_TYPE::CURRENT_SENSOR_BACK_LEFT:
             return "Current Sensor Back Left";
-        case CURRENT_SENSOR_BACK_RIGHT:
+        case SENSOR_TYPE::CURRENT_SENSOR_BACK_RIGHT:
             return "Current Sensor Back Right";
-        case CURRENT_SENSOR_FRONT_LEFT:
+        case SENSOR_TYPE::CURRENT_SENSOR_FRONT_LEFT:
             return "Current Sensor Front Left";
-        case CURRENT_SENSOR_FRONT_RIGHT:
+        case SENSOR_TYPE::CURRENT_SENSOR_FRONT_RIGHT:
             return "Current Sensor Front Right";
-        case PRESSURE:
+        case SENSOR_TYPE::PRESSURE:
             return "Pressure";
         default:
             return "Unknown";
@@ -67,21 +67,21 @@ static char const* Helper::getSensorType(SENSOR_TYPE type) {
 
 static char const* Helper::getAccessoriesType(ACCESSORIES_TYPE type) {
     switch (type) {
-        case LEFT_GRIPPER:
+        case ACCESSORIES_TYPE::LEFT_GRIPPER:
             return "Left Gripper";
-        case RIGHT_GRIPPER:
+        case ACCESSORIES_TYPE::RIGHT_GRIPPER:
             return "Right Gripper";
-        case LIGHTS:
+        case ACCESSORIES_TYPE::LIGHTS:
             return "Lights";
-        case IMU_TOGGLE:
+        case ACCESSORIES_TYPE::IMU_TOGGLE:
             return "IMU Toggle";
-        case PRESSURE_TOGGLE:
+        case ACCESSORIES_TYPE::PRESSURE_TOGGLE:
             return "Pressure Toggle";
-        case ACCESORIES_EMPTY1:
+        case ACCESSORIES_TYPE::ACCESORIES_EMPTY1:
             return "Accesories Empty1";
-        case ACCESORIES_EMPTY2:
+        case ACCESSORIES_TYPE::ACCESORIES_EMPTY2:
             return "Accesories Empty2";
-        case ACCESORIES_EMPTY3:
+        case ACCESSORIES_TYPE::ACCESORIES_EMPTY3:
             return "Accesories Empty3";
         default:
             return "Unknown";

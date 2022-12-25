@@ -1,10 +1,10 @@
 SensorsManager::SensorsManager() {
-    this->sensors[PRESSURE] = new PressureSensor();
-    this->sensors[IMU] = new MPU6050Sensor();
-    this->sensors[CURRENT_SENSOR_FRONT_LEFT] = new CurrentSensor(CURRENT_SENSOR_FRONT_LEFT_PIN, CURRENT_SENSOR_FRONT_LEFT);
-    this->sensors[CURRENT_SENSOR_FRONT_RIGHT] = new CurrentSensor(CURRENT_SENSOR_FRONT_RIGHT_PIN, CURRENT_SENSOR_FRONT_RIGHT);
-    this->sensors[CURRENT_SENSOR_BACK_LEFT] = new CurrentSensor(CURRENT_SENSOR_BACK_LEFT_PIN, CURRENT_SENSOR_BACK_LEFT);
-    this->sensors[CURRENT_SENSOR_BACK_RIGHT] = new CurrentSensor(CURRENT_SENSOR_BACK_RIGHT_PIN, CURRENT_SENSOR_BACK_RIGHT);
+    this->sensors[SENSOR_TYPE::PRESSURE] = new PressureSensor();
+    this->sensors[SENSOR_TYPE::IMU] = new MPU6050Sensor();
+    this->sensors[SENSOR_TYPE::CURRENT_SENSOR_FRONT_LEFT] = new CurrentSensor(CURRENT_SENSOR_FRONT_LEFT_PIN, SENSOR_TYPE::CURRENT_SENSOR_FRONT_LEFT);
+    this->sensors[SENSOR_TYPE::CURRENT_SENSOR_FRONT_RIGHT] = new CurrentSensor(CURRENT_SENSOR_FRONT_RIGHT_PIN, SENSOR_TYPE::CURRENT_SENSOR_FRONT_RIGHT);
+    this->sensors[SENSOR_TYPE::CURRENT_SENSOR_BACK_LEFT] = new CurrentSensor(CURRENT_SENSOR_BACK_LEFT_PIN, SENSOR_TYPE::CURRENT_SENSOR_BACK_LEFT);
+    this->sensors[SENSOR_TYPE::CURRENT_SENSOR_BACK_RIGHT] = new CurrentSensor(CURRENT_SENSOR_BACK_RIGHT_PIN, SENSOR_TYPE::CURRENT_SENSOR_BACK_RIGHT);
     for (int i = 0; i < SENSORS_DATA_SIZE; i++) {
         this->sensorsData[i] = 0;
     }
@@ -28,7 +28,7 @@ void SensorsManager::update() {
 }
 
 uint8_t* SensorsManager::getSensorsData() {
-    return this->sensorsData;
+    return (uint8_t*)this->sensorsData;
 }
 
 void SensorsManager::reset() {
@@ -51,11 +51,11 @@ void SensorsManager::toggleWorking() {
 
 void SensorsManager::toggleSensorWorking(SENSOR_TYPE sensor) {
     switch (sensor) {
-        case IMU:
-            this->sensors[IMU]->toggleWorking();
+        case SENSOR_TYPE::IMU:
+            this->sensors[SENSOR_TYPE::IMU]->toggleWorking();
             break;
-        case PRESSURE:
-            this->sensors[PRESSURE]->toggleWorking();
+        case SENSOR_TYPE::PRESSURE:
+            this->sensors[SENSOR_TYPE::PRESSURE]->toggleWorking();
             break;
         default:
             break;

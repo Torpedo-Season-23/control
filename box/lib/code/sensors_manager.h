@@ -9,7 +9,7 @@
 class SensorsManager {
    private:
     Sensor **sensors;
-    uint8_t sensorsData[SENSORS_DATA_SIZE];
+    float sensorsData[SENSORS_DATA_SIZE];
     bool working;
 
    public:

@@ -1,6 +1,6 @@
 ServoROVMotor::ServoROVMotor(unsigned char pin, MOTOR_ORIENTATION type) {
     this->pin = pin;
-    this->direction = STOP;
+    this->direction = DIRECTION::STOP;
     this->type = type;
     this->speed = STOP_SPEED;
     this->exponent = EXPONENT_INITAL;
@@ -30,27 +30,27 @@ void ServoROVMotor::reset() {
 }
 
 void ServoROVMotor::clockWise(uint8_t speed) {
-    this->direction = FORWARD;
+    this->direction = DIRECTION::FORWARD;
     uint8_t previousSpeed = this->speed;
     this->setSpeed(speed);
     Soft::motorSoftStart(this->servo, previousSpeed, &this->speed, this->type, this->exponent);
 }
 
 void ServoROVMotor::antiClockWise(uint8_t speed) {
-    this->direction = BACKWARD;
+    this->direction = DIRECTION::BACKWARD;
     uint8_t previousSpeed = this->speed;
     this->setSpeed(speed);
     Soft::motorSoftStart(this->servo, previousSpeed, &this->speed, this->type, this->exponent);
 }
 
 void ServoROVMotor::stop() {
-    this->direction = STOP;
+    this->direction = DIRECTION::STOP;
     this->speed = STOP_SPEED;
     servo->writeMicroseconds(this->speed);
 }
 
 void ServoROVMotor::putSpeed(uint8_t speed) {
-    this->speed = GENERIC;
+    this->speed = DIRECTION::GENERIC;
     uint8_t previousSpeed = this->speed;
     this->setSpeed(speed);
     Soft::motorSoftStart(this->servo, previousSpeed, &this->speed, this->type, this->exponent);

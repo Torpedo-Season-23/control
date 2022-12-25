@@ -23,7 +23,7 @@ enum DIRECTION {
 
 // ROV
 #define SENSOR_COUNT 6
-#define SENSORS_DATA_SIZE 10
+#define SENSORS_DATA_SIZE 6
 
 #define DEBUG_SENSORS 1
 enum SENSOR_TYPE {

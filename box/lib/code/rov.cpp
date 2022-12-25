@@ -15,8 +15,8 @@ void ROV::init() {
 void ROV::update() {
     this->communication->recieve();
     this->data = this->communication->getFrameRecieved();
-    this->setMotion(data);
-    this->setAccessories(data);
+    this->setMotion();
+    this->setAccessories();
     this->setSensors();
     this->communication->send();
 }
@@ -28,15 +28,15 @@ void ROV::reset() {
     this->accessories->reset();
 }
 
-void ROV::setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]) {
-    this->motion->setDirection(Mapper::getDirection(frame));
-    this->motion->setSpeed(Mapper::getSpeed(frame));
-    this->motion->setExponent(Mapper::getExponent(frame));
+void ROV::setMotion() {
+    this->motion->setDirection(Mapper::getDirection(this->data));
+    this->motion->setSpeed(Mapper::getSpeed(this->data));
+    this->motion->setExponent(Mapper::getExponent(this->data));
     this->motion->update();
 }
 
-void ROV::setAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]) {
-    this->accessories->setAccessories(Mapper::getAccessories(frame));
+void ROV::setAccessories() {
+    this->accessories->setAccessories(Mapper::getAccessories(this->data));
     this->accessories->update();
     this->sensorsManager->toggleSensorWorking(Mapper::getSensorToToggle(this->accessories->getAccessories()));
 }

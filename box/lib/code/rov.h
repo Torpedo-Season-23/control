@@ -15,8 +15,8 @@ class ROV {
     Motion *motion;
     Communication *communication;
     Accessories *accessories;
-    void setMotion(uint8_t frame[FRAME_RECIEVED_SIZE]);
-    void setAccessories(uint8_t frame[FRAME_RECIEVED_SIZE]);
+    void setMotion();
+    void setAccessories();
     void setSensors();
 
    public:
