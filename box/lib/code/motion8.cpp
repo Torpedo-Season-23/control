@@ -1,5 +1,5 @@
 Motion8::Motion8() {
-    this->direction = STOP;
+    this->direction = DIRECTION::STOP;
     this->motors[MOTOR_ORIENTATION::HORIZONTAL_FRONT_LEFT] = new T200Motor(HORIZONTAL_FRONT_LEFT_PIN, MOTOR_ORIENTATION::HORIZONTAL_FRONT_LEFT);
     this->motors[MOTOR_ORIENTATION::HORIZONTAL_FRONT_RIGHT] = new T200Motor(HORIZONTAL_FRONT_RIGHT_PIN, MOTOR_ORIENTATION::HORIZONTAL_FRONT_RIGHT);
     this->motors[MOTOR_ORIENTATION::HORIZONTAL_BACK_LEFT] = new T200Motor(HORIZONTAL_BACK_LEFT_PIN, MOTOR_ORIENTATION::HORIZONTAL_BACK_LEFT);
@@ -137,7 +137,7 @@ void Motion8::reset() {
 }
 
 void Motion8::display() {
-    Serial.print("Motion8: ");
+    Serial.print("[Motion8] ");
     Serial.print("Direction: ");
     Serial.print(Helper::getDirection(this->direction));
     for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
@@ -149,7 +149,7 @@ void Motion8::display() {
     Serial.println();
 }
 
-void Motion8::setSpeed(uint8_t *speed) {
+void Motion8::setSpeed(uint16_t *speed) {
     for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
         this->speed[i] = speed[i];
     }

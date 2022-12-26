@@ -26,7 +26,7 @@ class Motion8 : public Motion {
     virtual void reset();
     virtual void update();
     virtual void setDirection(DIRECTION direction);
-    virtual void setSpeed(uint8_t *speed);
+    virtual void setSpeed(uint16_t *speed);
     virtual void setExponent(uint8_t *exponent);
     virtual void move();
     virtual void stop();

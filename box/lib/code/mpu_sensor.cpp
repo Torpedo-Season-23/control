@@ -22,6 +22,7 @@ void MPU6050Sensor::update() {
     this->data = this->accelX;
     if (DEBUG_SENSORS)
         this->display();
+    Serial.println();
 }
 
 void MPU6050Sensor::reset() {

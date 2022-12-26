@@ -49,10 +49,9 @@ void ServoROVMotor::stop() {
     servo->writeMicroseconds(this->speed);
 }
 
-void ServoROVMotor::putSpeed(uint8_t speed) {
+void ServoROVMotor::putSpeed(uint16_t speed) {
     this->speed = DIRECTION::GENERIC;
     uint8_t previousSpeed = this->speed;
-    this->setSpeed(speed);
     Soft::motorSoftStart(this->servo, previousSpeed, &this->speed, this->type, this->exponent);
 }
 

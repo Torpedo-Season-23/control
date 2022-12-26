@@ -10,8 +10,6 @@ class BoxEthernet : public Communication {
     uint8_t mac[MAC_COUNT];
     IPAddress boxIp;
     IPAddress consoleIp;
-    uint8_t boxPort;
-    uint8_t consolePort;
     EthernetUDP* udp;
     uint8_t packetSize;
     void display();

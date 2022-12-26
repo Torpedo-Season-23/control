@@ -1,11 +1,11 @@
 static DIRECTION Mapper::getDirection(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
     return static_cast<DIRECTION>(communicationFrame[DIRECTION_INDEX]);
 }
-static uint8_t* Mapper::getSpeed(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
-    uint8_t speed[MOTOR_COUNT];
+static uint16_t* Mapper::getSpeed(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
+    uint16_t speed[MOTOR_COUNT];
     uint8_t i = 0, j = SPEED_INDEX_START;
     while (i < MOTOR_COUNT) {
-        speed[i++] = communicationFrame[j++] + communicationFrame[j++];
+        speed[i++] = communicationFrame[j++] + (communicationFrame[j++] * 256);
     }
     return speed;
 }
@@ -13,8 +13,8 @@ static uint8_t* Mapper::getSpeed(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]
 static uint8_t* Mapper::getExponent(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
     uint8_t exponent[MOTOR_COUNT];
     uint8_t i = 0, j = EXPONENT_INDEX_START;
-    while (i < MOTOR_COUNT) {
-        exponent[i++] = communicationFrame[j++];
+    while (i < EXPONENT_COUNT) {
+        exponent[i++] = communicationFrame[j++] + (communicationFrame[j++] * 256);
     }
     return exponent;
 }

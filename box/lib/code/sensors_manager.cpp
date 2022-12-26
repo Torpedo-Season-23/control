@@ -65,7 +65,7 @@ void SensorsManager::toggleSensorWorking(SENSOR_TYPE sensor) {
 void SensorsManager::display() {
     for (int i = 0; i < SENSOR_COUNT; i++) {
         sensors[i]->display();
-        Serial.print(" | ");
+        Serial.println();
     }
     Serial.println();
 }

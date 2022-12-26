@@ -18,7 +18,7 @@ void Accessories::init() {
 
 void Accessories::update() {
     for (uint8_t i = 0; i < ACCESSORIES_COUNT; i++) {
-        digitalWrite(this->pins[i], this->data << i == 1 ? HIGH : LOW);
+        digitalWrite(this->pins[i], (this->data >> i) & 1 == 1 ? HIGH : LOW);
     }
     if (DEBUG_ACCESSORIES)
         this->display();

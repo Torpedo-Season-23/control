@@ -6,7 +6,7 @@
 class Mapper {
    public:
     static DIRECTION getDirection(uint8_t *communicationFrame);
-    static uint8_t *getSpeed(uint8_t *communicationFrame);
+    static uint16_t *getSpeed(uint8_t *communicationFrame);
     static uint8_t *getExponent(uint8_t *communicationFrame);
     static uint8_t getAccessories(uint8_t *communicationFrame);
     static SENSOR_TYPE getSensorToToggle(uint8_t accessoriesFrame);
