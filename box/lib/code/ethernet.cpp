@@ -10,16 +10,17 @@ BoxEthernet::BoxEthernet() {
     this->udp = new EthernetUDP();
     this->packetSize = 0;
     for (uint8_t i = 0; i < FRAME_RECIEVED_SIZE; i++) {
-        this->frameRecieved[i] = 5;
+        this->frameRecieved[i] = 0;
     }
     for (uint8_t i = 0; i < FRAME_SENT_SIZE; i++) {
-        this->frameSent[i] = 10;
+        this->frameSent[i] = 0;
     }
 }
 
 void BoxEthernet::init() {
     Ethernet.begin(this->mac, this->boxIp);
     this->udp->begin(BOX_PORT);
+    this->lastTimeRecieved = millis();
 }
 
 void BoxEthernet::reset() {
@@ -50,6 +51,11 @@ void BoxEthernet::recieve() {
     this->packetSize = this->udp->parsePacket();
     if (this->packetSize == FRAME_RECIEVED_SIZE) {
         udp->read(this->frameRecieved, this->packetSize);
+        this->lastTimeRecieved = millis();
+    } else {
+        if (millis() - this->lastTimeRecieved > CRITICAL_TIME) {
+            this->reset();
+        }
     }
 }
 

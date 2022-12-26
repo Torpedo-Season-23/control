@@ -27,8 +27,8 @@ extern float exponent;  // need to be defined at ".ino" file
 class Soft {
    public:
     static void softStartInitial();                                                                                                      // to be called in setup(initiate time values)
-    static void softStart(char type, uint8_t motor_speed, uint8_t *motor_controlled_speed, MOTOR_ORIENTATION i);                         // contorl soft start stages(speed changes)
-    static void motorSoftStart(Servo *motor_num, uint8_t motor_speed, uint8_t *motor_controlled_speed, MOTOR_ORIENTATION i, float EXP);  // control speed coming form console
+    static void softStart(char type, uint16_t motor_speed, uint16_t *motor_controlled_speed, MOTOR_ORIENTATION i);                         // contorl soft start stages(speed changes)
+    static void motorSoftStart(Servo *motor_num, uint16_t motor_speed, uint16_t *motor_controlled_speed, MOTOR_ORIENTATION i, float EXP);  // control speed coming form console
 };
 
 #ifndef _SOFT_START_CPP_

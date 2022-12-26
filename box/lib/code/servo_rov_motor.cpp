@@ -13,7 +13,7 @@ void ServoROVMotor::init() {
     Soft::softStartInitial();
 }
 
-void ServoROVMotor::setSpeed(uint8_t speed) {
+void ServoROVMotor::setSpeed(uint16_t speed) {
     speed = speed > MAX_INTERVAL ? MAX_INTERVAL : speed;
     if (this->direction == FORWARD)
         this->speed = STOP_SPEED + speed;
@@ -29,16 +29,16 @@ void ServoROVMotor::reset() {
     this->stop();
 }
 
-void ServoROVMotor::clockWise(uint8_t speed) {
+void ServoROVMotor::clockWise(uint16_t speed) {
     this->direction = DIRECTION::FORWARD;
-    uint8_t previousSpeed = this->speed;
+    uint16_t previousSpeed = this->speed;
     this->setSpeed(speed);
     Soft::motorSoftStart(this->servo, previousSpeed, &this->speed, this->type, this->exponent);
 }
 
-void ServoROVMotor::antiClockWise(uint8_t speed) {
+void ServoROVMotor::antiClockWise(uint16_t speed) {
     this->direction = DIRECTION::BACKWARD;
-    uint8_t previousSpeed = this->speed;
+    uint16_t previousSpeed = this->speed;
     this->setSpeed(speed);
     Soft::motorSoftStart(this->servo, previousSpeed, &this->speed, this->type, this->exponent);
 }
@@ -51,7 +51,8 @@ void ServoROVMotor::stop() {
 
 void ServoROVMotor::putSpeed(uint16_t speed) {
     this->speed = DIRECTION::GENERIC;
-    uint8_t previousSpeed = this->speed;
+    uint16_t previousSpeed = this->speed;
+    this->setSpeed(speed);
     Soft::motorSoftStart(this->servo, previousSpeed, &this->speed, this->type, this->exponent);
 }
 
@@ -63,7 +64,7 @@ MOTOR_ORIENTATION ServoROVMotor::getType() {
     return this->type;
 }
 
-uint8_t ServoROVMotor::getSpeed() {
+uint16_t ServoROVMotor::getSpeed() {
     return this->speed;
 }
 

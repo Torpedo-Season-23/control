@@ -12,6 +12,7 @@ class BoxEthernet : public Communication {
     IPAddress consoleIp;
     EthernetUDP* udp;
     uint8_t packetSize;
+    unsigned long lastTimeRecieved;
     void display();
 
    public:

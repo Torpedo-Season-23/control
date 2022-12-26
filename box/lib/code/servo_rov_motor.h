@@ -11,20 +11,20 @@ class ServoROVMotor {
     unsigned char pin;
     MOTOR_ORIENTATION type;
     DIRECTION direction;
-    uint8_t speed;
+    uint16_t speed;
     float exponent;
     Servo *servo;
-    virtual void setSpeed(uint8_t speed);
+    virtual void setSpeed(uint16_t speed);
 
    public:
     ServoROVMotor(unsigned char pin, MOTOR_ORIENTATION type);
     virtual void init();
-    virtual void clockWise(uint8_t speed);
-    virtual void antiClockWise(uint8_t speed);
+    virtual void clockWise(uint16_t speed);
+    virtual void antiClockWise(uint16_t speed);
     virtual void setExponent(float exponent);
-    virtual void putSpeed(uint8_t speed);
+    virtual void putSpeed(uint16_t speed);
     virtual MOTOR_ORIENTATION getType();
-    virtual uint8_t getSpeed();
+    virtual uint16_t getSpeed();
     virtual void reset();
     virtual void stop();
     virtual void update();

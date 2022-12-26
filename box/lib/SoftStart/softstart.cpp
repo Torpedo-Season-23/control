@@ -9,7 +9,7 @@ static void Soft::softStartInitial() {
         time2[i] = millis();
     }
 }
-static void Soft::softStart(char type, uint8_t motor_speed, uint8_t *motor_controlled_speed, MOTOR_ORIENTATION i) {
+static void Soft::softStart(char type, uint16_t motor_speed, uint16_t *motor_controlled_speed, MOTOR_ORIENTATION i) {
     if ((time2[i] - time1[i]) >= TIME_STEP) {
         time1[i] = millis();
         speed_counter[i]++;
@@ -31,7 +31,7 @@ static void Soft::softStart(char type, uint8_t motor_speed, uint8_t *motor_contr
     time2[i] = millis();
 }
 
-static void Soft::motorSoftStart(Servo *motor_num, uint8_t motor_speed, uint8_t *motor_controlled_speed, MOTOR_ORIENTATION i, float EXP) {
+static void Soft::motorSoftStart(Servo *motor_num, uint16_t motor_speed, uint16_t *motor_controlled_speed, MOTOR_ORIENTATION i, float EXP) {
     exponent = EXP;
 
     if (motor_speed < 1100 || motor_speed > 1900)
