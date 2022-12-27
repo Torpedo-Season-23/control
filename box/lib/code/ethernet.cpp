@@ -73,7 +73,7 @@ void BoxEthernet::update() {
 }
 
 void BoxEthernet::display() {
-    if (0) {
+    if (SHOW_MAC_AND_IP) {
         Serial.print("MAC: ");
         for (int i = 0; i < MAC_COUNT; i++) {
             Serial.print(this->mac[i]);
@@ -102,7 +102,7 @@ void BoxEthernet::display() {
         Serial.print(CONSOLE_PORT);
     }
 
-    Serial.print(" | Frame recieved: ");
+    SHOW_MAC_AND_IP == 1 ? Serial.print(" | Frame recieved: ") : Serial.print("Frame recieved: ");
     for (int i = 0; i < FRAME_RECIEVED_SIZE; i++) {
         Serial.print(this->frameRecieved[i]);
         if (i < FRAME_RECIEVED_SIZE - 1) {

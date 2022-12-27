@@ -124,6 +124,7 @@ enum MOTOR_ORIENTATION {
 
 // ETHERNET
 #define DEBUG_ETHERNET 0
+#define SHOW_MAC_AND_IP 0
 #define MAC_COUNT 6
 #define IP_COUNT 4
 #define DNS_COUNT 4
