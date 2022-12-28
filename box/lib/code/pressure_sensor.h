@@ -15,7 +15,6 @@ class PressureSensor : public Sensor {
     float pressure;
     float temperature;
     float depth;
-    uint16_t readData(const uint16_t command, const unsigned long recvDelay = 0);
 
    public:
     PressureSensor();
