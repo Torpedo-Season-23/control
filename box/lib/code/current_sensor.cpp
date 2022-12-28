@@ -19,7 +19,11 @@ void CurrentSensor::update() {
     }
     avg = samples / 150.0;
     this->current = (2.5 - (avg * (5.0 / 1024.0))) / 0.185;
+
     this->data = this->current;
+
+    if (DEBUG_SENSORS)
+        this->display();
 }
 
 float CurrentSensor::getCurrent() {

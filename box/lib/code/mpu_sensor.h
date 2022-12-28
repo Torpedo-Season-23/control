@@ -15,10 +15,6 @@ class MPU6050Sensor : public Sensor {
     int16_t gyroX;
     int16_t gyroY;
     int16_t gyroZ;
-    int16_t magX;
-    int16_t magY;
-    int16_t magZ;
-    int16_t temp;
     unsigned long currentTime;
     unsigned long previousTime;
     MPU6050 *mpu;
