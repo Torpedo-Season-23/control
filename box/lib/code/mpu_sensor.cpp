@@ -5,6 +5,9 @@ MPU6050Sensor::MPU6050Sensor() {
     this->gyroX = 0;
     this->gyroY = 0;
     this->gyroZ = 0;
+    this->magX = 0;
+    this->magY = 0;
+    this->magZ = 0;
     this->mpu = new MPU6050();
 }
 
@@ -15,11 +18,11 @@ void MPU6050Sensor::init() {
 
 void MPU6050Sensor::update() {
     if (!this->working) return;
-    this->mpu->getMotion6(&this->accelX, &this->accelY, &this->accelZ, &this->gyroX, &this->gyroY, &this->gyroZ);
+    this->mpu->getMotion9(&this->accelX, &this->accelY, &this->accelZ, &this->gyroX, &this->gyroY, &this->gyroZ, &this->magX, &this->magY, &this->magZ);
 
     this->data = this->accelX;
 
-    if (DEBUG_SENSORS)
+    if (DEBUG_MPU)
         this->display();
 }
 
@@ -40,12 +43,7 @@ void MPU6050Sensor::display() {
     Serial.print(this->accelY);
     Serial.print(" | Accel Z: ");
     Serial.print(this->accelZ);
-    Serial.print(" | Gyro X: ");
-    Serial.print(this->gyroX);
-    Serial.print(" | Gyro Y: ");
-    Serial.print(this->gyroY);
-    Serial.print(" | Gyro Z: ");
-    Serial.print(this->gyroZ);
+    Serial.println();
 }
 
 void wireImplInit() {

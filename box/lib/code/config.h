@@ -20,7 +20,7 @@ enum DIRECTION {
 };
 
 // ROV
-#define SENSOR_COUNT 6
+#define SENSOR_COUNT 2
 #define SENSORS_DATA_SIZE 6
 
 #define DEBUG_SENSORS 1
@@ -35,6 +35,7 @@ enum SENSOR_TYPE {
 };
 
 // IMU SENSOR
+#define DEBUG_MPU 1
 #define IMU_ADDRESS 0x68
 #define IMU_TIMEOUT 10000UL
 #define IMU_WRITE_REG_INIT 0x6B
@@ -45,10 +46,12 @@ enum SENSOR_TYPE {
 #define ACCELARATION_NORMALIZATION 195
 
 // PRESSURE SENSOR
-#define PRESSURE_MCLK 13
-#define PRESSURE_MISO 12
-#define PRESSURE_MOSI 11
-#define PRESSURE_SCLK 10
+#define DEBUG_PRESSURE 1
+#define AIR_PRESSURE 1013
+#define PRESSURE_MCLK 10         // 10 for nano - 9 for mega
+#define PRESSURE_MISO 7          // 7 for nano - 12 for mega
+#define PRESSURE_MOSI 8          // 8 for nano - 11 for mega
+#define PRESSURE_SCLK 9          // 9 for nano - 13 for mega
 #define D1_SEQUENCE 0x0F40       // pressure measurement sequence
 #define D2_SEQUENCE 0x0F20       // temperature measurement sequence
 #define WORD1_SEQUENCE 0x1D50    // word1 sequence
@@ -68,7 +71,7 @@ enum SENSOR_TYPE {
 #define CURRENT_SENSOR_BACK_RIGHT_PIN A5
 
 // ACCESSORIES
-#define DEBUG_ACCESSORIES 1
+#define DEBUG_ACCESSORIES 0
 #define ACCESSORIES_COUNT 8
 #define ACCESSORIES_INDEX 0
 #define RIGHT_GRIPPER_PIN A0
@@ -104,7 +107,7 @@ enum MOTOR_ORIENTATION {
     VERTICAL_RIGHT
 };
 
-#define DEBUG_MOTION 1
+#define DEBUG_MOTION 0
 #define MOTOR_COUNT 8
 #define SPEED_INDEX_START 1
 #define EXPONENT_INDEX_START 17
@@ -120,6 +123,7 @@ enum MOTOR_ORIENTATION {
 #define VERTICAL_LEFT_PIN 8
 #define VERTICAL_RIGHT_PIN 9
 #define STOP_SPEED 1500
+#define MAX_SPEED 1850
 #define MAX_INTERVAL 300
 
 // ETHERNET

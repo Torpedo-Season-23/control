@@ -140,6 +140,7 @@ void Motion8::display() {
     Serial.print("[Motion8] ");
     Serial.print("Direction: ");
     Serial.print(Helper::getDirection(this->direction));
+    Serial.print(" | ");
     for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
         this->motors[i]->display();
         if (i < MOTOR_COUNT - 1) {

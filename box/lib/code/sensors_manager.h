@@ -9,7 +9,7 @@
 class SensorsManager {
    private:
     Sensor *sensors[SENSOR_COUNT];
-    float sensorsData[SENSORS_DATA_SIZE];
+    float sensorsData[SENSOR_COUNT];
     bool working;
 
    public:

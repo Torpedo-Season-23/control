@@ -18,6 +18,8 @@ static char const* Helper::getDirection(DIRECTION direction) {
             return "Down";
         case DIRECTION::STOP:
             return "Stop";
+        case DIRECTION::GENERIC:
+            return "Generic";
         default:
             return "Unknown";
     }

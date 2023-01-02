@@ -41,7 +41,7 @@ void Accessories::display() {
     for (uint8_t i = 0; i < ACCESSORIES_COUNT; i++) {
         Serial.print(Helper::getAccessoriesType((ACCESSORIES_TYPE)i));
         Serial.print(": ");
-        Serial.println(Helper::getOnOff(this->data << i));
+        Serial.print(Helper::getOnOff(this->data << i));
         if (i < ACCESSORIES_COUNT - 1)
             Serial.print(" | ");
     }

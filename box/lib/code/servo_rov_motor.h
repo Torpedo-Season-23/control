@@ -14,7 +14,9 @@ class ServoROVMotor {
     uint16_t speed;
     float exponent;
     Servo *servo;
+    bool softStart;
     virtual void setSpeed(uint16_t speed);
+    virtual void apply(uint16_t prevoiusSpeed);
 
    public:
     ServoROVMotor(unsigned char pin, MOTOR_ORIENTATION type);

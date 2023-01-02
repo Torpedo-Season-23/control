@@ -8,8 +8,8 @@ class Motion {
    protected:
     ServoROVMotor *motors[MOTOR_COUNT];
     DIRECTION direction;
-    uint16_t *speed;
-    uint8_t *exponent;
+    uint16_t speed[MOTOR_COUNT];
+    uint8_t exponent[MOTOR_COUNT];
     virtual void forward() = 0;
     virtual void backward() = 0;
     virtual void left() = 0;
