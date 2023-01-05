@@ -19,6 +19,8 @@ void SensorsManager::update() {
         sensors[i]->update();
         this->sensorsData[i] = this->sensors[i]->getData();
     }
+    if (DEBUG_SENSORS)
+        this->display();
 }
 
 uint8_t* SensorsManager::getSensorsData() {

@@ -64,9 +64,6 @@ void PressureSensor::update() {
     this->depth = max(0, ((this->pressure - AIR_PRESSURE) * 100) / (1000 * 9.81));  // formula: P = ρ(1000) * g(9.81) * h
 
     this->data = this->depth;
-
-    if (DEBUG_PRESSURE)
-        this->display();
 }
 
 void PressureSensor::reset() {
@@ -82,14 +79,15 @@ void PressureSensor::reset() {
 }
 
 void PressureSensor::display() {
-    Serial.print("Temperature: ");
-    Serial.print(this->temperature);
-    Serial.print(" °C | Pressure: ");
-    Serial.print(this->pressure);
-    Serial.print(" mbar | Depth: ");
-    Serial.print(this->depth);
-    Serial.print(" m");
-    Serial.println();
+    if (DEBUG_PRESSURE) {
+        Serial.print("Temperature: ");
+        Serial.print(this->temperature);
+        Serial.print(" °C | Pressure: ");
+        Serial.print(this->pressure);
+        Serial.print(" mbar | Depth: ");
+        Serial.print(this->depth);
+        Serial.print(" m");
+    }
 }
 
 float PressureSensor::getDepth() {
@@ -100,7 +98,7 @@ float PressureSensor::getPressure() {
     return this->pressure;
 }
 
-uint16_t PressureSensor::readData(const uint16_t command, const unsigned long recvDelay = 0) {
+uint16_t PressureSensor::readData(const uint16_t command, const unsigned long recvDelay) {
     this->spi->beginTransaction(SPISettings(COMM_FREQUENCY, MSBFIRST, SPI_MODE0));
     this->spi->transfer((RESET_SEQUENCE >> 16) & 0xFF);
     this->spi->transfer((RESET_SEQUENCE >> 8) & 0xFF);

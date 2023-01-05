@@ -77,11 +77,11 @@ enum SENSOR_TYPE {
 #define RIGHT_GRIPPER_PIN A0
 #define LEFT_GRIPPER_PIN A2
 #define LIGHTS_PIN A4
-#define IMU_TOGGLE_PIN A12
-#define PRESSURE_TOGGLE_PIN A14
-#define ACCESORIES_EMPTY1_PIN A6
-#define ACCESORIES_EMPTY2_PIN A8
-#define ACCESORIES_EMPTY3_PIN A10
+#define IMU_TOGGLE_PIN A12         // comment for nano
+#define PRESSURE_TOGGLE_PIN A14    // comment for nano
+#define ACCESORIES_EMPTY1_PIN A6   // comment for nano
+#define ACCESORIES_EMPTY2_PIN A8   // comment for nano
+#define ACCESORIES_EMPTY3_PIN A10  // comment for nano
 
 enum ACCESSORIES_TYPE {
     RIGHT_GRIPPER,
