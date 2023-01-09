@@ -16,7 +16,6 @@ void MPU6050Sensor::init() {
 void MPU6050Sensor::update() {
     if (!this->working) return;
     this->mpu->getMotion6(&this->accelX, &this->accelY, &this->accelZ, &this->gyroX, &this->gyroY, &this->gyroZ);
-
     this->data = this->accelX;
 }
 

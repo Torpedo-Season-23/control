@@ -1,29 +1,56 @@
-static DIRECTION Mapper::getDirection(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
-    return static_cast<DIRECTION>(communicationFrame[DIRECTION_INDEX]);
-}
-static uint16_t* Mapper::getSpeed(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
-    uint16_t speed[MOTOR_COUNT];
-    uint8_t i = 0, j = SPEED_INDEX_START;
-    while (i < MOTOR_COUNT) {
-        speed[i++] = communicationFrame[j++] + (communicationFrame[j++] * 256);
+void Mapper::setData(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
+    for (uint8_t i = 0; i < FRAME_RECIEVED_SIZE; i++) {
+        this->data[i] = communicationFrame[i];
     }
-    return speed;
+    this->setDirection();
+    this->setSpeed();
+    this->setExponent();
+    this->setAccessories();
+    this->setSensorToToggle();
 }
 
-static uint8_t* Mapper::getExponent(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
+void Mapper::setDirection() {
+    this->direction = static_cast<DIRECTION>(this->data[DIRECTION_INDEX]);
+}
+void Mapper::setSpeed() {
+    uint8_t i = 0, j = SPEED_INDEX_START;
+    while (i < MOTOR_COUNT) {
+        this->speed[i++] = this->data[j++] + (this->data[j++] * 256);
+    }
+}
+
+void Mapper::setExponent() {
     uint8_t exponent[MOTOR_COUNT];
     uint8_t i = 0, j = EXPONENT_INDEX_START;
     while (i < EXPONENT_COUNT) {
-        exponent[i++] = communicationFrame[j++] + (communicationFrame[j++] * 256);
+        this->exponent[i++] = this->data[j++] + (this->data[j++] * 256);
     }
-    return exponent;
 }
 
-static uint8_t Mapper::getAccessories(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
-    return communicationFrame[ACCESSORIES_INDEX];
+void Mapper::setAccessories() {
+    this->accessories = this->data[ACCESSORIES_INDEX];
+}
+void Mapper::setSensorToToggle() {
+    this->sensorToToggle = this->accessories << IMU_TOGGLE == 1 ? IMU : this->accessories << PRESSURE_TOGGLE == 1 ? PRESSURE
+                                                                                                                  : NO_SENSOR;
 }
 
-static SENSOR_TYPE Mapper::getSensorToToggle(uint8_t accessoriesFrame) {
-    return accessoriesFrame << IMU_TOGGLE == 1 ? IMU : accessoriesFrame << PRESSURE_TOGGLE == 1 ? PRESSURE
-                                                                                                : NO_SENSOR;
+DIRECTION Mapper::getDirection() {
+    return this->direction;
+}
+
+uint16_t* Mapper::getSpeed() {
+    return this->speed;
+}
+
+uint8_t* Mapper::getExponent() {
+    return this->exponent;
+}
+
+uint8_t Mapper::getAccessories() {
+    return this->accessories;
+}
+
+SENSOR_TYPE Mapper::getSensorToToggle() {
+    return this->sensorToToggle;
 }

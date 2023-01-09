@@ -3,6 +3,7 @@ ROV::ROV() {
     this->motion = new Motion8();
     this->communication = new BoxEthernet();
     this->accessories = new Accessories();
+    this->mapper = new Mapper();
 }
 
 void ROV::init() {
@@ -15,6 +16,7 @@ void ROV::init() {
 void ROV::update() {
     this->communication->recieve();
     this->data = this->communication->getFrameRecieved();
+    this->prepareData();
     this->setMotion();
     this->setAccessories();
     this->setSensors();
@@ -28,20 +30,24 @@ void ROV::reset() {
     this->accessories->reset();
 }
 
+void ROV::prepareData() {
+    this->mapper->setData(this->data);
+}
+
 void ROV::setMotion() {
-    this->motion->setDirection(Mapper::getDirection(this->data));
-    this->motion->setSpeed(Mapper::getSpeed(this->data));
-    this->motion->setExponent(Mapper::getExponent(this->data));
+    this->motion->setDirection(this->mapper->getDirection());
+    this->motion->setSpeed(this->mapper->getSpeed());
+    this->motion->setExponent(this->mapper->getExponent());
     this->motion->update();
 }
 
 void ROV::setAccessories() {
-    this->accessories->setAccessories(Mapper::getAccessories(this->data));
+    this->accessories->setAccessories(this->mapper->getAccessories());
     this->accessories->update();
-    this->sensorsManager->toggleSensorWorking(Mapper::getSensorToToggle(this->accessories->getAccessories()));
 }
 
 void ROV::setSensors() {
+    this->sensorsManager->toggleSensorWorking(this->mapper->getSensorToToggle());
     this->sensorsManager->update();
     this->communication->setFrameSent(this->sensorsManager->getSensorsData());
 }

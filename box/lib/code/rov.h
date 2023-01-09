@@ -15,6 +15,8 @@ class ROV {
     Motion *motion;
     Communication *communication;
     Accessories *accessories;
+    Mapper *mapper;
+    void prepareData();
     void setMotion();
     void setAccessories();
     void setSensors();
