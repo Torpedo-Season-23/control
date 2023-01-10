@@ -11,14 +11,15 @@ class Mapper {
     uint8_t exponent[EXPONENT_COUNT];
     uint8_t accessories;
     SENSOR_TYPE sensorToToggle;
-
-   public:
-    void setData(uint8_t *communicationFrame);
     void setDirection();
     void setSpeed();
     void setExponent();
     void setAccessories();
     void setSensorToToggle();
+
+   public:
+    Mapper();
+    void setData(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]);
     SENSOR_TYPE getSensorToToggle();
     DIRECTION getDirection();
     uint16_t *getSpeed();

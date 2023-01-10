@@ -1,3 +1,14 @@
+Mapper::Mapper() {
+    this->direction = STOP;
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
+        this->speed[i] = 0;
+    }
+    for (uint8_t i = 0; i < EXPONENT_COUNT; i++) {
+        this->exponent[i] = 0;
+    }
+    this->accessories = 0;
+    this->sensorToToggle = NO_SENSOR;
+}
 void Mapper::setData(uint8_t communicationFrame[FRAME_RECIEVED_SIZE]) {
     for (uint8_t i = 0; i < FRAME_RECIEVED_SIZE; i++) {
         this->data[i] = communicationFrame[i];
@@ -20,7 +31,6 @@ void Mapper::setSpeed() {
 }
 
 void Mapper::setExponent() {
-    uint8_t exponent[MOTOR_COUNT];
     uint8_t i = 0, j = EXPONENT_INDEX_START;
     while (i < EXPONENT_COUNT) {
         this->exponent[i++] = this->data[j++] + (this->data[j++] * 256);
