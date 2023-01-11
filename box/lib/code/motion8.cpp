@@ -157,7 +157,7 @@ void Motion8::setSpeed(uint16_t *speed) {
 }
 
 void Motion8::setExponent(uint8_t *exponent) {
-    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
+    for (uint8_t i = 0; i < EXPONENT_COUNT; i++) {
         this->motors[i]->setExponent(exponent[i]);
     }
 }

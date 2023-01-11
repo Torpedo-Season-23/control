@@ -52,14 +52,6 @@ static char const* Helper::getSensorType(SENSOR_TYPE type) {
     switch (type) {
         case SENSOR_TYPE::IMU:
             return "IMU";
-        case SENSOR_TYPE::CURRENT_SENSOR_BACK_LEFT:
-            return "Current Sensor Back Left";
-        case SENSOR_TYPE::CURRENT_SENSOR_BACK_RIGHT:
-            return "Current Sensor Back Right";
-        case SENSOR_TYPE::CURRENT_SENSOR_FRONT_LEFT:
-            return "Current Sensor Front Left";
-        case SENSOR_TYPE::CURRENT_SENSOR_FRONT_RIGHT:
-            return "Current Sensor Front Right";
         case SENSOR_TYPE::PRESSURE:
             return "Pressure";
         default:

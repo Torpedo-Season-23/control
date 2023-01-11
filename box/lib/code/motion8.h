@@ -9,6 +9,9 @@
 
 class Motion8 : public Motion {
    private:
+    ServoROVMotor *motors[MOTOR_COUNT];
+    uint16_t speed[MOTOR_COUNT];
+    uint8_t exponent[EXPONENT_COUNT];
     virtual void forward();
     virtual void backward();
     virtual void left();
