@@ -1,10 +1,10 @@
 ConsoleEthernet::ConsoleEthernet() {
-    this->mac[0] = ETHERNET_BOX_MAC_0;
-    this->mac[1] = ETHERNET_BOX_MAC_1;
-    this->mac[2] = ETHERNET_BOX_MAC_2;
-    this->mac[3] = ETHERNET_BOX_MAC_3;
-    this->mac[4] = ETHERNET_BOX_MAC_4;
-    this->mac[5] = ETHERNET_BOX_MAC_5;
+    this->mac[0] = ETHERNET_CONSOLE_MAC_0;
+    this->mac[1] = ETHERNET_CONSOLE_MAC_1;
+    this->mac[2] = ETHERNET_CONSOLE_MAC_2;
+    this->mac[3] = ETHERNET_CONSOLE_MAC_3;
+    this->mac[4] = ETHERNET_CONSOLE_MAC_4;
+    this->mac[5] = ETHERNET_CONSOLE_MAC_5;
     this->boxIp = IPAddress(IP_0, IP_1, IP_2, BOX_IP_3);
     this->consoleIp = IPAddress(IP_0, IP_1, IP_2, CONSOLE_IP_3);
     this->udp = new EthernetUDP();
