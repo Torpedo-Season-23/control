@@ -1,9 +1,8 @@
-#include <Arduino.h>
+#include "lib/code/ethernet.h"
 
 void setup() {
-    // put your setup code here, to run once:
+    Serial.begin(BAUD_RATE);
 }
 
 void loop() {
-    // put your main code here, to run repeatedly:
 }
