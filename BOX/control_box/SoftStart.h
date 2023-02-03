@@ -1,7 +1,7 @@
 #ifndef SOFT_START_H
 #define SOFT_START_H
  
-#include <Servo.h>
+#include <ESP32Servo.h>
 extern float exponent;        //need to be defined at ".ino" file 
 
 #define TIME_STEP 80.0        // time difference to use soft start
