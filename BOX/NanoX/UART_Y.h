@@ -2,7 +2,7 @@
 #define UART_Y_H
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-#define UART_y_FRAME_SIZE 14// (( 12 Motor | 1 Accessories ))
+#define UART_y_FRAME_SIZE 12
 #define RX_Y 27
 #define TX_Y 26
 #define ANGLE_INDEX 2
