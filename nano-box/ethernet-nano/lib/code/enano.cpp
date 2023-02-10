@@ -12,7 +12,7 @@ void ENANO::init() {
 void ENANO::update() {
   // * Recieve Process
   this->ethernet->recieve();
-  this->mapper->setEthernetRecievedFrame(ethernet->getFrameRecieved());
+  this->mapper->setEthernetRecievedFrame(this->ethernet->getFrameRecieved());
   this->uart->setFrameSent(this->mapper->getUartSentFrame());
   this->uart->send();
 
