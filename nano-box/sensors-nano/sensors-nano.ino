@@ -2,6 +2,7 @@
 #include "lib/code/config.h"
 
 SoftwareSerial sensorsSerial(SENSORS_SOFTWARE_SERIAL_RX, SENSORS_SOFTWARE_SERIAL_TX);
+uint8_t frame[12 - 4];
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -23,18 +24,50 @@ void blinkLED() {
 }
 
 void send() {
+  sensorsSerial.stopListening();
   Serial.println("Sending...");
-  sensorsSerial.print("Hello From Sensors");
+  sensorsSerial.print(123);
 }
 
 void recieve() {
-  Serial.print("Receiving...");
-  Serial.println(sensorsSerial.available());
-  while (sensorsSerial.available() == 0) {
-  }
+  Serial.println("Receiving...");
+  if (!sensorsSerial.available())
+    return;
+  byte x = sensorsSerial.read();
+  if (x != '(')
+    return;
 
-  if (sensorsSerial.available()) {
-    Serial.print("Recieved: ");
-    Serial.println(sensorsSerial.readString());
+  while (!sensorsSerial.available())
+    ;
+  x = sensorsSerial.read();
+  Serial.println(x);
+  if (x != '(')
+    return;
+  for (uint8_t i = 0; i < 12 - 4; i++) {
+    while (!sensorsSerial.available())
+      ;
+    frame[i] = sensorsSerial.read();
+    Serial.println(frame[i]);
   }
+  while (!sensorsSerial.available())
+    ;
+  x = sensorsSerial.read();
+  Serial.println(x);
+  if (x != ')')
+    return;
+  while (!sensorsSerial.available())
+    ;
+  x = sensorsSerial.read();
+  if (x != ')')
+    return;
+
+  printRecieved();
+}
+
+void printRecieved() {
+  Serial.print("Recieved: ");
+  for (uint8_t i = 0; i < 12 - 4; i++) {
+    Serial.print(frame[i]);
+  }
+  Serial.println();
 }

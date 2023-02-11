@@ -3,6 +3,7 @@
 
 SoftwareSerial sensorsSerial(SENSORS_SOFTWARE_SERIAL_RX, SENSORS_SOFTWARE_SERIAL_TX);
 SoftwareSerial motorsSerial(MOTORS_SOFTWARE_SERIAL_RX, MOTORS_SOFTWARE_SERIAL_TX);
+uint8_t frame[12];
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -26,10 +27,17 @@ void blinkLED() {
 
 void send() {
   Serial.println("Sending...");
-  for (uint8_t i = 0; i < 10; i++) {
-    sensorsSerial.print(i);
-    motorsSerial.print(i);
+  frame[0] = '(';
+  frame[1] = '(';
+  for (uint8_t i = 2; i < 10; i++) {
+    frame[i] = i + 1;
   }
+
+  frame[12 - 2] = ')';
+  frame[12 - 1] = ')';
+
+  sensorsSerial.write(frame, 12);
+  motorsSerial.write(frame, 12);
 }
 
 void receive() {

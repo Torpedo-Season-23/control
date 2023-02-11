@@ -3,6 +3,7 @@
 #include "lib/code/config.h"
 
 AltSoftSerial motorsSerial(MOTORS_SOFTWARE_SERIAL_RX, MOTORS_SOFTWARE_SERIAL_TX);
+uint8_t frame[12 - 4];
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -25,17 +26,46 @@ void blinkLED() {
 
 void send() {
   Serial.println("Sending...");
-  motorsSerial.print("Hello From Motors");
+  motorsSerial.print(123);
 }
 
 void recieve() {
-  Serial.print("Receiving...");
-  Serial.println(motorsSerial.available());
-  while (motorsSerial.available() == 0) {
-  }
+  Serial.println("Receiving...");
+  if (!motorsSerial.available())
+    return;
+  byte x = motorsSerial.read();
+  if (x != '(')
+    return;
 
-  if (motorsSerial.available()) {
-    Serial.print("Recieved: ");
-    Serial.println(motorsSerial.readString());
+  while (!motorsSerial.available())
+    ;
+  x = motorsSerial.read();
+  if (x != '(')
+    return;
+  for (uint8_t i = 0; i < 12 - 4; i++) {
+    while (!motorsSerial.available())
+      ;
+    frame[i] = motorsSerial.read();
+    Serial.println(frame[i]);
   }
+  while (!motorsSerial.available())
+    ;
+  x = motorsSerial.read();
+  if (x != ')')
+    return;
+  while (!motorsSerial.available())
+    ;
+  x = motorsSerial.read();
+  if (x != ')')
+    return;
+
+  printRecieved();
+}
+
+void printRecieved() {
+  Serial.print("Recieved: ");
+  for (uint8_t i = 0; i < 12 - 4; i++) {
+    Serial.print(frame[i]);
+  }
+  Serial.println();
 }
