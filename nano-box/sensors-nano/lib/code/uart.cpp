@@ -2,7 +2,7 @@ UART::UART(uint8_t rxPin, uint8_t txPin) {
   this->softSerial = new SoftwareSerial(rxPin, txPin);
 }
 
-void UART::init() { this->softSerial->begin(SOFTWARE_SERIAL_BAUD_RATE); }
+void UART::init() { this->softSerial->begin(BAUD_RATE); }
 
 void UART::recieve() {
   if (!this->softSerial->available())
