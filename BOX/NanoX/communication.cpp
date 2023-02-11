@@ -18,7 +18,7 @@ void CommunicationClient::receiveData(uint8_t *z_frame, uint8_t *thrus_frame) {
   { 
     Serial.println("Received!");
     udp.read(z_frame, success + 1);
-    for(int i= 0;i<success;i++){
+    for(int i= 0;i<3;i++){
       Serial.print(z_frame[i]);
       Serial.print(" ");
     }

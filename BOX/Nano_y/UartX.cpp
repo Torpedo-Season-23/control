@@ -52,9 +52,11 @@ void Nano_X::receive() {
     x = softSerial.read();
     if (x != '(') continue;
     while (!softSerial.available());
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 3; i++) {
       while (!softSerial.available());
-      Serial.print((char)softSerial.read());
+      Serial.print(softSerial.read());
+      Serial.print(" ");
+      
     }
     while (!softSerial.available());
     x = softSerial.read();

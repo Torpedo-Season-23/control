@@ -18,6 +18,6 @@ class UART_Y{
         UART_Y(){};
         void begin();
         void receiveFrame(struct sensorsData* frame);
-        void sendFrame();
+        void sendFrame(uint8_t*);
 };
 #endif

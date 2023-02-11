@@ -66,8 +66,11 @@ void UART_Y::receiveFrame(struct sensorsData* data) {
     }*/
 }
 
-void UART_Y::sendFrame() {
-  uint8_t sendingFrame[] = {'(', 'a', 'b', 'c', 'd', 'e', 'f', 'e', ')'};
-  serialY.print("(abcdefg)");
-  Serial.println("Sending..");
+void UART_Y::sendFrame(uint8_t* sendingFrame) {
+  //uint8_t sendingFrame[] = {'(', 'a', 'b', 'c', 'd', 'e', 'f', 'e', ')'};
+  //serialY.print("(abcdefg)");
+  //Serial.println("Sending..");
+  sendingFrame[1]= '(';
+  sendingFrame[1+4]= ')';
+  serialY.write(sendingFrame+1,5);
 }

@@ -18,7 +18,7 @@ void setup() {
   uart_data.Start_Uart();
   // IMU.check();
   //  pressur_S.init();
-  attachInterrupt(digitalPinToInterrupt(2), handler, LOW);
+  //attachInterrupt(digitalPinToInterrupt(2), handler, LOW);
 }
 void loop() {
   //Serial.println("Waiting to receive...");
