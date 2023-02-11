@@ -1,4 +1,4 @@
-#include "Pressure.h"
+/*#include "Pressure.h"
 
 SoftSPI mySPI(MOSI_PIN, MISO_PIN, SCLK_PIN);
 void PressureSensor::init() {
@@ -60,7 +60,7 @@ void PressureSensor::update() {
       Serial.println(word3);
       Serial.print("Calibration word 4: ");
       Serial.println(word4);*/
-
+/*
     const uint16_t c1 = word1 >> 1;
     const uint16_t c2 = ((word3 & 0x3F) << 6) | (word4 & 0x3F);
     const uint16_t c3 = word4 >> 6;
@@ -125,10 +125,10 @@ void PressureSensor::update() {
         // Serial.print("Pressure: ");
         // Serial.print(pressure);
         // Serial.println(" mbar");
-  
+  /*
 }
 float PressureSensor::getPressure(){
   this->update();
   return this->pressure;
 
-}
+}*/

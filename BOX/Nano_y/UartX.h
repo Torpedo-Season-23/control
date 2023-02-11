@@ -21,5 +21,6 @@ void Set_IMU_Angles(int angles[3]);
 void Set_Pressure(int Pressure);
 void Prepare_frame(uint8_t Datafram[8]);
 void Send_Data();
+void receive();
 };
 #endif

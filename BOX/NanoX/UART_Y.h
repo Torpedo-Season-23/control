@@ -3,8 +3,8 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #define UART_y_FRAME_SIZE 12
-#define RX_Y 27
-#define TX_Y 26
+#define RX_Y 8
+#define TX_Y 9
 #define ANGLE_INDEX 2
 #define PRESSURE_INDEX ANGLE_INDEX + 3*2
 
@@ -18,5 +18,6 @@ class UART_Y{
         UART_Y(){};
         void begin();
         void receiveFrame(struct sensorsData* frame);
+        void sendFrame();
 };
 #endif

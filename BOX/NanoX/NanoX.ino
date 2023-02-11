@@ -11,29 +11,38 @@ UART_Z uart_z;
 UART_Y uart_y;
 
 
-void setup(){
+void setup() {
   Serial.begin(115200);
   client.Init();
-  uart_z.begin();
+  //uart_z.begin();
   uart_y.begin();
-
-
+  pinMode(A1, OUTPUT);
+  digitalWrite(A1, HIGH);
 }
-void loop(){
-    client.receiveData(uart_z_frame+2,uart_z_frame);
-    uart_z.sendFrame(uart_z_frame);
-    uart_y.receiveFrame(&sensors);
-    
-    //Switch Converters
-    /*
+void loop() {
+  //digitalWrite(13,HIGH);
+
+  //client.receiveData(uart_z_frame+2,uart_z_frame);
+  //uart_z.sendFrame(uart_z_frame);
+  //Serial.println("Printing");
+  uart_y.sendFrame();
+
+  digitalWrite(A1, LOW);
+
+  uart_y.receiveFrame(&sensors);
+  digitalWrite(A1, HIGH);
+  delay(10);
+
+  //Switch Converters
+  /*
     //Receive Communication
     //Switch Converters
     //Send to Z
     //Send to Y
-    */
-    /*
+  */
+  /*
     Read from y
     Read from converters
     Send UDP
-    */
+  */
 }
