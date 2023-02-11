@@ -1,4 +1,5 @@
 #include "softStart.h"
+#include "Output_signals.h"
 #include "Arduino.h"
 float exponent = 0;
 
@@ -8,7 +9,7 @@ long int time1[8], time2[8], speed_counter[8] = {0};
 
 void soft_start_initial_value() {
   //needed to check time step
-  for (char i = 0; i < 8; i++) {
+  for (char i = 0; i < MOTORS_COUNT; i++) {
     time1[i] = millis();
     time2[i] = millis();
   }

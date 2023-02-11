@@ -20,6 +20,7 @@ void setup() {
 void loop() {
  
   uartz.receiveFrame(thrusters.thrustersFrame , tools.tool_frame);
-  thrusters.prep_And_apply_signal();
-  tools.apply_signal();
+ 
+  // thrusters.prep_And_apply_signal();
+  // tools.apply_signal();
 }

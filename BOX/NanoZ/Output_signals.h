@@ -4,12 +4,13 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-const int motorsCount = 8; 
-const int toolsCount = 8;
-extern Servo Motors[motorsCount]; 
+#define MOTORS_COUNT  6
+#define TOOLS_COUNT  4
+
+extern Servo Motors[MOTORS_COUNT]; 
 class Thrusters{
   // motor pins
-  const int motorPins[motorsCount] =  {3, 5, 7, 9, 11, 13, 4, 6};
+  const int motorPins[MOTORS_COUNT] =  {0};
   public:
   uint8_t *thrustersFrame;
   void init();
@@ -20,7 +21,7 @@ class Thrusters{
 
 class Tools{
   // first 5 are Grippers pins, last 3 lights pins 
-  const int toolPins[toolsCount] = {A0 ,A2 ,A4 ,A6 ,A0 ,A2 ,A4 ,A6};
+  const int toolPins[TOOLS_COUNT] = {0};
   public:
   uint8_t *tool_frame;
   void init();
