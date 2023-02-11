@@ -1,5 +1,5 @@
 #include "Thrusters.h"
 int main(){
     ThrustersProcess process;
-    process.processForces(100,20,0);
+    process.processForces(128,0,0);
 }
