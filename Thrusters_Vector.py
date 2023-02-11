@@ -18,10 +18,12 @@ class Vectors:
         self.S_Astred=inv(S_matrix.T)
         zeros =np.array(np.zeros(3))
         self.S_Astred=np.vstack((self.S_Astred,zeros))
+
+        print(f"U: {self.U.T}")
         
     def process(x,y,m):
         td=np.array([x ,y, m])# Values to be adjusted by controller
         f= np.round(Vectors.V_transpose.T@Vectors.S_Astred@Vectors.U.T@td)
         for i in range (4):
-            f[i]=np.round(np.interp(f[i],[-128,128],[1100,1900]),decimals=2)
+            f[i]=np.round(np.interp(f[i],[-45,45],[1100,1900]),decimals=2)
         return f
