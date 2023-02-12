@@ -9,7 +9,7 @@ void handler() {
   //Serial.println("In Interrupt!");
   //uart_data.Set_Pressure();
 
-  uint16_t angles[] = {20, 30, 60};
+  //uint16_t angles[] = {20, 30, 60};
   //uart_data.Set_IMU_Angles(IMU.getangles());
   uart_data.Send_Data();
 }
@@ -17,6 +17,8 @@ long currentTime = millis();
 void setup() {
   Serial.begin(115200);
   uart_data.Start_Uart();
+  IMU.start();
+
   IMU.check();
   pressur_S.init();
   attachInterrupt(digitalPinToInterrupt(2), handler, LOW);
@@ -26,8 +28,8 @@ void loop() {
   if (current - currentTime > 200) {
     //noInterrupts();
     //Serial.print("HERE!");
-    pressur_S.getPressure();
-    IMU.getangles();
+    //uart_data.Set_IMU_Angles(IMU.getangles());
+    //uart_data.Set_Pressure(pressur_S.getPressure());
     currentTime= current;
   }
   //interrupts();

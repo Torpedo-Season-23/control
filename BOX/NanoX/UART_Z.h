@@ -2,7 +2,7 @@
 #define UART_Z_H
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-#define UART_Z_FRAME_SIZE 17// (( 12 Motor | 1 Accessories ))
+#define UART_Z_FRAME_SIZE 15// (( 12 Motor | 1 Accessories ))
 #define RX_Z 25
 #define TX_Z 24
 #define MOTOR_INDEX 0

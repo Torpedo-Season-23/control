@@ -124,7 +124,6 @@ public:
     setZAccelOffset(1788);
   }
   void TorpedoMPU::check() {
-    start();
     if (devStatus == 0) {
       CalibrateAccel(6);
       CalibrateGyro(6);
@@ -192,12 +191,12 @@ public:
     angles[0] = roll;
     angles[1] = pitch;
     angles[2] = yaw_3;
-   /* Serial.print("roll");
+    Serial.print("roll");
     Serial.print(angles[0]);
     Serial.print("  pitch");
     Serial.print(angles[1]);
     Serial.print("   yaw");
-    Serial.println(angles[2]);*/
+    Serial.println(angles[2]);
   }
   //     float TorpedoMPU::Return_roll() {
   //       calculate();

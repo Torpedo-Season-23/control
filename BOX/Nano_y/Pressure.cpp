@@ -129,8 +129,8 @@ void PressureSensor::update() {
          Serial.println(" mbar");
   
 }
-float PressureSensor::getPressure(){
+uint16_t PressureSensor::getPressure(){
   this->update();
-  return this->pressure;
+  return (uint16_t)this->pressure;
 
 }

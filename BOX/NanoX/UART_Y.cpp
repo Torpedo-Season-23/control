@@ -6,30 +6,31 @@ void UART_Y::begin() {
   serialY.begin(9600);
 }
 
-void UART_Y::receiveFrame(struct sensorsData* data) {
-  Serial.print("Waiting to receive: ");
-  Serial.println(serialY.available());
+void UART_Y::receiveFrame(struct sensorsData* data){
+  uint8_t recFrame[UART_y_FRAME_SIZE-2];
   while (1) {
     byte x;
     while (!serialY.available());
     x = serialY.read();
     if (x != '(') continue;
-    while (!serialY.available());
-    x = serialY.read();
-    if (x != '(') continue;
-    for (int i = 0; i < 7; i++) {
+    for(int i= 0;i<UART_y_FRAME_SIZE-2;i++){
       while (!serialY.available());
-      Serial.print((char)serialY.read());
+      recFrame[i] = serialY.read();
     }
     while (!serialY.available());
     x = serialY.read();
     if (x != ')') continue;
-    
-    while (!serialY.available());
-    x = serialY.read();
-    if (x != ')') continue;
-    
-    Serial.println();
+    /*for(int i= 0;i<8;i++){
+      Serial.print(recFrame[i]);
+      Serial.print(" ");
+    }
+    Serial.println();*/
+    uint8_t count= 0;
+    for(int i= ANGLE_INDEX;i<3;i+=2){
+      data->angles[count]= recFrame[i]<<8 | recFrame[i+1];
+      count++;
+    }
+    data->pressure= recFrame[PRESSURE_INDEX]<<8 | recFrame[PRESSURE_INDEX+1];
     return;
   }
   /*

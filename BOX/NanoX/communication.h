@@ -28,7 +28,7 @@ public:
   
   void Init();
   void receiveData(uint8_t* acc_frame, uint8_t* thrus_frame);
-  void sendData(int *imu_frame,int imu_size,uint8_t current,int current_size,uint16_t pressure);
+  void sendData();
   void prep_to_send(int *imu_frame,int imu_size,uint8_t current,int current_size,uint16_t pressure);
 };
 

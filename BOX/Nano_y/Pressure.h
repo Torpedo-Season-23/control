@@ -31,6 +31,6 @@ class PressureSensor {
     void init();
     void update();
     uint16_t readData(const uint16_t command, const unsigned long recvDelay = 0);
-    float getPressure();
+    uint16_t getPressure();
 };
 #endif

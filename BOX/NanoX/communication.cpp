@@ -13,7 +13,7 @@ void CommunicationClient::receiveData(uint8_t *z_frame, uint8_t *thrus_frame) {
   this->udp.begin(this->BOXPort);
   int success;
   success = udp.parsePacket();
-  Serial.println(success);
+  //Serial.println(success);
   if (success)
   { 
     Serial.println("Received!");
@@ -23,16 +23,24 @@ void CommunicationClient::receiveData(uint8_t *z_frame, uint8_t *thrus_frame) {
       Serial.print(" ");
     }
     Serial.println();
+    /*switch(z_frame[0]){
+      case 30: digitalWrite(A1,HIGH);digitalWrite(A2,LOW);digitalWrite(A3,LOW);break;
+      case 10: digitalWrite(A1,LOW);digitalWrite(A2,HIGH);digitalWrite(A3,LOW);break;
+      case 20: digitalWrite(A1,LOW);digitalWrite(A2,LOW);digitalWrite(A3,HIGH);break;
+      default: digitalWrite(A1,LOW);digitalWrite(A2,LOW);digitalWrite(A3,LOW);
+          
+    }*/
   }
   udp.flush();
 }
 
-void CommunicationClient::sendData(int *imu_frame, int imu_size, uint8_t current, int current_size, uint16_t pressure) {
-  prep_to_send(imu_frame,  imu_size, current, current_size, pressure);
+void CommunicationClient::sendData() {
+  //prep_to_send(imu_frame,  imu_size, current, current_size, pressure);
 //  Serial.println("here ");
   //  Serial.println(data_sent[4]);
+  uint8_t frame[55];
   udp.beginPacket(IPAddress(192, 168, 1, 9), 7000);
-  int size = udp.write(data_sent, 10);
+  int size = udp.write(frame, 33);
   Serial.println(size);
   udp.endPacket();
 
