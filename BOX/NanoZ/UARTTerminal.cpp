@@ -5,38 +5,29 @@ SoftwareSerial serial(RX_Z, TX_Z);
 
 void Uart_z::startUART(){
     serial.begin(9600); 
-  }
+}
 
 void Uart_z::receiveFrame(uint8_t *thrustFarme , uint8_t *toolFrame){
-  
-  while (serial.available()){
-    byte x= serial.read();
-    byte y= serial.read();
-    uint8_t frame2[ACTUAL_DATA] = {0};
-
-    if(x != '(' && y != '('){
-       continue;
+  uint8_t frame[3];
+  while(true){
+    byte x;
+   while(!serial.available());
+   x= serial.read();
+   if(x!='(')continue;
+   for(int i= 0;i<3;i++){    
+    while(!serial.available());
+    frame[i]= serial.read();
     }
-
-    while (!serial.available());
-    for(int i = 0 ; i < ACTUAL_DATA ; i++){
-      while (!serial.available());
-      frame2[i] = serial.read();
-
-    }
-    
-    while (!serial.available());
-    x= serial.read();
-    y= serial.read();
-  
-    if(x != ')' && y != ')'){
-       continue;
-    }
-    
-    extractData(frame2 , thrustFarme , toolFrame );
-   
+   while(!serial.available());
+   x= serial.read();
+   if(x!=')')continue;
+   Serial.print("Frame is ");
+   for(int i= 0;i<3;i++){
+    Serial.print(frame[i]);
+    Serial.print(" ");
+   }
+   Serial.println();
   }
- 
 }
 
 
@@ -72,11 +63,7 @@ void Uart_z::extractData(uint8_t frame[] , uint8_t * thrustFarme, uint8_t *toolF
         frame[ACTUAL_DATA-1] >>= 1;
     }
   }
-
   thrustFarme = thrust;
   toolFrame = tool;
 
 }
-
-
-

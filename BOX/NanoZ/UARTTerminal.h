@@ -9,8 +9,8 @@
 #define THRUSTERS_FRAME 13         //bytes
 #define THRUSTERS_signal_FRAME 18  //( 6 directions | 6 Motor | 6 exp )(elements)
 #define TOOLS_FRAME 4     
-#define RX_Z 25
-#define TX_Z 24
+#define RX_Z 9
+#define TX_Z 8
 
 
 class Uart_z{

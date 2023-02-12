@@ -1,5 +1,5 @@
 #include "Output_signals.h"
-#include "softStart.h"
+#include "SoftStart.h"
 
 Servo Motors[MOTORS_COUNT];
 int motor_controlled_speed[MOTORS_COUNT] = { MOT_ZERO_SPEED};

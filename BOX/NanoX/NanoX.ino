@@ -27,14 +27,14 @@ void loop() {
   client.receiveData(uart_z_frame+2,uart_z_frame);
   //delay(30);
   uart_y.sendFrame(uart_z_frame);
-    uint8_t frame[UART_Z_FRAME_SIZE];
+  uint8_t frame[UART_Z_FRAME_SIZE];
 
 
-  digitalWrite(PIN, LOW);
-  uart_z.sendFrame(frame);
+  //digitalWrite(PIN, LOW);
+  //uart_z.sendFrame(uart_z_frame);/*
   //if(current-currentTime < 2000)
   //  return;
-  uart_y.receiveFrame(&sensors);
+  //uart_y.receiveFrame(&sensors);
 
   digitalWrite(PIN, HIGH);
 

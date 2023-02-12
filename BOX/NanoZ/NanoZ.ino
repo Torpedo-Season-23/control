@@ -1,4 +1,4 @@
-#include "softStart.h"
+#include "SoftStart.h"
 #include "Output_signals.h"
 #include "UARTTerminal.h"
 
@@ -10,7 +10,7 @@ Uart_z uartz;
 // uint8_t tool[] = {0, 255, 0, 255, 255, 255, 255, 255};
  
 void setup() {
-
+  Serial.begin(115200);
   uartz.startUART();
   soft_start_initial_value();
   tools.init();
@@ -18,9 +18,8 @@ void setup() {
 }
 
 void loop() {
- 
-  uartz.receiveFrame(thrusters.thrustersFrame , tools.tool_frame);
- 
-  // thrusters.prep_And_apply_signal();
-  // tools.apply_signal();
+  Serial.print("Waiting to receive...");
+   uartz.receiveFrame(thrusters.thrustersFrame , tools.tool_frame);
+   thrusters.prep_And_apply_signal();
+   tools.apply_signal();
 }
