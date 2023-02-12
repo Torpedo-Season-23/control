@@ -1,8 +1,9 @@
 // #include "SOFTSPI.h"
+#include <SPI.h>
 #ifndef _PRESSURE_H_
 #define _PRESSURE_H_
 #include <Arduino.h>
-#include "lib/SoftSPi/SoftSPI.h"
+// #include "lib/SoftSPI/SoftSPI.cpp"
 
 #define D1_SEQUENCE 0x0F40      // pressure measurement sequence
 #define D2_SEQUENCE 0x0F20      // temperature measurement sequence
@@ -15,10 +16,10 @@
 #define CONVERSION_DELAY_MS 35
 #define COMM_FREQUENCY 500000
 
-#define MCLK_PIN 6
-#define MISO_PIN 3
-#define MOSI_PIN 5
-#define SCLK_PIN 10
+#define MCLK_PIN 10
+#define MISO_PIN 12
+#define MOSI_PIN 11
+#define SCLK_PIN 13
 class PressureSensor {
   private:
     float pressure;

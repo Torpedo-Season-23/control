@@ -1,8 +1,8 @@
-/*#include "Pressure.h"
+#include "Pressure.h"
 
-SoftSPI mySPI(MOSI_PIN, MISO_PIN, SCLK_PIN);
+// SPI mySPI(MOSI_PIN, MISO_PIN, SCLK_PIN);
 void PressureSensor::init() {
-    mySPI.begin();
+    SPI.begin();
     pinMode(MCLK_PIN, OUTPUT);
     delay(100);
 
@@ -22,21 +22,21 @@ PressureSensor::PressureSensor() {
 }
 
 uint16_t PressureSensor::readData(const uint16_t command, const unsigned long recvDelay) {
-    mySPI.beginTransaction(SPISettings(COMM_FREQUENCY, MSBFIRST, SPI_MODE0));
+    // SPI.beginTransaction(SPISettings(COMM_FREQUENCY, MSBFIRST, SPI_MODE0));
     // transfer 3 byte reset sequence
-    mySPI.transfer((RESET_SEQUENCE >> 16) & 0xFF);
-    mySPI.transfer((RESET_SEQUENCE >> 8) & 0xFF);
-    mySPI.transfer(RESET_SEQUENCE & 0xFF);
+    SPI.transfer((RESET_SEQUENCE >> 16) & 0xFF);
+    SPI.transfer((RESET_SEQUENCE >> 8) & 0xFF);
+    SPI.transfer(RESET_SEQUENCE & 0xFF);
 
-    mySPI.transfer16(command); // transfer 2 byte command
-    mySPI.endTransaction();
+    SPI.transfer16(command); // transfer 2 byte command
+    SPI.endTransaction();
 
     if (recvDelay > 0)
         delay(recvDelay); // wait for conversion end
 
-    mySPI.beginTransaction(SPISettings(COMM_FREQUENCY, MSBFIRST, SPI_MODE1));
-    uint16_t data = mySPI.transfer16(0);
-    mySPI.endTransaction();
+    SPI.beginTransaction(SPISettings(COMM_FREQUENCY, MSBFIRST, SPI_MODE1));
+    uint16_t data = SPI.transfer16(0);
+    SPI.endTransaction();
 
     // Serial.print("Data received (cmd: 0x");
     // Serial.print(command, HEX);
@@ -60,7 +60,7 @@ void PressureSensor::update() {
       Serial.println(word3);
       Serial.print("Calibration word 4: ");
       Serial.println(word4);*/
-/*
+
     const uint16_t c1 = word1 >> 1;
     const uint16_t c2 = ((word3 & 0x3F) << 6) | (word4 & 0x3F);
     const uint16_t c3 = word4 >> 6;
@@ -111,6 +111,8 @@ void PressureSensor::update() {
     this->temperature = (float)temp / 10;
     this->pressure = (float)p / 10;
     this->depth = (this->pressure * 100) / (1000 * 9.81);
+   /* Serial.println("temperature");
+    Serial.println(temperature);*/
 
     //
     //    Serial.print("Temperature: ");
@@ -122,13 +124,13 @@ void PressureSensor::update() {
         //Serial.print(temp);
         //Serial.println(" °C");
 */
-        // Serial.print("Pressure: ");
-        // Serial.print(pressure);
-        // Serial.println(" mbar");
-  /*
+         Serial.print("Pressure: ");
+         Serial.print(pressure);
+         Serial.println(" mbar");
+  
 }
 float PressureSensor::getPressure(){
   this->update();
   return this->pressure;
 
-}*/
+}

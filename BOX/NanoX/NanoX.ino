@@ -10,26 +10,31 @@ struct sensorsData sensors;
 UART_Z uart_z;
 UART_Y uart_y;
 
+long currentTime= millis();
 
 void setup() {
   Serial.begin(115200);
   client.Init();
-  //uart_z.begin();
+  uart_z.begin();
   uart_y.begin();
-  pinMode(A1, OUTPUT);
-  digitalWrite(A1, HIGH);
+  pinMode(3, OUTPUT);
+  digitalWrite(3, HIGH);
 }
 void loop() {
   //digitalWrite(13,HIGH);
 
   client.receiveData(uart_z_frame+2,uart_z_frame);
-  //uart_z.sendFrame(uart_z_frame);
-  //Serial.println("Printing");
+  //delay(30);
   uart_y.sendFrame(uart_z_frame);
-  /*digitalWrite(A1, LOW);
+  long current= millis();
+  //if(current-currentTime < 2000)
+  //  return;
+  currentTime= current;
+  digitalWrite(3, LOW);
   uart_y.receiveFrame(&sensors);
-  digitalWrite(A1, HIGH);*/
-
+  digitalWrite(3, HIGH);
+  uint8_t frame[11];
+  uart_z.sendFrame(frame);
   //Switch Converters
   /*
     //Receive Communication

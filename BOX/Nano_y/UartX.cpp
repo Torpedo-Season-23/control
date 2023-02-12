@@ -30,7 +30,7 @@ void Nano_X::Prepare_frame(uint8_t Datafram[8]) {
 
 void Nano_X::Send_Data() {
   softSerial.print("((abcdefg))");
-  Serial.println("Sent...");
+ // Serial.println("Sent...");
   /*
   uint8_t Datafram[8];
   Prepare_frame(Datafram);
@@ -44,8 +44,9 @@ void Nano_X::Send_Data() {
 }
 
 void Nano_X::receive() {
-  Serial.print("Waiting to receive: ");
-  Serial.println(softSerial.available());
+  //Serial.print("Waiting to receive: ");
+  //Serial.println(softSerial.available());
+  uint8_t recFrame[3];
   while (1) {
     byte x;
     while (!softSerial.available());
@@ -54,15 +55,19 @@ void Nano_X::receive() {
     while (!softSerial.available());
     for (int i = 0; i < 3; i++) {
       while (!softSerial.available());
-      Serial.print(softSerial.read());
-      Serial.print(" ");
-      
+      recFrame[i]= softSerial.read();
     }
     while (!softSerial.available());
     x = softSerial.read();
     if (x != ')') continue;
-    
+    noInterrupts();
+    Serial.print("Frame is ");
+    for(int i= 0;i<3;i++){
+      Serial.print( recFrame[i]);
+      Serial.print(" ");
+    }
     Serial.println();
+    interrupts();
     return;
   }
 }
