@@ -96,22 +96,68 @@ void Controller::Update() {
     }
   
   //vertical frame
+  switch(this->speed){
+    case 1:
+    if (PS3.getButtonPress(L2)) {
+        this->vertical_frame[1] = 1633;
+        this->vertical_frame[0] = 1367;
+        } 
+    else {
+        this->vertical_frame[1] = 1500;
+        this->vertical_frame[0] = 1500;}
+    if (PS3.getButtonPress(R2)||PS3.getButtonPress(L2)) {
+        this->vertical_frame[0] = 1633;
+        this->vertical_frame[1] = 1367;
+        if (PS3.getButtonPress(L2)) {
+          this->vertical_frame[1] = 1633;
+          this->vertical_frame[0] = 1367;} 
+      } 
+    else {
+        this->vertical_frame[1] = 1500;
+        this->vertical_frame[0] = 1500;}
 
-
-
-    if (PS3.getButtonPress(R2)) {
+    break;
+    case 2:
+    if (PS3.getButtonPress(L2)) {
+        this->vertical_frame[1] = 1766;
+        this->vertical_frame[0] = 1234;} 
+    else {
+        this->vertical_frame[1] = 1500;
+        this->vertical_frame[0] = 1500;}
+    if (PS3.getButtonPress(R2)||PS3.getButtonPress(L2)) {
+        this->vertical_frame[0] = 1766;
+        this->vertical_frame[1] = 1234;
+        if (PS3.getButtonPress(L2)) {
+          this->vertical_frame[1] = 1766;
+          this->vertical_frame[0] = 1234;} 
+        } 
+    else {
+        this->vertical_frame[1] = 1500;
+        this->vertical_frame[0] = 1500;}
+    break;
+    case 3:
+    if (PS3.getButtonPress(L2)) {
         this->vertical_frame[1] = 1900;
         this->vertical_frame[0] = 1100;} 
     else {
         this->vertical_frame[1] = 1500;
         this->vertical_frame[0] = 1500;}
-
-    if (PS3.getButtonPress(L2)) {
+    if (PS3.getButtonPress(R2)||PS3.getButtonPress(L2)) {
         this->vertical_frame[0] = 1900;
-        this->vertical_frame[1] = 1100;} 
+        this->vertical_frame[1] = 1100;
+        if (PS3.getButtonPress(L2)) {
+          this->vertical_frame[1] = 1900;
+          this->vertical_frame[0] = 1100;} 
+        } 
     else {
         this->vertical_frame[1] = 1500;
         this->vertical_frame[0] = 1500;}
+    break;
+    default:
+    this->vertical_frame[1] = 1500;
+    this->vertical_frame[0] = 1500;
+    break;
+  }
 
   //acc frame
     if (PS3.getButtonClick(TRIANGLE)) {

@@ -13,7 +13,7 @@ class Controller {
 private:
   uint8_t acc_array[4];
   int Td_array[3]={0};
-  int vertical_frame[2];
+  int vertical_frame[2]={1500,1500};
   bool flags[4]={0};
   int speed;
 

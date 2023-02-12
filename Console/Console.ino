@@ -13,19 +13,14 @@ void setup() {
 
 void loop() {
  
-
-
  
+  controller.Update();
   int speed=controller.getspeed();
   int* array=controller.get_hframe();
   int* v=controller.get_vframe();
-  int arr[3]={128,0,0};
-  float arra[2]={0,1900};
   uint8_t* acc=controller.get_accframe();
-
-  controller.Update();
-  thruster.set_h_forces(array);
-  thruster.set_v_forces(v);
+  thruster.set_h_forces(controller.get_hframe());
+  thruster.set_v_forces(controller.get_vframe());
   double * res;
   res=thruster.get_thruster_frame();
   Serial.println();
