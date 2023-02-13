@@ -18,8 +18,9 @@ void Nano_X::Set_Pressure(int Pressure) {
 
 void Nano_X::Prepare_frame(uint8_t Datafram[8]) {
   uint8_t Index = 0;
-  for(int i=0;i>6;i++)
-    Datafram[i]=i;
+  for(uint8_t i=0;i<6;i++){   
+    //Serial.println(i);
+    Datafram[i]=i;}
   /*for (int i = Imu_Angles_Index; i < Imu_Angles_Index; i + 2) {
     Datafram[i] = highByte(IMU_Angles[Index]);
     Datafram[i + 1] = lowByte(IMU_Angles[Index]);
@@ -28,6 +29,12 @@ void Nano_X::Prepare_frame(uint8_t Datafram[8]) {
 
   Datafram[PRESSURE_index] = pressure >> 8;
   Datafram[PRESSURE_index + 1] = pressure & 0xFF;
+  /*for(int i= 0;i<8 ; i++)
+  {
+    Serial.print(Datafram[i]);
+    Serial.print(" ");
+  }
+  Serial.println();*/
 }
 
 void Nano_X::Send_Data() {
@@ -52,16 +59,14 @@ void Nano_X::receive() {
     x = softSerial.read();
     if (x != '(') continue;
     while (!softSerial.available());
-    for (int i = 0; i < 3; i++) {
-      while (!softSerial.available());
-      recFrame[i]= softSerial.read();
-    }
+    while (!softSerial.available());
+    recFrame[0]= softSerial.read();
     while (!softSerial.available());
     x = softSerial.read();
     if (x != ')') continue;
     noInterrupts();
     Serial.print("Frame is ");
-    for(int i= 0;i<3;i++){
+    for(int i= 0;i<1;i++){
       Serial.print( recFrame[i]);
       Serial.print(" ");
     }

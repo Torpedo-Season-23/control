@@ -1,5 +1,6 @@
 #include "communication.h"
 
+IPAddress cons(192,168,1,9);
 //initiatize the ethertnet module
 void CommunicationClient::Init() {
   Ethernet.begin(this->mac, this->BOXIP);
@@ -9,53 +10,27 @@ void CommunicationClient::ips_setting(IPAddress Box, IPAddress Console) {
 
 }
 // receiving function
-void CommunicationClient::receiveData(uint8_t *z_frame, uint8_t *thrus_frame) {
+void CommunicationClient::receiveData(uint8_t *z_frame) {
   this->udp.begin(this->BOXPort);
   int success;
   success = udp.parsePacket();
-  //Serial.println(success);
   if (success)
   { 
-    Serial.println("Received!");
+    Serial.print("Received! Success is ");
+    Serial.println(success);
     udp.read(z_frame, success + 1);
-    for(int i= 0;i<3;i++){
+    /*for(int i= 0;i<3;i++){
       Serial.print(z_frame[i]);
       Serial.print(" ");
     }
-    Serial.println();
-    /*switch(z_frame[0]){
-      case 30: digitalWrite(A1,HIGH);digitalWrite(A2,LOW);digitalWrite(A3,LOW);break;
-      case 10: digitalWrite(A1,LOW);digitalWrite(A2,HIGH);digitalWrite(A3,LOW);break;
-      case 20: digitalWrite(A1,LOW);digitalWrite(A2,LOW);digitalWrite(A3,HIGH);break;
-      default: digitalWrite(A1,LOW);digitalWrite(A2,LOW);digitalWrite(A3,LOW);
-          
-    }*/
+    Serial.println();*/
   }
   udp.flush();
 }
 
-void CommunicationClient::sendData() {
-  //prep_to_send(imu_frame,  imu_size, current, current_size, pressure);
-//  Serial.println("here ");
-  //  Serial.println(data_sent[4]);
-  uint8_t frame[55];
-  udp.beginPacket(IPAddress(192, 168, 1, 9), 7000);
-  int size = udp.write(frame, 33);
-  Serial.println(size);
+void CommunicationClient::sendData(uint8_t* frame) {
+  udp.beginPacket(cons, 5000);
+  int size = udp.write(frame, 15);
   udp.endPacket();
-
   udp.stop();
-}
-void CommunicationClient::prep_to_send(int *imu_frame, int imu_size, uint8_t current, int current_size, uint16_t pressure) {
-  int x = 0;
-  for (int j = 0; j < imu_size; j++) {
-    this->data_sent[x++] = lowByte(imu_frame[j]);
-    this->data_sent[x++] = highByte(imu_frame[j]);
-  }
-
-  this->data_sent[x++] = current;
-
-
-  this->data_sent[x++] = lowByte(pressure);
-  this->data_sent[x++] = highByte(pressure);
 }

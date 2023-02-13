@@ -25,11 +25,11 @@ void setup() {
 }
 void loop() {
   long current = millis();
-  if (current - currentTime > 200) {
+  if (current - currentTime > 100) {
     //noInterrupts();
     //Serial.print("HERE!");
-    //uart_data.Set_IMU_Angles(IMU.getangles());
-    //uart_data.Set_Pressure(pressur_S.getPressure());
+    uart_data.Set_IMU_Angles(IMU.getangles());
+    uart_data.Set_Pressure(pressur_S.getPressure());
     currentTime= current;
   }
   //interrupts();

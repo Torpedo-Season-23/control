@@ -8,16 +8,12 @@
 #define ANGLE_INDEX 0
 #define PRESSURE_INDEX ANGLE_INDEX + 3*2
 
-struct sensorsData{
-    int angles[3];
-    uint16_t pressure;
-};
 
 class UART_Y{
     public:
         UART_Y(){};
         void begin();
-        void receiveFrame(struct sensorsData* frame);
+        void receiveFrame(uint8_t* frame);
         void sendFrame(uint8_t*);
 };
 #endif

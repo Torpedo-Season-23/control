@@ -6,7 +6,11 @@ void UART_Z::begin(){
     serial.begin(9600);}
 
 void UART_Z::sendFrame(uint8_t* sendingFrame){
-  sendingFrame[1]= '(';
-  sendingFrame[1+4]= ')';
-  serial.print("(hel)");
+  long now= millis();
+  serial.write('(');
+  serial.write(sendingFrame,14);
+  serial.write(')');
+  Serial.print("Current Time is : ");
+  Serial.println(millis()-now);
+  
 }
