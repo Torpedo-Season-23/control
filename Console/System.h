@@ -1,11 +1,10 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-
 #include "IController.h"
 #include "Thrusters.h"
 #include "communication.h"
-#include "controller.h"
+#include "psgamepad.h"
 #include "lf310.h"
 #include <Arduino.h>
 
