@@ -73,8 +73,10 @@ void prepareData(uint8_t* accessories, double* thrusters, uint8_t* sentFrame) { 
 void sendData(uint8_t* sentFrame) {
 
   int x = udp.beginPacket(boxIP, boxPort);
-  if (!x)
+  if (!x) {
     Serial.println("Problem resolving the hostname or port");
+    comm_init();
+  }
 
   udp.write(sentFrame, sentFrameSize);
   udp.endPacket();
