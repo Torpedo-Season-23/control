@@ -1,12 +1,12 @@
 #ifndef _UART_H_
 #define _UART_H_
 
-#include "../AltSoftSerial/AltSoftSerial.h"
+#include "../SoftwareSerial/src/SoftwareSerial.h"
 #include "communication.h"
 
 class UART : public Communication {
  private:
-  AltSoftSerial *softSerial;
+  SoftwareSerial *softSerial;
   uint8_t frameReceived[UART_FRAME_RECEIVED_SIZE];
   uint8_t frameSent[UART_FRAME_SENT_SIZE];
 

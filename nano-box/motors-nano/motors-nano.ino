@@ -1,15 +1,15 @@
-#include "lib/code/uart.h"
+#include "lib/code/mnano.h"
 
-UART mUart(MOTORS_SOFTWARE_SERIAL_RX, MOTORS_SOFTWARE_SERIAL_TX);
+MNANO mnano;
 
 void setup() {
-  Serial.begin(BAUD_RATE);
-  mUart.init();
+  pinMode(LED_BUILTIN, OUTPUT);
+  mnano.init();
 }
 
 void loop() {
   blinkLed();
-  mUart.receive();
+  mnano.update();
 }
 
 void blinkLed() {
