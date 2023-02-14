@@ -1,37 +1,23 @@
 #include "communication.h"
 
-EthernetUDP udp;
-
-IPAddress boxIP(192, 168, 1, 7);
-IPAddress consoleIP(192, 168, 1, 9);
-uint16_t boxPort = 8000;
-uint16_t consolePort = 7000;
-uint8_t mac[6] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x06 };
-
-void comm_init() {
-
-  Ethernet.begin(mac, consoleIP);
+void Communication:: comm_init() {
+  Ethernet.begin(this->mac, this->consoleIP);
 }
 
-
-void receiveData(uint8_t* receivedFrame) {
-
-  udp.begin(consolePort);
-  int frameSize = udp.parsePacket();
+void Communication:: receiveData(uint8_t* receivedFrame) {
+  this->udp.begin(this->consolePort);
+  int frameSize = this->udp.parsePacket();
   Serial.println(frameSize);
   if (frameSize > 0) {
-
-    udp.read(receivedFrame, receivedFrameSize);
-    udp.flush();
-    udp.stop();
+    this->udp.read(receivedFrame, receivedFrameSize);
+    this->udp.flush();
+    this->udp.stop();
   }
 }
 
-void getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //modify received frame
-
+void Communication:: getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //modify received frame
   Serial.println("Readings:");
   Serial.println("Imu (3 values) -- Pressure (1 value) -- Current (2 values)");  //order of sending needs to be changed in box
-
   int j = 0;
   for (int i = 0; i < IMU + PRESSURE; i++) {
     sensors[i] = receivedFrame[j] + receivedFrame[j + 1] * 256;
@@ -47,7 +33,7 @@ void getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //modify received f
   }
 }
 
-void prepareData(uint8_t* accessories, double* thrusters, uint8_t* sentFrame) {  //modify sent frame
+void Communication:: prepareData(uint8_t* accessories, double* thrusters, uint8_t* sentFrame) {  //modify sent frame
 
   int x = 0;
   int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
@@ -70,15 +56,13 @@ void prepareData(uint8_t* accessories, double* thrusters, uint8_t* sentFrame) { 
   }
 }
 
-void sendData(uint8_t* sentFrame) {
-
-  int x = udp.beginPacket(boxIP, boxPort);
+void Communication:: sendData(uint8_t* sentFrame) {
+  int x = this->udp.beginPacket(this->boxIP, this->boxPort);
   if (!x) {
     Serial.println("Problem resolving the hostname or port");
-    comm_init();
+    this->comm_init();
   }
-
-  udp.write(sentFrame, sentFrameSize);
-  udp.endPacket();
-  udp.stop();
+  this->udp.write(sentFrame, sentFrameSize);
+  this->udp.endPacket();
+  this->udp.stop();
 }

@@ -1,28 +1,13 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-
-#include <PS3USB.h>
-#ifdef dobogusinclude
-#include <spi4teensy3.h>
-#endif
-#include <SPI.h>
-
-
-
-class Controller {
+#include"IController.h"
+class PSGamepad:public IController {
 private:
-  uint8_t acc_array[4];
-  int Td_array[3]={0};
-  int vertical_frame[2]={1500,1500};
-  bool flags[4]={0};
-  int speed;
-
+  PS3USB PS3;
+  void update_vmotion();
+  void update_hmotion();
 public:
-  void init();
+  PSGamepad() : PS3(&Usb) {}
   void Update();
-  int* get_hframe();
-  int* get_vframe();
-  uint8_t* get_accframe();
-  int getspeed();
 };
 #endif
