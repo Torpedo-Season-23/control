@@ -10,7 +10,6 @@ void ENANO::init() {
 }
 
 void ENANO::update() {
-  // * Receiving Process
   this->ethernet->receive();
   this->mapper->setEthernetReceivedFrame(this->ethernet->getFrameReceived());
   this->uart->setFrameSent(this->mapper->getUartSentFrame());
@@ -20,7 +19,9 @@ void ENANO::update() {
 }
 
 void ENANO::getSensors() {
+  digitalWrite(SENSOR_INTERRUPT_PIN, LOW);
   this->uart->receive();
+  digitalWrite(SENSOR_INTERRUPT_PIN, HIGH);
   this->mapper->setUartReceivedFrame(this->uart->getFrameReceived());
   this->ethernet->setFrameSent(this->mapper->getEthernetSentFrame());
 }
