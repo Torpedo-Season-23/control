@@ -3,7 +3,6 @@
 
 class Sensor {
  protected:
-  float data;
   bool working;
 
  public:
@@ -11,7 +10,6 @@ class Sensor {
   virtual void init() = 0;
   virtual void update() = 0;
   virtual void reset() = 0;
-  virtual float getData();
   virtual void startWorking();
   virtual void stopWorking();
   virtual void toggleWorking();

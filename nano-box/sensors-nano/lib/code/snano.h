@@ -2,6 +2,7 @@
 #define _SNANO_H_
 
 #include "config.h"
+#include "mapper.h"
 #include "mpu_sensor.h"
 #include "pressure_sensor.h"
 #include "uart.h"
@@ -11,12 +12,14 @@ class SNano {
   MPU6050Sensor *mpu;
   PressureSensor *pressure;
   UART *uart;
-  uint8_t frame[UART_FRAME_SENT_SIZE];
+  SensorsMapper *mapper;
 
  public:
   SNano();
   void init();
   void update();
+  void receive();
+  void send();
 };
 
 #ifndef _SNANO_CPP_

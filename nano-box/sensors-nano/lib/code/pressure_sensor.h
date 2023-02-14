@@ -15,6 +15,7 @@ class PressureSensor : public Sensor {
   float pressure;
   float temperature;
   float depth;
+  uint8_t data[PRESSURE_FRAME_SIZE];
   uint16_t readData(const uint16_t command, const unsigned long recvDelay = 0);
 
  public:
@@ -25,6 +26,7 @@ class PressureSensor : public Sensor {
   float getDepth();
   float getPressure();
   virtual void display();
+  uint8_t* getData();
 };
 
 #ifndef _PRESSURE_SENSOR_CPP_

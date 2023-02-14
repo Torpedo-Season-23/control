@@ -7,14 +7,14 @@
 
 class BoxEthernet : public Communication {
  private:
-  uint8_t frameRecieved[ETHERNET_FRAME_RECIEVED_SIZE];
+  uint8_t frameReceived[ETHERNET_FRAME_RECEIVED_SIZE];
   uint8_t frameSent[ETHERNET_FRAME_SENT_SIZE];
   uint8_t mac[MAC_COUNT];
   IPAddress boxIp;
   IPAddress consoleIp;
   EthernetUDP* udp;
   uint8_t packetSize;
-  unsigned long lastTimeRecieved;
+  unsigned long lastTimeReceived;
   void display();
 
  public:
@@ -23,9 +23,9 @@ class BoxEthernet : public Communication {
   virtual void reset();
   virtual void update();
   virtual void setFrameSent(uint8_t frame[ETHERNET_FRAME_SENT_SIZE]);
-  virtual uint8_t* getFrameRecieved();
+  virtual uint8_t* getFrameReceived();
   virtual uint8_t* getFrameSent();
-  virtual void recieve();
+  virtual void receive();
   virtual void send();
 };
 

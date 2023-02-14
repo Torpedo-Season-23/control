@@ -4,7 +4,7 @@ UART::UART(uint8_t rxPin, uint8_t txPin) {
 
 void UART::init() { this->softSerial->begin(SOFTWARE_SERIAL_BAUD_RATE); }
 
-void UART::recieve() {
+void UART::receive() {
   Serial.print("Recieving: ");
   Serial.println(this->softSerial->available());
   if (!this->softSerial->available())
@@ -21,10 +21,10 @@ void UART::recieve() {
     this->reset();
     return;
   }
-  for (int i = 2; i < UART_FRAME_RECIEVED_SIZE - 2; i++) {
+  for (int i = 2; i < UART_FRAME_RECEIVED_SIZE - 2; i++) {
     while (!this->softSerial->available())
       ;
-    frameRecieved[i] = this->softSerial->read();
+    frameReceived[i] = this->softSerial->read();
   }
   while (!this->softSerial->available())
     ;
@@ -48,8 +48,8 @@ void UART::send() {
 }
 
 void UART::reset() {
-  for (int i = 0; i < UART_FRAME_RECIEVED_SIZE; i++) {
-    this->frameRecieved[i] = 0;
+  for (int i = 0; i < UART_FRAME_RECEIVED_SIZE; i++) {
+    this->frameReceived[i] = 0;
   }
   for (int i = 0; i < UART_FRAME_SENT_SIZE; i++) {
     this->frameSent[i] = 0;
@@ -57,7 +57,7 @@ void UART::reset() {
 }
 
 void UART::update() {
-  this->recieve();
+  this->receive();
   this->send();
 }
 
@@ -71,6 +71,6 @@ void UART::setFrameSent(uint8_t frame[UART_FRAME_SENT_SIZE]) {
   frameSent[UART_FRAME_SENT_SIZE - 2] = RELIABLE_END_FRAME;
 }
 
-uint8_t *UART::getFrameRecieved() { return this->frameRecieved; }
+uint8_t *UART::getFrameReceived() { return this->frameReceived; }
 
 uint8_t *UART::getFrameSent() { return this->frameSent; }

@@ -7,6 +7,7 @@ PressureSensor::PressureSensor() {
   this->pressure = 0;
   this->temperature = 0;
   this->depth = 0;
+  for (uint8_t i = 0; i < PRESSURE_FRAME_SIZE; i++) this->data[i] = 0;
 }
 
 void PressureSensor::init() {
@@ -63,7 +64,8 @@ void PressureSensor::update() {
   this->pressure = (float)p / 10;
   this->depth = max(0, ((this->pressure - AIR_PRESSURE) * 100) / (1000 * 9.81));  // formula: P = ρ(1000) * g(9.81) * h
 
-  this->data = this->depth;
+  this->data[0] = (uint8_t)this->depth >> 8;
+  this->data[1] = (uint8_t)this->depth & 0xFF;
 }
 
 void PressureSensor::reset() {
@@ -112,4 +114,8 @@ uint16_t PressureSensor::readData(const uint16_t command, const unsigned long re
   this->spi->endTransaction();
 
   return data;
+}
+
+uint8_t* PressureSensor::getData() {
+  return this->data;
 }

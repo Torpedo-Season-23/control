@@ -1,15 +1,15 @@
 Mapper::Mapper() {
 }
 
-void Mapper::setEthernetRecievedFrame(uint8_t frame[ETHERNET_FRAME_RECIEVED_SIZE]) {
-  for (int i = 0; i < ETHERNET_FRAME_RECIEVED_SIZE; i++) {
+void Mapper::setEthernetReceivedFrame(uint8_t frame[ETHERNET_FRAME_RECEIVED_SIZE]) {
+  for (int i = 0; i < ETHERNET_FRAME_RECEIVED_SIZE; i++) {
     this->ethernetRecievedFrame[i] = frame[i];
   }
   this->convertUartToEthernet();
 }
 
-void Mapper::setUartRecievedFrame(uint8_t frame[UART_FRAME_RECIEVED_SIZE]) {
-  for (int i = 0; i < UART_FRAME_RECIEVED_SIZE; i++) {
+void Mapper::setUartReceivedFrame(uint8_t frame[UART_FRAME_RECEIVED_SIZE]) {
+  for (int i = 0; i < UART_FRAME_RECEIVED_SIZE; i++) {
     this->uartRecievedFrame[i] = frame[i];
   }
   this->convertEthernetToUart();

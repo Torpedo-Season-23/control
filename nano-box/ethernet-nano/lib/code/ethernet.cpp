@@ -9,8 +9,8 @@ BoxEthernet::BoxEthernet() {
   this->consoleIp = IPAddress(IP_0, IP_1, IP_2, CONSOLE_IP_3);
   this->udp = new EthernetUDP();
   this->packetSize = 0;
-  for (uint8_t i = 0; i < ETHERNET_FRAME_RECIEVED_SIZE; i++) {
-    this->frameRecieved[i] = 0;
+  for (uint8_t i = 0; i < ETHERNET_FRAME_RECEIVED_SIZE; i++) {
+    this->frameReceived[i] = 0;
   }
   for (uint8_t i = 0; i < ETHERNET_FRAME_SENT_SIZE; i++) {
     this->frameSent[i] = 0;
@@ -20,12 +20,12 @@ BoxEthernet::BoxEthernet() {
 void BoxEthernet::init() {
   Ethernet.begin(this->mac, this->boxIp);
   this->udp->begin(CONSOLE_PORT);
-  this->lastTimeRecieved = millis();
+  this->lastTimeReceived = millis();
 }
 
 void BoxEthernet::reset() {
-  for (int i = 0; i < ETHERNET_FRAME_RECIEVED_SIZE; i++) {
-    this->frameRecieved[i] = 0;
+  for (int i = 0; i < ETHERNET_FRAME_RECEIVED_SIZE; i++) {
+    this->frameReceived[i] = 0;
   }
   for (int i = 0; i < ETHERNET_FRAME_SENT_SIZE; i++) {
     this->frameSent[i] = 0;
@@ -39,17 +39,17 @@ void BoxEthernet::setFrameSent(uint8_t frame[ETHERNET_FRAME_SENT_SIZE]) {
   }
 }
 
-uint8_t* BoxEthernet::getFrameRecieved() { return this->frameRecieved; }
+uint8_t* BoxEthernet::getFrameReceived() { return this->frameReceived; }
 
 uint8_t* BoxEthernet::getFrameSent() { return this->frameSent; }
 
-void BoxEthernet::recieve() {
+void BoxEthernet::receive() {
   this->packetSize = this->udp->parsePacket();
-  if (this->packetSize == ETHERNET_FRAME_RECIEVED_SIZE) {
-    udp->read(this->frameRecieved, this->packetSize);
-    this->lastTimeRecieved = millis();
+  if (this->packetSize == ETHERNET_FRAME_RECEIVED_SIZE) {
+    udp->read(this->frameReceived, this->packetSize);
+    this->lastTimeReceived = millis();
   } else {
-    if (millis() - this->lastTimeRecieved > CRITICAL_TIME) {
+    if (millis() - this->lastTimeReceived > CRITICAL_TIME) {
       this->reset();
     }
   }
@@ -62,7 +62,7 @@ void BoxEthernet::send() {
 }
 
 void BoxEthernet::update() {
-  this->recieve();
+  this->receive();
   this->send();
   if (DEBUG_ETHERNET) this->display();
 }
@@ -97,11 +97,11 @@ void BoxEthernet::display() {
     Serial.print(CONSOLE_PORT);
   }
 
-  SHOW_MAC_AND_IP == 1 ? Serial.print(" | Frame recieved: ")
-                       : Serial.print("Frame recieved: ");
-  for (int i = 0; i < ETHERNET_FRAME_RECIEVED_SIZE; i++) {
-    Serial.print(this->frameRecieved[i]);
-    if (i < ETHERNET_FRAME_RECIEVED_SIZE - 1) {
+  SHOW_MAC_AND_IP == 1 ? Serial.print(" | Frame received: ")
+                       : Serial.print("Frame received: ");
+  for (int i = 0; i < ETHERNET_FRAME_RECEIVED_SIZE; i++) {
+    Serial.print(this->frameReceived[i]);
+    if (i < ETHERNET_FRAME_RECEIVED_SIZE - 1) {
       Serial.print(" ");
     }
   }

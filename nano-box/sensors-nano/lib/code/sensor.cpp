@@ -1,6 +1,5 @@
 Sensor::Sensor() {
   this->working = false;
-  this->data = 0;
 }
 
 void Sensor::startWorking() {
@@ -13,8 +12,4 @@ void Sensor::stopWorking() {
 
 void Sensor::toggleWorking() {
   this->working = !this->working;
-}
-
-float Sensor::getData() {
-  return this->data;
 }

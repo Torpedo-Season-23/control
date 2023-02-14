@@ -10,15 +10,17 @@ void ENANO::init() {
 }
 
 void ENANO::update() {
-  // * Recieve Process
-  this->ethernet->recieve();
-  this->mapper->setEthernetRecievedFrame(this->ethernet->getFrameRecieved());
+  // * Receiving Process
+  this->ethernet->receive();
+  this->mapper->setEthernetReceivedFrame(this->ethernet->getFrameReceived());
   this->uart->setFrameSent(this->mapper->getUartSentFrame());
   this->uart->send();
 
-  // * Sent Process
-  this->uart->recieve();
-  this->mapper->setUartRecievedFrame(this->uart->getFrameRecieved());
-  this->ethernet->setFrameSent(this->mapper->getEthernetSentFrame());
   this->ethernet->send();
+}
+
+void ENANO::getSensors() {
+  this->uart->receive();
+  this->mapper->setUartReceivedFrame(this->uart->getFrameReceived());
+  this->ethernet->setFrameSent(this->mapper->getEthernetSentFrame());
 }

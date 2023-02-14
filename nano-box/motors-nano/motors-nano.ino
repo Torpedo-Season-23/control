@@ -9,7 +9,7 @@ void setup() {
 
 void loop() {
   blinkLed();
-  mUart.recieve();
+  mUart.receive();
 }
 
 void blinkLed() {

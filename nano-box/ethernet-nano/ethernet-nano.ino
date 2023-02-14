@@ -1,15 +1,18 @@
-#include "lib/code/euart.h"
+#include "lib/code/enano.h"
 
-EUART euart;
+ENANO enano;
+long currentTime;
 
 void setup() {
-  euart.init();
+  enano.init();
 }
 
 void loop() {
+  currentTime = millis();
   blinkLed();
-  euart.send();
-  euart.recieve();
+  enano.update();
+  if (millis() - currentTime > GET_SENSORS_TIME)
+    enano.getSensors();
 }
 
 void blinkLed() {

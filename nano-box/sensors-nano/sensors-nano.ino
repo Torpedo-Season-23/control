@@ -3,10 +3,15 @@
 SNano snano;
 
 void setup() {
-  Serial.begin(BAUD_RATE);
   snano.init();
+  attachInterrupt(digitalPinToInterrupt(SENSORS_INTERRUPT_PIN), handle, LOW);
 }
 
 void loop() {
   snano.update();
+  snano.receive();
+}
+
+void handle() {
+  snano.send();
 }

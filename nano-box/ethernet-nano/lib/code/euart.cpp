@@ -8,9 +8,9 @@ void EUART::init() {
   this->mUart->init();
 }
 
-void EUART::recieve() {
-  this->sUart->recieve();
-  memcpy(this->frameRecieved, this->sUart->getFrameRecieved(), UART_FRAME_RECIEVED_SIZE);
+void EUART::receive() {
+  this->sUart->receive();
+  memcpy(this->frameReceived, this->sUart->getFrameReceived(), UART_FRAME_RECEIVED_SIZE);
 }
 
 void EUART::send() {
@@ -27,6 +27,6 @@ void EUART::setFrameSent(uint8_t frame[UART_FRAME_SENT_SIZE]) {
   memcpy(this->frameSent, frame, UART_FRAME_SENT_SIZE);
 }
 
-uint8_t *EUART::getFrameRecieved() {
-  return this->frameRecieved;
+uint8_t *EUART::getFrameReceived() {
+  return this->frameReceived;
 }

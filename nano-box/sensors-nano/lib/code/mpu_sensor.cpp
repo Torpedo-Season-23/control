@@ -16,7 +16,6 @@ void MPU6050Sensor::init() {
 void MPU6050Sensor::update() {
   if (!this->working) return;
   this->mpu->getMotion6(&this->accelX, &this->accelY, &this->accelZ, &this->gyroX, &this->gyroY, &this->gyroZ);
-  this->data = this->accelX;
 }
 
 void MPU6050Sensor::reset() {
@@ -36,6 +35,10 @@ void MPU6050Sensor::display() {
   Serial.print(this->accelY);
   Serial.print(" | Accel Z: ");
   Serial.print(this->accelZ);
+}
+
+uint8_t* MPU6050Sensor::getData() {
+  return this->data;
 }
 
 void wireImplInit() {

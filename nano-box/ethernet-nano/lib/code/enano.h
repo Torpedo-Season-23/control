@@ -16,6 +16,7 @@ class ENANO {
   ENANO();
   void init();
   void update();
+  void getSensors();
 };
 
 #ifndef _E_NANO_CPP_
