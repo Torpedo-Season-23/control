@@ -12,7 +12,7 @@ class System{
 private:
   Thrusters thruster;
   IController *gamepad;
-  // Communication console;
+  Communication console;
 public:
   System(IController *gamepad){
     this->gamepad=gamepad;
@@ -26,13 +26,13 @@ public:
 
 void System::Init(){
   this->gamepad->init();
-  // this->console.comm_init();
+  this->console.comm_init();
 }
 void System ::Update(){
-   gamepad->Update();
-  int speed = gamepad->getspeed();
-  int* array = gamepad->get_hframe();
-  int* v = gamepad->get_vframe();
+  gamepad->Update();
+  // int speed = gamepad->getspeed();
+  // int* array = gamepad->get_hframe();
+  // int* v = gamepad->get_vframe();
   int * acc = gamepad->get_accframe();
   thruster.set_h_forces(gamepad->get_hframe());
   thruster.set_v_forces(gamepad->get_vframe());
@@ -40,41 +40,41 @@ void System ::Update(){
   res = thruster.get_thruster_frame();
 
 
-  // // uint8_t* sentFrame;
-  // // prepareData(acc, res, sentFrame);
-  // // sendData(sentFrame);
+  uint8_t* sentFrame;
+  prepareData(acc, res, sentFrame);
+  sendData(sentFrame);
 
-  // // uint8_t* receivedFrame;
-  // // receiveData(receivedFrame);
+  uint8_t* receivedFrame;
+  receiveData(receivedFrame);
 
-  // // int16_t* sensors;
-  // // getSensors(receivedFrame, sensors);
+  int16_t* sensors;
+  getSensors(receivedFrame, sensors);
 
   // //double* res -> int16_t* thrusters
 
-  Serial.println();
-  Serial.print("array frame  ");
-  Serial.print(array[0]);
-  Serial.print("--");
-  Serial.print(array[1]);
-  Serial.print("--");
-  Serial.print(array[2]);
-  Serial.print("speed  ");
-  Serial.println(speed);
-  Serial.println();
-  Serial.print("vertical ");
-  Serial.print(v[0]);
-  Serial.print("--");
-  Serial.print(v[1]);
-  Serial.println();
-  Serial.print("acc frame  ");
-  Serial.print(acc[0]);
-  Serial.print("--");
-  Serial.print(acc[1]);
-  Serial.print("--");
-  Serial.print(acc[2]);
-  Serial.print("--");
-  Serial.print(acc[3]);
+  // Serial.println();
+  // Serial.print("array frame  ");
+  // Serial.print(array[0]);
+  // Serial.print("--");
+  // Serial.print(array[1]);
+  // Serial.print("--");
+  // Serial.print(array[2]);
+  // Serial.print("speed  ");
+  // Serial.println(speed);
+  // Serial.println();
+  // Serial.print("vertical ");
+  // Serial.print(v[0]);
+  // Serial.print("--");
+  // Serial.print(v[1]);
+  // Serial.println();
+  // Serial.print("acc frame  ");
+  // Serial.print(acc[0]);
+  // Serial.print("--");
+  // Serial.print(acc[1]);
+  // Serial.print("--");
+  // Serial.print(acc[2]);
+  // Serial.print("--");
+  // Serial.print(acc[3]);
   // //UR , BR , UL ,BL , UP , DOWN
   Serial.println();
   Serial.print("UR: ");
