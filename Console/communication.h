@@ -17,7 +17,7 @@ public:
   void comm_init();
   void receiveData(uint8_t* receivedFrame);
   void getSensors(uint8_t* receivedFrame, int16_t* sensors);
-  void prepareData(uint8_t* accessories, double* thrusters, uint8_t* sentFrame);
+  void prepareData(int* accessories, int* thrusters, uint8_t* sentFrame);
   void sendData(uint8_t* sentFrame);
 };
 

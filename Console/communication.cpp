@@ -6,6 +6,7 @@ void Communication:: comm_init() {
 
 void Communication:: receiveData(uint8_t* receivedFrame) {
   this->udp.begin(this->consolePort);
+  
   int frameSize = this->udp.parsePacket();
   Serial.println(frameSize);
   if (frameSize > 0) {
@@ -13,47 +14,60 @@ void Communication:: receiveData(uint8_t* receivedFrame) {
     this->udp.flush();
     this->udp.stop();
   }
+  if (frameSize = 0)
+  {
+    Serial.print("not received");
+  }
+  Serial.print("--------");
+   for(int i=0;i<10;i++) Serial.print(receivedFrame[i]); 
+    Serial.println("--------");
+
 }
 
 void Communication:: getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //modify received frame
-  Serial.println("Readings:");
-  Serial.println("Imu (3 values) -- Pressure (1 value) -- Current (2 values)");  //order of sending needs to be changed in box
+  // Serial.println("Readings:");
+  // Serial.println("Imu (3 values) -- Pressure (1 value) -- Current (2 values)");  //order of sending needs to be changed in box
   int j = 0;
   for (int i = 0; i < IMU + PRESSURE; i++) {
-    sensors[i] = receivedFrame[j] + receivedFrame[j + 1] * 256;
+    sensors[i] = receivedFrame[j+1] + receivedFrame[j] * 256;
     j += 2;
   }
   for (int i = IMU + PRESSURE; i < SENSORS; i++) {
     sensors[i] = receivedFrame[j];
     j++;
   }
-  for (int i = 0; i < SENSORS; i++) {
-    Serial.print(sensors[i]);
+  // for (int i = 3; i < 4; i++) {
+    Serial.print("pressure");
+    Serial.print(sensors[3]);
     Serial.println("  ");
-  }
+  // }
 }
 
-void Communication:: prepareData(uint8_t* accessories, double* thrusters, uint8_t* sentFrame) {  //modify sent frame
+void Communication:: prepareData(int* accessories, int* thrusters, uint8_t* sentFrame) {  //modify sent frame
 
   int x = 0;
   int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
   for (int i = ACCESSORIES - 1; i >= 0; i--) {
-    if (accessories[i] == 255) {
+    if (accessories[i] == 1) {
       x += weights[i];
     }
   }
   sentFrame[0] = (uint8_t)x;
 
-  // for (int i = 0; i < ACCESSORIES; i++) {
-  //   sentFrame[i] = accessories[i];
-  // }
 
   int j = 0;
-  for (int i = ACCESSORIES; i < sentFrameSize; i += 2) {
-    sentFrame[i] = lowByte((int16_t)thrusters[j]);
-    sentFrame[i + 1] = highByte((int16_t)thrusters[j]);
+  for (int i = 1; i < sentFrameSize; i += 2) {
+    sentFrame[i] = lowByte(thrusters[j]);
+    sentFrame[i + 1] = highByte(thrusters[j]);
     j++;
   }
+  Serial.print("sent frame ");
+  for (int i = 0; i < 13; i++) {
+    Serial.print(sentFrame[i]);
+    Serial.print(" ");
+
+  }
+  Serial.println();
 }
 
 void Communication:: sendData(uint8_t* sentFrame) {

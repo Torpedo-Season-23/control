@@ -8,6 +8,9 @@
 #include "lf310.h"
 #include <Arduino.h>
 
+
+ uint8_t receivedFrame[10];
+
 class System{
 private:
   Thrusters thruster;
@@ -29,28 +32,32 @@ void System::Init(){
   this->console.comm_init();
 }
 void System ::Update(){
-  gamepad->Update();
-  // int speed = gamepad->getspeed();
-  // int* array = gamepad->get_hframe();
-  // int* v = gamepad->get_vframe();
-  int * acc = gamepad->get_accframe();
-  thruster.set_h_forces(gamepad->get_hframe());
-  thruster.set_v_forces(gamepad->get_vframe());
-  double* res;
-  res = thruster.get_thruster_frame();
+ gamepad->Update();
+int speed = gamepad->getspeed();
+ int* array = gamepad->get_hframe();
+   int* v = gamepad->get_vframe();
+   int * acc = gamepad->get_accframe();
+   thruster.set_h_forces(gamepad->get_hframe());
+   thruster.set_v_forces(gamepad->get_vframe());
+   int* res;
+   res = thruster.get_thruster_frame();
+
+   //int acc[20] = {0}; 
 
 
-  uint8_t* sentFrame;
-  prepareData(acc, res, sentFrame);
-  sendData(sentFrame);
+   uint8_t sentFrame[13];
+   this->console.prepareData(acc, res, sentFrame);
+    this->console.sendData(sentFrame);
 
-  uint8_t* receivedFrame;
-  receiveData(receivedFrame);
+
+ 
+  this->console.receiveData(receivedFrame);
 
   int16_t* sensors;
-  getSensors(receivedFrame, sensors);
 
-  // //double* res -> int16_t* thrusters
+  this->console.getSensors(receivedFrame, sensors);
+
+  //double* res -> int16_t* thrusters
 
   // Serial.println();
   // Serial.print("array frame  ");
@@ -75,20 +82,20 @@ void System ::Update(){
   // Serial.print(acc[2]);
   // Serial.print("--");
   // Serial.print(acc[3]);
-  // //UR , BR , UL ,BL , UP , DOWN
-  Serial.println();
-  Serial.print("UR: ");
-  Serial.println(res[1]);
-  Serial.print("BR: ");
-  Serial.println(res[0]);
-  Serial.print("UL: ");
-  Serial.println(res[3]);
-  Serial.print("BL: ");
-  Serial.println(res[2]);
-  Serial.print("UP: ");
-  Serial.println(res[4]);
-  Serial.print("DOWN: ");
-  Serial.println(res[5]);
+  //UR , BR , UL ,BL , UP , DOWN
+  // Serial.println();
+  // Serial.print("UR: ");
+  // Serial.println(res[1]);
+  // Serial.print("BR: ");
+  // Serial.println(res[0]);
+  // Serial.print("UL: ");
+  // Serial.println(res[3]);
+  // Serial.print("BL: ");
+  // Serial.println(res[2]);
+  // Serial.print("UP: ");
+  // Serial.println(res[4]);
+  // Serial.print("DOWN: ");
+  // Serial.println(res[5]);
 }
 
 

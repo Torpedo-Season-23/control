@@ -1,7 +1,7 @@
 #include "Thrusters.h"
 #include <Arduino.h>
 
-double *Thrusters::get_thruster_frame(){
+int *Thrusters::get_thruster_frame(){
   return this->thruster_frame;
 }
 
