@@ -1,12 +1,12 @@
 #ifndef ICONTROLLER_H
 #define ICONTROLLER_H
 
-#include <PS3USB.h>
+#include "hiduniversal.h"
+#include "PS3USB.h"
 #ifdef dobogusinclude
-#include <spi4teensy3.h>
+#include "spi4teensy3.h"
 #endif
 #include <SPI.h>
-#include <hiduniversal.h>
 #include "config.h"
 
 
