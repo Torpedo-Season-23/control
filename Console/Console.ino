@@ -16,7 +16,8 @@ void setup() {
 
 void loop() {
   s.Update();
-
+  Serial.println(" ");
+  
   // gamepad->Update();
   // int speed = gamepad->getspeed();
   // int* array = gamepad->get_hframe();

@@ -45,18 +45,26 @@ int speed = gamepad->getspeed();
    //int acc[20] = {0}; 
 
 
-   uint8_t sentFrame[13];
-   this->console.prepareData(acc, res, sentFrame);
-    this->console.sendData(sentFrame);
+  //  uint8_t sentFrame[13];
+  //  this->console.prepareData(acc, res, sentFrame);
+  //   this->console.sendData(sentFrame);
 
 
  
-  this->console.receiveData(receivedFrame);
+  // this->console.receiveData(receivedFrame);
 
-  int16_t* sensors;
+  // int16_t* sensors;
 
-  this->console.getSensors(receivedFrame, sensors);
+  // this->console.getSensors(receivedFrame, sensors);
 
+
+
+  // for(int i = 0 ; i <THRUSTERS ;  i++){
+  //   Serial.print( *(res+i) );
+  //   Serial.print("\t");
+  // }
+
+  // Serial.println("---------------------------------------");
   //double* res -> int16_t* thrusters
 
   // Serial.println();
