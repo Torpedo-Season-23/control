@@ -1,5 +1,6 @@
 #include "UartX.h"
 SoftwareSerial softSerial(9, 8);
+    uint16_t thrusters[6];
 
 void Nano_X::Start_Uart() {
   softSerial.begin(9600);
@@ -7,9 +8,9 @@ void Nano_X::Start_Uart() {
   pressure = 0;
 }
 void Nano_X::Set_IMU_Angles(int angles[3]) {
-  IMU_Angles[0] =55;// angles[0];
-  IMU_Angles[1] =25;// angles[1];
-  IMU_Angles[2] =30;// angles[2];
+  IMU_Angles[0] =0;// angles[0];
+  IMU_Angles[1] =0;// angles[1];
+  IMU_Angles[2] =0;// angles[2];
 }
 
 void Nano_X::Set_Pressure(int Pressure) {
@@ -18,14 +19,11 @@ void Nano_X::Set_Pressure(int Pressure) {
 
 void Nano_X::Prepare_frame(uint8_t Datafram[8]) {
   uint8_t Index = 0;
-  for(uint8_t i=0;i<6;i++){   
-    //Serial.println(i);
-    Datafram[i]=i;}
-  /*for (int i = Imu_Angles_Index; i < Imu_Angles_Index; i + 2) {
+  for (int i = 0; i < 6; i+= 2) {
     Datafram[i] = highByte(IMU_Angles[Index]);
     Datafram[i + 1] = lowByte(IMU_Angles[Index]);
     Index++;
-  }*/
+  }
 
   Datafram[PRESSURE_index] = pressure >> 8;
   Datafram[PRESSURE_index + 1] = pressure & 0xFF;
@@ -52,25 +50,37 @@ void Nano_X::Send_Data() {
 void Nano_X::receive() {
   //Serial.print("Waiting to receive: ");
   //Serial.println(softSerial.available());
-  uint8_t recFrame[3];
+  uint8_t recFrame[13];
   while (1) {
     byte x;
     while (!softSerial.available());
     x = softSerial.read();
     if (x != '(') continue;
-    while (!softSerial.available());
-    while (!softSerial.available());
-    recFrame[0]= softSerial.read();
+    for(int i= 0;i<13;i++){
+      while(!softSerial.available());
+      recFrame[i]= softSerial.read();
+    }
+    
     while (!softSerial.available());
     x = softSerial.read();
     if (x != ')') continue;
     noInterrupts();
     Serial.print("Frame is ");
-    for(int i= 0;i<1;i++){
+    for(int i= 0;i<13;i++){
       Serial.print( recFrame[i]);
       Serial.print(" ");
     }
     Serial.println();
+    int count=0;
+    for(int i= 1;i<12+1;i+=2){
+      thrusters[count]= recFrame[i+1]*256+recFrame[i];
+      Serial.print(thrusters[count]);
+      Serial.print(" ");
+      count++;
+    }
+     Serial.println();
+
+    
     interrupts();
     return;
   }

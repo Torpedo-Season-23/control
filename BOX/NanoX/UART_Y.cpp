@@ -25,6 +25,16 @@ void UART_Y::receiveFrame(uint8_t* data){
     }
     Serial.println();
     Serial.println("Received From Sensors!");
+    //uint8_t count= 0;
+    Serial.print("ANgles: ");
+    for(int i= ANGLE_INDEX;i<6;i+=2){
+        int x= data[i]<<8 | data[i+1];
+        Serial.print(x);
+        Serial.print(" ");
+    }
+    Serial.print(" Pressure: ");
+   int y= data[PRESSURE_INDEX]<<8 | data[PRESSURE_INDEX+1];
+    Serial.println(y);
     return;
   }
   /*
@@ -68,6 +78,6 @@ void UART_Y::sendFrame(uint8_t* sendingFrame) {
   //sendingFrame[1]= '(';
   //sendingFrame[1+4]= ')';
   serialY.write('(');
-  serialY.write(sendingFrame,1);
+  serialY.write(sendingFrame,13);
   serialY.write(')');
 }

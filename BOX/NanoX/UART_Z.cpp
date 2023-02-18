@@ -10,7 +10,7 @@ void UART_Z::sendFrame(uint8_t* sendingFrame){
   serial.write('(');
   serial.write(sendingFrame,14);
   serial.write(')');
-  Serial.print("Current Time is : ");
-  Serial.println(millis()-now);
+  //Serial.print("Current Time is : ");
+  //Serial.println(millis()-now);
   
 }

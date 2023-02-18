@@ -10,7 +10,7 @@ class Nano_X{
 public: 
     uint16_t IMU_Angles[3];
     int pressure;
-SendData (){
+Nano_X (){
  this->IMU_Angles [0]=0;
  this->IMU_Angles [1]=0;
  this->IMU_Angles [2]=0;

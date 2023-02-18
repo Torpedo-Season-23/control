@@ -15,7 +15,7 @@ void handler() {
 }
 long currentTime = millis();
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(38400);
   uart_data.Start_Uart();
   IMU.start();
 
@@ -33,7 +33,7 @@ void loop() {
     currentTime= current;
   }
   //interrupts();
-  //Serial.println("Waiting to receive...");
+  Serial.println("Waiting to receive...");
   uart_data.receive();
   //uart_data.Send_Data();
 }
