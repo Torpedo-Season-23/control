@@ -1,6 +1,8 @@
 #ifndef THRUSTERS_H
 #define THRUSTERS_H
 
+
+
 class Thrusters
 {
 private:
