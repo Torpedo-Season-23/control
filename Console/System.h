@@ -9,7 +9,7 @@
 #include <Arduino.h>
 
 
- uint8_t receivedFrame[10];
+ uint8_t receivedFrame[11];
 
 class System{
 private:
