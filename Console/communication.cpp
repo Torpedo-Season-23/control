@@ -59,7 +59,7 @@ void Communication:: prepareData(int* accessories, int* thrusters, uint8_t* sent
 
  // last byte for thrusters' direction
   x = 0;
-  int weights[6] = { 1, 2, 4, 8, 16, 32};
+  //int weights[6] = { 1, 2, 4, 8, 16, 32};
   for (int i = THRUSTERS - 1; i >= 0; i--) {
     if (thrusters[i] > 1500){
       x += weights[i]; // 1500 will be added in Box
