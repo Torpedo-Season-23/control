@@ -13,7 +13,7 @@ extern float exponent;        //need to be defined at ".ino" file
 #define MOT_ZERO_SPEED 1500   // motors stop speed 
 #define MOT_SPEED_DIFF 400.0  // difference between any max speed and the stop speed (1900-1500)
 //calculate 
-#define TIME_STEP_RETURN_UP (-log(-((*motor_controlled_speed) - MOT_MAX_SPEED) / MOT_SPEED_DIFF))*1000 / (TIME_STEP*EXPONENT)
+#define TIME_STEP_RETURN_UP (-log(-((*motor_controlled_speed) - MOT_MAX_SPEED) / MOT_SPEED_DIFF))*1000 / (TIME_STEP*EXPONENT)s
 #define TIME_STEP_RETURN_DOWN (-log(((*motor_controlled_speed) - MOT_MIN_SPEED) / MOT_SPEED_DIFF))*1000 / (TIME_STEP*EXPONENT)
 //speed change vaules for speeds higher than 1500
 #define SOFT_START_UP (MOT_MAX_SPEED - (MOT_SPEED_DIFF * exp(-EXPONENT *TIME_STEP * speed_counter[i] / 1000.0)))
