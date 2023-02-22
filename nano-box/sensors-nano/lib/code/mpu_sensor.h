@@ -3,23 +3,16 @@
 
 #include <Wire.h>
 
-#include "../MPU6050/MPU6050.h"
+#include "../Adafruit_MPU6050/Adafruit_MPU6050.h"
 #include "config.h"
 #include "sensor.h"
 
 class MPU6050Sensor : public Sensor {
  private:
-  MPU6050* mpu;
-  int16_t accelX;
-  int16_t accelY;
-  int16_t accelZ;
-  int16_t gyroX;
-  int16_t gyroY;
-  int16_t gyroZ;
+  Adafruit_MPU6050* mpu;
   uint8_t data[MPU_FRAME_SIZE];
   unsigned long currentTime;
   unsigned long previousTime;
-  virtual void display();
 
  public:
   MPU6050Sensor();

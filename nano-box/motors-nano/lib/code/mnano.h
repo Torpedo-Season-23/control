@@ -6,14 +6,14 @@
 #include "motion6.h"
 #include "uart.h"
 
-class MNANO {
+class MNano {
  private:
   Motion6 *motion;
   UART *uart;
   MotorsMapper *mapper;
 
  public:
-  MNANO();
+  MNano();
   void init();
   void update();
 };

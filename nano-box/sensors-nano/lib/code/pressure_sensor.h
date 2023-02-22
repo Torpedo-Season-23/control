@@ -11,21 +11,21 @@ class PressureSensor : public Sensor {
   unsigned char miso;
   unsigned char mosi;
   unsigned char sclk;
-  SoftSPI *spi;
+  SoftSPI* spi;
   float pressure;
   float temperature;
   float depth;
   uint8_t data[PRESSURE_FRAME_SIZE];
   uint16_t readData(const uint16_t command, const unsigned long recvDelay = 0);
+  float getDepth();
+  float getPressure();
+  virtual void display();
 
  public:
   PressureSensor();
   virtual void init();
   virtual void update();
   virtual void reset();
-  float getDepth();
-  float getPressure();
-  virtual void display();
   uint8_t* getData();
 };
 

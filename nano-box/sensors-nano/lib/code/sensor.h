@@ -13,7 +13,6 @@ class Sensor {
   virtual void startWorking();
   virtual void stopWorking();
   virtual void toggleWorking();
-  virtual void display() = 0;
 };
 
 #ifndef _SENSOR_CPP_
