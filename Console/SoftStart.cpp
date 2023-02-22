@@ -1,7 +1,7 @@
 #include "softStart.h"
 // #include "Output_signals.h"
 #include "Arduino.h"
-float exponent = 2;
+float exponent = 4;
 
 int dir = up; // direction of increasing the speed
 long int time1[8], time2[8], speed_counter[8] = {0};

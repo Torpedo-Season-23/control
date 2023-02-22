@@ -9,15 +9,15 @@ void Communication:: receiveData(uint8_t* receivedFrame) {
   this->udp.begin(this->consolePort);
   
   int frameSize = this->udp.parsePacket();
-  Serial.println(frameSize);
+  // Serial.println(frameSize);
   if (frameSize > 0) {
     this->udp.read(receivedFrame, receivedFrameSize);
     this->udp.flush();
     this->udp.stop();
   }
-  if (frameSize = 0)
+  if (frameSize == 0)
   {
-    Serial.print("Not received :(");
+    Serial.println("Not received :(");
   }
   // Serial.print("--------");
   //  for(int i=0;i<10;i++) Serial.print(receivedFrame[i]); 

@@ -2,6 +2,8 @@
 
 int* IController::get_hframe(){return this->Td_array;}
 int* IController::get_vframe(){return this->vertical_frame;}
+void IController ::set_hframe(int *array){this->Td_array=array}
+void IController ::set_vframe(int *array){this->vertical_frame=array}
 int* IController::get_accframe(){return this->acc_array;}
 int IController::getspeed(){return this->speed;}
 void IController::init(){

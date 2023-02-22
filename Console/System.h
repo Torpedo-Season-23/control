@@ -9,53 +9,52 @@
 #include <Arduino.h>
 
 
- uint8_t receivedFrame[11];
+uint8_t receivedFrame[11];
 
-class System{
+class System {
 private:
   Thrusters thruster;
-  IController *gamepad;
+  IController* gamepad;
   Communication console;
 public:
-  System(IController *gamepad){
-    this->gamepad=gamepad;
+  System(IController* gamepad) {
+    this->gamepad = gamepad;
   }
   void Init();
   void Update();
-
 };
 
 
 
-void System::Init(){
+void System::Init() {
   this->gamepad->init();
   this->console.comm_init();
 }
-void System ::Update(){
- gamepad->Update();
-int speed = gamepad->getspeed();
- int* array = gamepad->get_hframe();
-   int* v = gamepad->get_vframe();
-   int * acc = gamepad->get_accframe();
-   thruster.set_h_forces(gamepad->get_hframe());
-   thruster.set_v_forces(gamepad->get_vframe());
-   int* res;
-   res = thruster.get_thruster_frame();
+void System ::Update() {
+  gamepad->Update();
+  int speed = gamepad->getspeed();
+  int* array = gamepad->get_hframe();
+  int* v = gamepad->get_vframe();
+  int* acc = gamepad->get_accframe();
+  thruster.set_h_forces(gamepad->get_hframe());
+  thruster.set_v_forces(gamepad->get_vframe());
+  int* res;
+  res = thruster.get_thruster_frame();
 
-   //int acc[20] = {0}; 
-
-
-  //  uint8_t sentFrame[13];
-  //  this->console.prepareData(acc, res, sentFrame);
-  //   this->console.sendData(sentFrame);
+  //int acc[20] = {0};
 
 
- 
-  // this->console.receiveData(receivedFrame);
+  uint8_t sentFrame[13];
+  this->console.prepareData(acc, res, sentFrame);
+  this->console.sendData(sentFrame);
 
-  // int16_t* sensors;
 
-  // this->console.getSensors(receivedFrame, sensors);
+
+  this->console.receiveData(receivedFrame);
+
+  int16_t* sensors;
+
+  this->console.getSensors(receivedFrame, sensors);
 
 
 
@@ -80,7 +79,7 @@ int speed = gamepad->getspeed();
   // Serial.print("vertical ");
   // Serial.print(v[0]);
   // Serial.print("--");
-  // Serial.print(v[1]);
+  // // Serial.print(v[1]);
   // Serial.println();
   // Serial.print("acc frame  ");
   // Serial.print(acc[0]);
@@ -90,6 +89,15 @@ int speed = gamepad->getspeed();
   // Serial.print(acc[2]);
   // Serial.print("--");
   // Serial.print(acc[3]);
+  // Serial.print("--");
+  // Serial.print(acc[4]);
+  // Serial.print("--");
+  // Serial.print(acc[5]);
+  // Serial.print("--");
+  // Serial.print(acc[6]);
+  // Serial.print("--");
+  // Serial.print(acc[7]);
+
   //UR , BR , UL ,BL , UP , DOWN
   // Serial.println();
   // Serial.print("UR: ");

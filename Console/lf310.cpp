@@ -1,12 +1,12 @@
 #include "lf310.h"
 
 void LF310::ParseHIDData(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
-  if (HIDUniversal::VID != LF310_VID || HIDUniversal::PID != LF310_PID)  
+  if (HIDUniversal::VID != LF310_VID || HIDUniversal::PID != LF310_PID)
     return;
   memcpy(&lf310Data, buf, min(len, MFK_CASTUINT8T sizeof(lf310Data)));
   static LF310DataButtons oldButtonState;
-  if (lf310Data.btn.val != oldButtonState.val) {                    
-    buttonClickState.val = lf310Data.btn.val & ~oldButtonState.val;  
+  if (lf310Data.btn.val != oldButtonState.val) {
+    buttonClickState.val = lf310Data.btn.val & ~oldButtonState.val;
     oldButtonState.val = lf310Data.btn.val;
   }
 }
@@ -27,7 +27,7 @@ void Xbox::Update() {
   //acc frame
   if (this->lf310.buttonClickState.Ybutton) {
     if (this->flags[0] == 0) {
-     this->acc_array[0] = 1;
+      this->acc_array[0] = 1;
       this->flags[0] = 1;
     } else {
       this->acc_array[0] = 0;
@@ -65,6 +65,54 @@ void Xbox::Update() {
     }
     this->lf310.buttonClickState.Xbutton = 0;
   }
+  switch (this->lf310.lf310Data.btn.dPad) {
+    case DPAD_RIGHT:
+      if (this->flags[5] == 0) {
+      this->acc_array[5] = 1;
+      this->flags[5] = 1;
+    } else {
+      this->acc_array[5] = 0;
+      this->flags[5] = 0;
+    }
+      this->lf310.lf310Data.btn.dPad=0;
+      break;
+    case DPAD_UP:
+      if (this->flags[4] == 0) {
+        this->acc_array[4] = 1;
+        this->flags[4] = 1;
+      } else {
+        this->acc_array[4] = 0;
+        this->flags[4] = 0;
+      }
+      this->lf310.lf310Data.btn.dPad=0;
+      break;
+    case DPAD_DOWN:
+      if (this->flags[6] == 0) {
+      this->acc_array[6] = 1;
+      this->flags[6] = 1;
+    } else {
+      this->acc_array[6] = 0;
+      this->flags[6] = 0;
+    }
+      this->lf310.lf310Data.btn.dPad=0;
+      break;
+    case DPAD_LEFT:
+     if (this->flags[7] == 0) {
+      this->acc_array[7] = 1;
+      this->flags[7] = 1;
+    } else {
+      this->acc_array[7] = 0;
+      this->flags[7] = 0;
+    }
+      this->lf310.lf310Data.btn.dPad=0;
+      break;
+    case DPAD_OFF:
+      // this->lf310.lf310Data.btn.dPad=0;
+      break;
+    default:
+      // this->lf310.lf310Data.btn.dPad=0;
+      break;
+  }
   delay(50);
 }
 void Xbox::update_vmotion() {
@@ -83,7 +131,7 @@ void Xbox::update_hmotion() {
   if (Tx < 30 && Tx > -30) Tx = 0;
   if (Ty < 30 && Ty > -30) Ty = 0;
   if (Tm < 30 && Tm > -30) Tm = 0;
-  sum =abs (Tx) +abs (Ty) +abs (Tm);
+  sum = abs(Tx) + abs(Ty) + abs(Tm);
   factor = this->speeds[this->speed] / sum;
   Tx *= factor;
   Ty *= factor;
