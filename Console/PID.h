@@ -14,7 +14,7 @@
 //         float prev_time=0;
 //         IController *controller;
 //     public:
-//         PIDSystem(IController *controller,float Kp, float Ki, float Kd){
+//         PID(IController *controller,float Kp, float Ki, float Kd){
 //             this->Kp=Kp;
 //             this->Ki=Ki;
 //             this->Kd=Kd;

@@ -6,10 +6,10 @@
 #include "communication.h"
 #include "psgamepad.h"
 #include "lf310.h"
-#include <Arduino.h>
 
 
-uint8_t receivedFrame[11];
+
+
 
 class System {
 private:
@@ -30,19 +30,20 @@ void System::Init() {
   this->gamepad->init();
   this->console.comm_init();
 }
-void System ::Update() {
-  gamepad->Update();
-  int speed = gamepad->getspeed();
-  int* array = gamepad->get_hframe();
-  int* v = gamepad->get_vframe();
-  int* acc = gamepad->get_accframe();
-  thruster.set_h_forces(gamepad->get_hframe());
-  thruster.set_v_forces(gamepad->get_vframe());
+void System::Update() {
+  uint8_t receivedFrame[11];
+  this->gamepad->Update();
+  int speed = this->gamepad->getspeed();
+  int* array = this->gamepad->get_hframe();
+  int* v = this->gamepad->get_vframe();
+  int* acc = this->gamepad->get_accframe();
+  thruster.set_h_forces(this->gamepad->get_hframe());
+  thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
   res = thruster.get_thruster_frame();
 
   //int acc[20] = {0};
-
+ 
 
   uint8_t sentFrame[13];
   this->console.prepareData(acc, res, sentFrame);

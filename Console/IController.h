@@ -22,11 +22,12 @@ protected:
   virtual void update_vmotion() = 0;
   virtual void update_hmotion() = 0;
 public:
-  void init();
+  IController(){};
+  virtual void init();
   virtual void Update() = 0;
   int* get_hframe();
-  void set_hframe(int *array);
-  void set_vframe(int *array);
+  // void set_hframe(int *array);
+  // void set_vframe(int *array);
   int* get_vframe();
   int* get_accframe();
   int getspeed();
