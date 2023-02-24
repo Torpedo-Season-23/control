@@ -58,7 +58,7 @@ void PressureSensor::update() {
       Serial.println(word2);
       Serial.print("Calibration word 3: ");
       Serial.println(word3);
-      Serial.print("Calibration word 4: ");
+      Serial.print("Calibration word 4: "); 
       Serial.println(word4);*/
 
     const uint16_t c1 = word1 >> 1;
