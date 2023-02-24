@@ -6,14 +6,14 @@
 #include "euart.h"
 #include "mapper.h"
 
-class ENANO {
+class ENano {
  private:
   EUART *uart;
   BoxEthernet *ethernet;
   Mapper *mapper;
 
  public:
-  ENANO();
+  ENano();
   void init();
   void update();
   void getSensors();

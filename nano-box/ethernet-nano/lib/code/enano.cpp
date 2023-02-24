@@ -1,15 +1,15 @@
-ENANO::ENANO() {
+ENano::ENano() {
   this->uart = new EUART();
   this->ethernet = new BoxEthernet();
   this->mapper = new Mapper();
 }
 
-void ENANO::init() {
+void ENano::init() {
   this->ethernet->init();
   this->uart->init();
 }
 
-void ENANO::update() {
+void ENano::update() {
   this->ethernet->receive();
   this->mapper->setEthernetReceivedFrame(this->ethernet->getFrameReceived());
   this->uart->setFrameSent(this->mapper->getUartSentFrame());
@@ -18,7 +18,7 @@ void ENANO::update() {
   this->ethernet->send();
 }
 
-void ENANO::getSensors() {
+void ENano::getSensors() {
   digitalWrite(SENSOR_INTERRUPT_PIN, LOW);
   this->uart->receive();
   digitalWrite(SENSOR_INTERRUPT_PIN, HIGH);

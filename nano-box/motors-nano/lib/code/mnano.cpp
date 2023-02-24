@@ -9,15 +9,12 @@ void MNano::init() {
 }
 
 void MNano::update() {
-  //* Receive Frame
   this->uart->receive();
 
-  //* Set Frame To Motion
   this->mapper->setData(this->uart->getFrameReceived());
   this->motion->setDirection(this->mapper->getDirection());
   this->motion->setSpeed(this->mapper->getSpeed());
   this->motion->setExponent(this->mapper->getExponent());
 
-  //* UPDATE MOTION
   this->motion->update();
 }
