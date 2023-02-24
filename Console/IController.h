@@ -13,7 +13,7 @@
 class IController {
 protected:
   int acc_array[4];
-  int Td_array[3] = { 0 };
+  int Td_array[4] = { 0 };
   int vertical_frame[2] = { 1500, 1500 };
   bool flags[4] = { 0 };
   uint8_t speeds[3] = { LOW_SPEED_VALUE, NORMAL_SPEED_VALUE, HIGH_SPEED_VALUE };

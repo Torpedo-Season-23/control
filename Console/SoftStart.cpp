@@ -38,7 +38,7 @@ void soft_start( char type, int motor_speed, int *motor_controlled_speed, char i
 }
 
 
-void motor_soft_start (int motor_speed, int *motor_controlled_speed, int *thrusterArr, char i) {
+void motor_soft_start (int motor_speed, int *motor_controlled_speed, int *thrusterArr, int i) {
   //motor speed limits
   if (motor_speed < 1100 || motor_speed > 1900)
     motor_speed = 1500;

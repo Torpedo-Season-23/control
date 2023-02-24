@@ -29,21 +29,21 @@ void Thrusters::set_h_forces(int *array){
 }
 
 void Thrusters::set_v_forces(int *array){
-  this->thruster_frame[4]=array[0];
-  this->thruster_frame[5]=array[1];
-  Serial.print(this->thruster_frame[4]);
+  this->thruster_frame[Up]=array[0];
+  this->thruster_frame[Down]=array[1];
+  Serial.print(this->thruster_frame[Up]);
   Serial.print("  ");  
   
-  motor_soft_start (this->thruster_frame[4],(motor_controlled_speed + 4) , this->thruster_frame ,(char) 4);
-  Serial.print(this->thruster_frame[4]);
+  motor_soft_start (this->thruster_frame[Up],(motor_controlled_speed + 4) , this->thruster_frame ,Up);
+  Serial.print(this->thruster_frame[Up]);
   Serial.print("\t");
 
-    Serial.print(this->thruster_frame[5]);
+    Serial.print(this->thruster_frame[Down]);
     Serial.print("  ");  
 
-  motor_soft_start (this->thruster_frame[5], (motor_controlled_speed + 5) , this->thruster_frame,(char) 5 );
+  motor_soft_start (this->thruster_frame[Down], (motor_controlled_speed + 5) , this->thruster_frame,Down);
 
-  Serial.print(this->thruster_frame[5]);
+  Serial.print(this->thruster_frame[Down]);
     Serial.print("\t");
   // free(array);
 } 
