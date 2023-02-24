@@ -29,6 +29,6 @@ extern float exponent;        //need to be defined at ".ino" file
 
 void soft_start_initial_value(); //to be called in setup(initiate time values) 
 void soft_start( char type, int motor_speed, int *motor_controlled_speed, char i);//contorl soft start stages(speed changes)
-void motor_soft_start (int motor_speed, int *motor_controlled_speed,int *thrusterArr, char i ); //control speed coming form console
+void motor_soft_start (int motor_speed, int *motor_controlled_speed,int *thrusterArr, int i ); //control speed coming form console
 
 #endif
