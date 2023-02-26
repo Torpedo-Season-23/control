@@ -22,7 +22,7 @@ bool CommunicationClient::receiveData(uint8_t *receivedFrame) {
 
 void CommunicationClient::sendData(uint8_t* frame) {
   udp.beginPacket(this->consoleIP, CONSOLE_PORT);
-  int size = udp.write(frame, 10);
+  int size = udp.write(frame, 13);
   udp.endPacket();
   udp.stop();
 }
