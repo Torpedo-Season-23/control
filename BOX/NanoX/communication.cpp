@@ -12,8 +12,10 @@ bool CommunicationClient::receiveData(uint8_t *receivedFrame) {
   success = udp.parsePacket();
   if (success)
   { 
-    Serial.print("Received! Success is ");
-    Serial.println(success);
+    #ifdef PRINT_ON
+      Serial.print("Received! Success is ");
+      Serial.println(success);
+    #endif
     udp.read(receivedFrame, success + 1);
   }
   udp.flush();

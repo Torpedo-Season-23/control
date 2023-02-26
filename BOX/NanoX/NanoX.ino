@@ -1,6 +1,6 @@
+#include "config.h"
 #include "communication.h"
 #include "UART_Y.h"
-#include "config.h"
 
 #define PIN 4
 

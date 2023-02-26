@@ -2,6 +2,7 @@
 #define UART_Y_H
 #include <Arduino.h>
 #include <SoftwareSerial.h>
+#include "config.h"
 #define UART_y_FRAME_SIZE 10
 #define RX_Y 8
 #define TX_Y 9
