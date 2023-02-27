@@ -1,4 +1,3 @@
-#include "SoftStart.h"
 #include "Output_signals.h"
 #include "UARTTerminal.h"
 
@@ -12,7 +11,6 @@ Uart_z uartz;
 void setup() {
   Serial.begin(115200);
   uartz.startUART();
-  soft_start_initial_value();
   tools.init();
   thrusters.init();
 }
