@@ -1,7 +1,6 @@
-#include "Output_signals.h"
+#include "Thrusters.h"
 
 
-Servo Motors[MOTORS_COUNT];
 
 void Thrusters::init() {
   for (int i = 0; i < MOTORS_COUNT; i++) {
@@ -11,18 +10,6 @@ void Thrusters::init() {
   delay(2000);
 }
 
-void Tools::init() {
-  for (int i = 0; i < TOOLS_COUNT; i++) {
-    pinMode(toolPins[i], OUTPUT); //set tool pins to be Output pins
-  }
-}
-
-//set signals to tools
-void Tools::apply_signal() {
-  for (int i = 0; i < TOOLS_COUNT; i++) {
-    analogWrite(toolPins[i], this->tool_frame[i]);
-  }
-}
 
 //set signals to Motors
 void Thrusters::apply_signal(int *thrustersSpeeds) {
@@ -46,3 +33,5 @@ void Thrusters::prep_And_apply_signal() {
 
   this->apply_signal(thrustersSpeeds);
 }
+
+
