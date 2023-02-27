@@ -7,7 +7,7 @@
 #define TX_Y 9
 #define ANGLE_INDEX 0
 #define PRESSURE_INDEX ANGLE_INDEX + 3*2
-
+#define Converters_INDEx ANGLE_INDEX + 3*2 + 2
 
 class UART_Y{
     public:
@@ -15,5 +15,6 @@ class UART_Y{
         void begin();
         void receiveFrame(uint8_t* frame);
         void sendFrame(uint8_t*);
+        // void PrepareFram(uint8_t*);
 };
 #endif
