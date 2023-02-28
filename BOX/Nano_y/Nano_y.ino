@@ -18,7 +18,7 @@ void setup() {
   Serial.begin(38400);
   uart_data.Start_Uart();
   //IMU.start();
-
+  mySensors.init();
   //IMU.check();
   //pressur_S.init();
   attachInterrupt(digitalPinToInterrupt(2), handler, LOW);

@@ -8,7 +8,7 @@ private:
     TorpedoMPU IMU;
 
 public:
-    Sensors()
+    void init()
     {
         this->pressure.init();
         this->IMU.start();
