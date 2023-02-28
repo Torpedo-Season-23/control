@@ -33,12 +33,12 @@ void Communication:: getSensors(uint8_t* receivedFrame, int16_t* sensors) {
     sensors[i] = receivedFrame[j];
     j++;
   }
-  for(int i = SENSORS; i < SENSORS + CURRENT) 
+  for(int i = SENSORS; i < SENSORS + CURRENT ; i++) 
   {
     sensors[i] = receivedFrame[j+1] + receivedFrame[j] * 256;
     j += 2;
   }
-  for(int i = SENSORS + CURRENT ; i < TOTAL) 
+  for(int i = SENSORS + CURRENT ; i < TOTAL ; i++) 
   {
     sensors[i] = receivedFrame[j];
     j++;
