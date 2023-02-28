@@ -10,6 +10,7 @@
 
 
 uint8_t receivedFrame[22];
+uint8_t sentFrame[8];
 
 class System{
 private:
@@ -39,33 +40,18 @@ int speed = gamepad->getspeed();
    int * acc = gamepad->get_accframe();
    thruster.set_h_forces(gamepad->get_hframe());
    thruster.set_v_forces(gamepad->get_vframe());
-   int* res;
-   res = thruster.get_thruster_frame();
-
-   //int acc[20] = {0}; 
+   int* res = thruster.get_thruster_frame();
 
 
-  //  uint8_t sentFrame[13];
-  //  this->console.prepareData(acc, res, sentFrame);
-  //   this->console.sendData(sentFrame);
-
-
- 
-  // this->console.receiveData(receivedFrame);
-
-  // int16_t* sensors;
-
-  // this->console.getSensors(receivedFrame, sensors);
+    this->console.prepareData(acc, res, sentFrame);
+    this->console.sendData(sentFrame);
+    
+    this->console.receiveData(receivedFrame);
+    int16_t* sensors;
+    this->console.getSensors(receivedFrame, sensors);
 
 
 
-  // for(int i = 0 ; i <THRUSTERS ;  i++){
-  //   Serial.print( *(res+i) );
-  //   Serial.print("\t");
-  // }
-
-  // Serial.println("---------------------------------------");
-  //double* res -> int16_t* thrusters
 
   // Serial.println();
   // Serial.print("array frame  ");
