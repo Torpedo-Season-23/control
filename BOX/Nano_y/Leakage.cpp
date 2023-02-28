@@ -13,7 +13,7 @@ void LeakageSensor::init() {
 }
 
 void LeakageSensor::update() {
-  delay(2000);
+  //delay(2000);
   this->humidity = dht.readHumidity();
   this->temperature = dht.readTemperature();
 

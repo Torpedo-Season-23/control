@@ -119,11 +119,11 @@ void PressureSensor::update() {
     //    Serial.print(temperature);
     //    Serial.println(" °C");
 
-    /*
-        //Serial.print("temp: ");
-        //Serial.print(temp);
-        //Serial.println(" °C");
-*/
+    
+        Serial.print("temp: ");
+        Serial.print(temp);
+        Serial.println(" °C");
+
          Serial.print("Pressure: ");
          Serial.print(pressure);
          Serial.println(" mbar");

@@ -13,14 +13,15 @@ void UART_Y::receiveFrame(uint8_t* data){
     while (!serialY.available());
     x = serialY.read();
     if (x != '(') continue;
-    for(int i= 0;i<UART_y_FRAME_SIZE-2;i++){
+    for(int i= 0;i<UART_y_FRAME_SIZE;i++){
+     // Serial.println("first for loop");
       while (!serialY.available());
       data[i] = serialY.read();
     }
     while (!serialY.available());
     x = serialY.read();
     if (x != ')') continue;
-    for(int i= 0;i<8;i++){
+    for(int i= 0;i<16;i++){
       Serial.print(data[i]);
       Serial.print(" ");
     }
