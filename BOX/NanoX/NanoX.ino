@@ -2,7 +2,7 @@
 #include "UART_Y.h"
 #include "config.h"
 
-#define PIN A0
+#define PIN A0 //Interrupt pin
 
 uint8_t box[] = {192, 168, 1, 7};
 uint8_t console[] = {192, 168, 1, 9};
@@ -24,15 +24,15 @@ void loop() {
 
  // udpReceiveFrame[0] = 5;
   
-  //if(client.receiveData(udpReceiveFrame)){
-   // uart_y.sendFrame(udpReceiveFrame);
+  if(client.receiveData(udpReceiveFrame)){
+  uart_y.sendFrame(udpReceiveFrame);
   digitalWrite(PIN, LOW);
   uart_y.receiveFrame(udpSendFrame);
   digitalWrite(PIN, HIGH);
-  
-  //}else{
-   // Serial.println("Nothing was received!");
-  //}
+  }
+  else{
+  Serial.println("Nothing was received!");
+  }
   client.sendData(udpSendFrame);
   delay(10);
 }

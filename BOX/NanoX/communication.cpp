@@ -1,19 +1,24 @@
 #include "communication.h"
+#include <Arduino.h>
 
 //initiatize the ethertnet module
 void CommunicationClient::Init() {
+
   Ethernet.begin(this->mac, this->boxIP);
 }
 
-// receiving function
-bool CommunicationClient::receiveData(uint8_t *receivedFrame) {
+bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
+
   this->udp.begin(BOX_PORT);
   int success;
   success = udp.parsePacket();
-  if (success)
-  { 
+  if (success) {
     Serial.print("Received! Success is ");
     Serial.println(success);
+    if(success != UDP_REC_FRAME){
+      Serial.println("Frame incomplete?");
+    }
+
     udp.read(receivedFrame, success + 1);
   }
   udp.flush();
@@ -21,8 +26,9 @@ bool CommunicationClient::receiveData(uint8_t *receivedFrame) {
 }
 
 void CommunicationClient::sendData(uint8_t* frame) {
+
   udp.beginPacket(this->consoleIP, CONSOLE_PORT);
-  int size = udp.write(frame, 13);
+  int size = udp.write(frame, UDP_SEND_FRAME);
   udp.endPacket();
   udp.stop();
 }
