@@ -2,7 +2,7 @@
 #include "UART_Y.h"
 #include "config.h"
 
-#define PIN A0 //Interrupt pin
+
 
 uint8_t box[] = {192, 168, 1, 7};
 uint8_t console[] = {192, 168, 1, 9};

@@ -13,5 +13,7 @@
 #define PRESSURE_INDEX ANGLE_INDEX + 3*2
 #define LEAKAGE_INDEX PRESSURE_INDEX + 2
 
+#define PIN A0 //Interrupt pin
+
 
 #endif

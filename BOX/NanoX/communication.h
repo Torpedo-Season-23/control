@@ -23,6 +23,8 @@ public:
   void Init();
   bool receiveData(uint8_t* acc_frame);
   void sendData(uint8_t* frame);
+  int *checkConverter(uint8_t* frame); //will be put in converters file
+  int *check_conv[2]; //will be put in converters file
 };
 
 
