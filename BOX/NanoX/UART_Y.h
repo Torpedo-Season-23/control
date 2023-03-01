@@ -3,11 +3,6 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #include "config.h"
-#define UART_y_FRAME_SIZE 10
-#define RX_Y 8
-#define TX_Y 9
-#define ANGLE_INDEX 0
-#define PRESSURE_INDEX ANGLE_INDEX + 3*2
 
 
 class UART_Y{

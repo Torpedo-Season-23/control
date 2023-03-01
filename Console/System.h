@@ -9,63 +9,46 @@
 #include <Arduino.h>
 
 
- uint8_t receivedFrame[11];
+uint8_t receivedFrame[22];
+uint8_t sentFrame[8];
 
-class System{
+class System {
 private:
   Thrusters thruster;
-  IController *gamepad;
+  IController* gamepad;
   Communication console;
 public:
-  System(IController *gamepad){
-    this->gamepad=gamepad;
+  System(IController* gamepad) {
+    this->gamepad = gamepad;
   }
   void Init();
   void Update();
-
 };
 
 
 
-void System::Init(){
+void System::Init() {
   this->gamepad->init();
   this->console.comm_init();
 }
-void System ::Update(){
- gamepad->Update();
-int speed = gamepad->getspeed();
- int* array = gamepad->get_hframe();
-   int* v = gamepad->get_vframe();
-   int * acc = gamepad->get_accframe();
-   thruster.set_h_forces(gamepad->get_hframe());
-   thruster.set_v_forces(gamepad->get_vframe());
-   int* res;
-   res = thruster.get_thruster_frame();
 
-   //int acc[20] = {0}; 
+void System ::Update() {
+  gamepad->Update();
+  int speed = gamepad->getspeed();
+  int* array = gamepad->get_hframe();
+  int* v = gamepad->get_vframe();
+  int* acc = gamepad->get_accframe();
+  thruster.set_h_forces(gamepad->get_hframe());
+  thruster.set_v_forces(gamepad->get_vframe());
+  int* res = thruster.get_thruster_frame();
 
+  int converters[2] = { 1, 1 };
+  this->console.prepareData(acc, res, converters, sentFrame);
+  this->console.sendData(sentFrame);
 
-  //  uint8_t sentFrame[13];
-  //  this->console.prepareData(acc, res, sentFrame);
-  //   this->console.sendData(sentFrame);
-
-
- 
-  // this->console.receiveData(receivedFrame);
-
-  // int16_t* sensors;
-
-  // this->console.getSensors(receivedFrame, sensors);
-
-
-
-  // for(int i = 0 ; i <THRUSTERS ;  i++){
-  //   Serial.print( *(res+i) );
-  //   Serial.print("\t");
-  // }
-
-  // Serial.println("---------------------------------------");
-  //double* res -> int16_t* thrusters
+  this->console.receiveData(receivedFrame);
+  int16_t* sensors;
+  this->console.getSensors(receivedFrame, sensors);
 
   // Serial.println();
   // Serial.print("array frame  ");

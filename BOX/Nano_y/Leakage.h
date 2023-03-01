@@ -2,7 +2,7 @@
 #define LEAKAGE_H
 
 #define DHTPIN 2 
-#define DHTTYPE DHT22  
+#define DHTTYPE DHT11  
 #define SENSORS_NUM 8
 
 #include <Arduino.h>

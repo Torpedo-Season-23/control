@@ -11,7 +11,7 @@ LeakageSensor leakSensors[8];
 int sensors_num = 0;
 
 void handler() {
-  //Serial.println("In Interrupt!");
+  Serial.println("In Interrupt!");
   //uart_data.Set_Pressure();
 
   //uint16_t angles[] = {20, 30, 60};
@@ -25,16 +25,18 @@ void setup() {
   IMU.start();
 
   init_mux();
-  leakSensors[0].init(); //Q: all wala one? needs to be tested
+  leakSensors[0].init();  //Q: all wala one? needs to be tested
 
-   for (int i = 0; i < SENSORS_NUM; i++) {
+  for (int i = 0; i < SENSORS_NUM; i++) {
     leakSensors[i].setSensor(i);
   }
 
   IMU.check();
   pressur_S.init();
-  attachInterrupt(digitalPinToInterrupt(2), handler, LOW);
+  attachInterrupt(digitalPinToInterrupt(3), handler, LOW);
 }
+
+
 void loop() {
   long current = millis();
   if (current - currentTime > 100) {
@@ -42,20 +44,24 @@ void loop() {
     //Serial.print("HERE!");
     uart_data.Set_IMU_Angles(IMU.getangles());
     uart_data.Set_Pressure(pressur_S.getPressure());
-    currentTime= current;
 
-    select_mux(sensors_num); //or for loop for all at once? needs to be tested
-  uint8_t humidity = leakSensors[sensors_num].getHumidity();
+    currentTime = current;
 
-  sensors_num++;
 
-  if(sensors_num > 7)
-  {
-    sensors_num = 0;
+    for (int i = 0; i < 8; i++) {
+     // select_mux(i);  //or for loop for all at once? needs to be tested
+      //uint8_t humidity = leakSensors[i].getHumidity();
+    }
+
+
+    //  sensors_num++;
+
+    //   if (sensors_num > 7) {
+    //     sensors_num = 0;
+    //   }
+     }
+    //interrupts();
+    Serial.println("Waiting to receive...");
+    uart_data.receive();
+    uart_data.Send_Data();
   }
-  }
-  //interrupts();
-  Serial.println("Waiting to receive...");
-  uart_data.receive();
-  //uart_data.Send_Data();
-}
