@@ -1,9 +1,6 @@
 #ifndef LEAKAGE_H
 #define LEAKAGE_H
 
-#define DHTPIN 2 
-#define DHTTYPE DHT11  
-#define SENSORS_NUM 8
 
 #include <Arduino.h>
 
@@ -17,7 +14,7 @@ class LeakageSensor{
     LeakageSensor();
     void init();
     void update();
-    void setSensor(int i);
+    void setByte(int i);
     uint8_t getHumidity();
     uint8_t getTemperature();
     uint8_t getSensorNum();

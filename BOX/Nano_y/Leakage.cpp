@@ -1,5 +1,6 @@
 #include "Leakage.h"
 #include "DHT.h"
+#include "config.h"
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -31,7 +32,7 @@ void LeakageSensor::update() {
   Serial.print(" %/n");
 }
 
-void LeakageSensor::setSensor(int i) {
+void LeakageSensor::setByte(int i) {
   this->sensor_num = (uint8_t)i;
 }
 

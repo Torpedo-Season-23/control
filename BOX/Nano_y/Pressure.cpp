@@ -1,4 +1,5 @@
 #include "Pressure.h"
+#include "config.h"
 
 // SPI mySPI(MOSI_PIN, MISO_PIN, SCLK_PIN);
 void PressureSensor::init() {
