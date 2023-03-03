@@ -33,6 +33,5 @@ void loop() {
     Serial.println("Nothing was received!");
   }
   client.sendData(udpSendFrame);
-  // client.sendData(converter.get_data());
   delay(10);
 }

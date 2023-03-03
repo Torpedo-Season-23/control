@@ -37,19 +37,20 @@ private:
   double linear11(twobytes tbval);
   twobytes CommandExec2(byte DeviceAddr, byte Command);
   double directf(twobytes tbval);
-  void data();
-
 
 public:
   double Converter_array[2];
-  uint8_t Converter_PINs[2] ={6,7};
+  int Converter_PINs[2] = { A2, A3 };
+  int ON_OFF_PINS[2] = { 7, 4 };
 
   Converter() {
     this->Converter_array[0] = 0;
     this->Converter_array[1] = 0;
     this->VOUT_MODE = -9;
   }
- uint8_t*get_data();
- void print_data();
+  uint8_t *data();
+  uint8_t *Set_data();
+  void print_data();
+  uint8_t *Debug();
 };
 #endif

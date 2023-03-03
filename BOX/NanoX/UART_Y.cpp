@@ -41,49 +41,12 @@ void UART_Y::receiveFrame(uint8_t* data) {
     int y = data[PRESSURE_INDEX] << 8 | data[PRESSURE_INDEX + 1];
     Serial.println(y);
 
-    for (int i = Converters_INDEx; i < Converters_INDEx + 4 ; i++) {
-      data[i] = conv.get_data();
+    for (int i = Converters_INDEx; i < Converters_INDEx + 6 ; i++) {
+      data[i] = conv.Set_data();
+      // data[i] = conv.Debug();
     }
     return;
   }
-  // void UART_Y::PrepareFram(uint8_t * Converter_data) {
-
-  //   for () {
-  //   }
-  // }
-
-  /*
-    while(true){
-    while(!serialY.available());
-    Serial.println("Received!");
-    byte x= serialY.read();
-    if (x != '(')
-        continue;
-    while (!serialY.available());
-    x= serialY.read();
-    if(x != '(')
-        continue;
-    uint8_t frame[UART_y_FRAME_SIZE-4];
-    for(int i= 0;i<UART_y_FRAME_SIZE-4;i++){
-        while (!serialY.available());
-        frame[i]= serialY.read();
-    }
-    while (!serialY.available());
-    x= serialY.read();
-    if(x!=')')
-        continue;
-    while (!serialY.available());
-    x= serialY.read();
-    if(x!=')')
-        continue;
-    uint8_t count= 0;
-    for(int i= ANGLE_INDEX;i<6;i+=2){
-        data->angles[count]= frame[i]<<8 | frame[i+1];
-        count++;
-    }
-    data->pressure= frame[PRESSURE_INDEX]<<8 | frame[PRESSURE_INDEX+1];
-    return;
-    }*/
 }
 
 void UART_Y::sendFrame(uint8_t* sendingFrame) {
