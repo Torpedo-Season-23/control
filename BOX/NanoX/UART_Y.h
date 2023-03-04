@@ -6,6 +6,8 @@
 
 
 class UART_Y{
+  private:
+  uint8_t rec_frame[8];
     public:
         UART_Y(){};
         void begin();

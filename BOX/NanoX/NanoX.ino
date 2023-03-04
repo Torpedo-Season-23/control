@@ -2,11 +2,8 @@
 #include "UART_Y.h"
 #include "config.h"
 
-
-
 uint8_t box[] = {192, 168, 1, 7};
 uint8_t console[] = {192, 168, 1, 9};
-
 uint8_t udpReceiveFrame[UDP_REC_FRAME];
 uint8_t udpSendFrame[UDP_SEND_FRAME] ;
 

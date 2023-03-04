@@ -33,8 +33,3 @@ void CommunicationClient::sendData(uint8_t* frame) {
   udp.stop();
 }
 
-int* CommunicationClient::checkConverter(uint8_t* frame) { //will be put in converters file
-  for (int i = 6; i < 8; i++) {       
-    this->check_conv[i] = bitRead(frame[1],i);  //(frame[1] >> (i)) & 0x01
-  }
-}

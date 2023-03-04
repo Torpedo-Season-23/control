@@ -15,6 +15,7 @@ private:
 
   
 public:
+  //will be put in converters file
   CommunicationClient( uint8_t *box,uint8_t *console) {
     this->boxIP = IPAddress(box);;
     this->consoleIP = IPAddress(console);
@@ -23,8 +24,8 @@ public:
   void Init();
   bool receiveData(uint8_t* acc_frame);
   void sendData(uint8_t* frame);
-  int *checkConverter(uint8_t* frame); //will be put in converters file
-  int *check_conv[2]; //will be put in converters file
+//will be put in converters file
+ 
 };
 
 
