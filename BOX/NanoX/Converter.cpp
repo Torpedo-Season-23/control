@@ -84,7 +84,7 @@ uint8_t* Converter::Set_data() {
 int *Converter::checkConverter(uint8_t *frame) {  //will be put in converters file
   for (int i = 6; i < 8; i++) {
 
-    this->check_conv[i] = bitRead(frame[1], i);  //(frame[1] >> (i)) & 0x01
+    this->check_conv[i] = (frame[1] >> (i)) & 0x01;
   }
 }
 
