@@ -2,14 +2,14 @@
 #define TOOLS_H
 #include "Config.h"
 
-class Tools{
-  // first 5 are Grippers pins, last 3 lights pins 
-  const int toolPins[TOOLS_COUNT] = {0};
-  
-  public:
-  uint8_t *tool_frame;
+class Tools {
+
+  const int toolPins[TOOLS_COUNT] = { 0 };
+
+public:
+  uint8_t *toolsFrame;
   void init();
-  void apply_signal();
+  void applySignal();
 };
 
 #endif

@@ -3,27 +3,31 @@
 #include <Arduino.h>
 
 
-#define MOTORS_COUNT  6
-#define TOOLS_COUNT  8
-#define MOT_ZERO_SPEED 1500
-#define UART_Z_FRAME_SIZE 10      // (1 gaurd |1 directions | 6 Motor| 1 Accessories | 1 gaurd )(bytes) waiting for sensors....
-#define ACTUAL_DATA 8             // ( 1 directions | 6 Motor | 1 Accessories )(bytes) waiting......
-// #define NANOZ_DATA_INDEX unkown
-#define THRUSTERS_ACC_FRAME 13     //bytes
-#define THRUSTERS_FRAME 12         //( 6 directions | 6 Motor)(elements)
-#define TOOLS_FRAME 8    
-// #define MOTORS_SPEEDS_INDEX unkown
-// #define DIRECTIONS_BYTE_INDEX unkown
-// #define ACC_BYTE_INDEX unkown
+#define MOTORS_COUNT 6
+#define TOOLS_COUNT 8
+
+//uart frame size
+#define UART_Z_FRAME_SIZE 10  // (1 gaurd | 1 Accessories | 1 directions | 6 Motor | 1 gaurd )(bytes)
+#define ACTUAL_DATA 8         // ( 1 Accessories | 1 directions | 6 Motor  )(bytes)
+
+//Nanoz data Indices
+#define MOTORS_SPEEDS_INDEX 2
+#define DIRECTIONS_BYTE_INDEX 1
+#define ACC_BYTE_INDEX 0
 
 //uart pins
 #define RX_Z 9
 #define TX_Z 8
 
+//Motors speeds
+#define MOT_ZERO_SPEED 1500
+#define MOT_MAX_SPEED 1900
+#define MOT_MIN_SPEED 1100
 
 
-
-
-// #define PRINT_ON 
+//debuging
+#define THRUSTERS_PRINT_ON
+// #define ACC_PRINT_ON
+// #define UART_PRINT_ON
 
 #endif
