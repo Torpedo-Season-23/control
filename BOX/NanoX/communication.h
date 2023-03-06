@@ -24,6 +24,7 @@ public:
   void Init();
   bool receiveData(uint8_t* acc_frame);
   void sendData(uint8_t* frame);
+  void defaultFrame(uint8_t* frame);
 //will be put in converters file
  
 };

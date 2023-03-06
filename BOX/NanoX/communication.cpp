@@ -6,6 +6,12 @@ void CommunicationClient::Init() {
 
   Ethernet.begin(this->mac, this->boxIP);
 }
+void CommunicationClient::defaultFrame(uint8_t* frame) {
+  for (int i = 2; i < 8; i++)
+  {
+    frame[i] = 0x00;
+  }
+}
 
 bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
 
@@ -18,7 +24,6 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
     if (success != UDP_REC_FRAME) {
       Serial.println("Frame incomplete?");
     }
-
     udp.read(receivedFrame, success + 1);
   }
   udp.flush();
@@ -30,6 +35,5 @@ void CommunicationClient::sendData(uint8_t* frame) {
   udp.beginPacket(this->consoleIP, CONSOLE_PORT);
   int size = udp.write(frame, UDP_SEND_FRAME);
   udp.endPacket();
-  udp.stop();
+  udp.stop();jkhjjk
 }
-
