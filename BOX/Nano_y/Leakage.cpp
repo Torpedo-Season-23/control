@@ -32,9 +32,9 @@ void LeakageSensor::update() {
   Serial.print(" %/n");
 }
 
-void LeakageSensor::setByte(int i) {
-  this->sensor_num = (uint8_t)i;
-}
+// void LeakageSensor::setByte(int i) {
+//   this->sensor_num = (uint8_t)i;
+// }
 
 uint8_t LeakageSensor::getHumidity() {
   this->update();
@@ -46,6 +46,4 @@ uint8_t LeakageSensor::getTemperature() {
   return ((uint8_t)this->temperature);
 }
 
-uint8_t LeakageSensor::getSensorNum() {
-  return this->sensor_num;
-}
+// 01001010

@@ -1,8 +1,8 @@
 #include "System.h"
 
 
-Xbox controller;
-IController *gamepad;
+PSGamepad controller;
+
 System s (&controller);
 // Communication console;
 // ThrustersProcess config;

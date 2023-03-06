@@ -1,34 +1,48 @@
-#ifndef SOFT_START_H
-#define SOFT_START_H
- 
-#include <Servo.h>
-extern float exponent;        //need to be defined at ".ino" file 
+#ifndef MOTOR_H
+#define MOTOR_H
+#include "Arduino.h"
+#include "config.h"
+#define GET_POSITIVE_SPEED(x) (x > MOTOR_STATIC_SPEED ? (x - MOTOR_STATIC_SPEED) : (MOTOR_STATIC_SPEED - x))
 
-#define TIME_STEP 80.0        // time difference to use soft start
+class Motor
+{
+private:
+    uint16_t currentSpeed;
+     // Parameter in the exponential equation
+    long lastUpdatedTime;
+    void increaseSpeed(uint16_t);
+    void decreaseSpeed(uint16_t);
+    void changeDirection(uint16_t);
 
-#define EXPONENT exponent     // affect rising rate for the motor
-#define STEP_SPEED 30         // maximum speed difference to not use soft start 
-#define MOT_MAX_SPEED 1900    // motors max speed 
-#define MOT_MIN_SPEED 1100    // motors max speed in opposite direction
-#define MOT_ZERO_SPEED 1500   // motors stop speed 
-#define MOT_SPEED_DIFF 400.0  // difference between any max speed and the stop speed (1900-1500)
-//calculate 
-#define TIME_STEP_RETURN_UP (-log(-((*motor_controlled_speed) - MOT_MAX_SPEED) / MOT_SPEED_DIFF))*1000 / (TIME_STEP*EXPONENT)
-#define TIME_STEP_RETURN_DOWN (-log(((*motor_controlled_speed) - MOT_MIN_SPEED) / MOT_SPEED_DIFF))*1000 / (TIME_STEP*EXPONENT)
-//speed change vaules for speeds higher than 1500
-#define SOFT_START_UP (MOT_MAX_SPEED - (MOT_SPEED_DIFF * exp(-EXPONENT *TIME_STEP * speed_counter[i] / 1000.0)))
-//speed change vaules for speeds Lower than 1500
-#define SOFT_START_DOWN (MOT_MIN_SPEED + (MOT_SPEED_DIFF * exp(-EXPONENT *TIME_STEP * speed_counter[i] / 1000.0)))
-#define up 0
-#define down 1
-//Counts
-#define MOTORS_COUNT  6
-#define TOOLS_COUNT  4
+public:
+    Motor()
+    {
+        this->currentSpeed = MOTOR_STATIC_SPEED;
+        this->lastUpdatedTime  = millis();
+        this->counter = 0;
+    }
+    uint8_t counter;
+    void setSpeed(uint16_t newSpeed);
+    uint16_t getSpeed(){
+        if(this->currentSpeed > MOTOR_HIGHEST_SPEED)
+            this->currentSpeed= MOTOR_HIGHEST_SPEED;
+        else if(this->currentSpeed < MOTOR_LOWEST_SPEED)
+            this->currentSpeed= MOTOR_LOWEST_SPEED;
+        return this->currentSpeed;};
+};
 
+class Motors
+{
+private:
+    float exponent;
+    float timeStep; // Time between every 2 updates
+    Motor motors[MOTORS_NUMBER];
+    void print();
 
+public:
+    Motors(){};
+    void update(int*);
+};
 
-void soft_start_initial_value(); //to be called in setup(initiate time values) 
-void soft_start( char type, int motor_speed, int *motor_controlled_speed, char i);//contorl soft start stages(speed changes)
-void motor_soft_start (int motor_speed, int *motor_controlled_speed,int *thrusterArr, int i ); //control speed coming form console
 
 #endif
