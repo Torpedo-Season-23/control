@@ -1,6 +1,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+
+#define BOX_PORT 8000
+#define CONSOLE_PORT 7000
+
 /*from BOX to CONSOLE*/
 #define UDP_REC_FRAME 8 //(bytes): 1 Accessories, 1 directions + converters on/off, 6 thrusters speeds "respectively"
 #define UDP_SEND_FRAME 22 //(bytes): 6 IMU angles, 2 pressure, 8 leakage, 3*2 converters(2 bytes for current, 1 for temperature) "respectively"
@@ -14,6 +18,9 @@
 #define LEAKAGE_INDEX PRESSURE_INDEX + 2
 #define Converters_INDEx ANGLE_INDEX + 3*2 + 2
 #define PIN A0 //Interrupt pin
+
+
+
 
 
 #endif

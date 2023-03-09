@@ -2,9 +2,9 @@
 #define CONFIG_H
 
 /* LEAKAGE */
-#define DHTPIN 2 
 #define DHTTYPE DHT11  
 #define SENSORS_NUM 8
+#define DHTPIN 2 
 
 /* PRESSURE */
 #define MCLK_PIN 10

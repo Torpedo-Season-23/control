@@ -3,30 +3,28 @@
 #include <UIPEthernet.h>
 #include <Arduino.h>
 #include "config.h"
-#define BOX_PORT 8000
-#define CONSOLE_PORT 7000
+
 
 class CommunicationClient {
 private:
   EthernetUDP udp;
-  IPAddress consoleIP;
-  IPAddress boxIP;
   uint8_t mac[6] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05 };
+  IPAddress boxIP;
+  IPAddress consoleIP;
 
-  
+
+
 public:
-  //will be put in converters file
-  CommunicationClient( uint8_t *box,uint8_t *console) {
-    this->boxIP = IPAddress(box);;
-    this->consoleIP = IPAddress(console);
+  CommunicationClient() {
+    this->boxIP = (192, 168, 1, 7);
+    ;
+    this->consoleIP = (192, 168, 1, 9);
   }
-  
-  void Init();
+
+  void init();
   bool receiveData(uint8_t* acc_frame);
   void sendData(uint8_t* frame);
   void defaultFrame(uint8_t* frame);
-//will be put in converters file
- 
 };
 
 

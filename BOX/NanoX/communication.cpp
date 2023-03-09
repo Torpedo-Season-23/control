@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 //initiatize the ethertnet module
-void CommunicationClient::Init() {
+void CommunicationClient::init() {
 
   Ethernet.begin(this->mac, this->boxIP);
 }
@@ -35,5 +35,5 @@ void CommunicationClient::sendData(uint8_t* frame) {
   udp.beginPacket(this->consoleIP, CONSOLE_PORT);
   int size = udp.write(frame, UDP_SEND_FRAME);
   udp.endPacket();
-  udp.stop();jkhjjk
+  udp.stop();
 }
