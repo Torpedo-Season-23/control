@@ -16,10 +16,7 @@
 #define CONVERSION_DELAY_MS 35
 #define COMM_FREQUENCY 500000
 
-#define MCLK_PIN 10
-#define MISO_PIN 12
-#define MOSI_PIN 11
-#define SCLK_PIN 13
+
 class PressureSensor {
   private:
     float pressure;

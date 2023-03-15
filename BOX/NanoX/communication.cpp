@@ -2,9 +2,15 @@
 #include <Arduino.h>
 
 //initiatize the ethertnet module
-void CommunicationClient::Init() {
+void CommunicationClient::init() {
 
   Ethernet.begin(this->mac, this->boxIP);
+}
+void CommunicationClient::defaultFrame(uint8_t* frame) {
+  for (int i = 2; i < 8; i++)
+  {
+    frame[i] = 0x00;
+  }
 }
 
 bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
@@ -15,10 +21,9 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
   if (success) {
     Serial.print("Received! Success is ");
     Serial.println(success);
-    if(success != UDP_REC_FRAME){
+    if (success != UDP_REC_FRAME) {
       Serial.println("Frame incomplete?");
     }
-
     udp.read(receivedFrame, success + 1);
   }
   udp.flush();

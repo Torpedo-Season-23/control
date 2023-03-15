@@ -19,6 +19,7 @@ private:
 public:
     void set_h_forces(int *array);
     void set_v_forces(int *array);
+    void soft_start();
     int * get_thruster_frame();
 
 };

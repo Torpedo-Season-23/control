@@ -6,6 +6,7 @@
 #include "communication.h"
 #include "psgamepad.h"
 #include "lf310.h"
+#include "softStart.h"
 #include <Arduino.h>
 
 
@@ -17,6 +18,7 @@ private:
   Thrusters thruster;
   IController* gamepad;
   Communication console;
+  Motors motors;
 public:
   System(IController* gamepad) {
     this->gamepad = gamepad;
@@ -42,13 +44,15 @@ void System ::Update() {
   thruster.set_v_forces(gamepad->get_vframe());
   int* res = thruster.get_thruster_frame();
 
-  int converters[2] = { 1, 1 };
-  this->console.prepareData(acc, res, converters, sentFrame);
-  this->console.sendData(sentFrame);
+  motors.update(res);
+ 
+  // int converters[2] = { 1, 1 };
+  // this->console.prepareData(acc, res, converters, sentFrame);
+  // this->console.sendData(sentFrame);
 
-  this->console.receiveData(receivedFrame);
-  int16_t* sensors;
-  this->console.getSensors(receivedFrame, sensors);
+  // this->console.receiveData(receivedFrame);
+  // int16_t* sensors;
+  // this->console.getSensors(receivedFrame, sensors);
 
   // Serial.println();
   // Serial.print("array frame  ");

@@ -1,50 +1,68 @@
 #include "Leakage.h"
 #include "DHT.h"
+#include "config.h"
 
-DHT dht(DHTPIN, DHTTYPE);
+DHT *dht[8];  //needs to be tested
 
 LeakageSensor::LeakageSensor() {
-  this->humidity = 0;
-  this->temperature = 0;
+  for (int i = 0 ; i < SENSORS_NUM ; i++)
+  {
+    this->humidity[i] = 0;
+    this->temperature[i] = 0;
+  }
+
 }
 
 void LeakageSensor::init() {
-  dht.begin();
+  int sensorsPin[8] = { A0, A1, A2, A3, 7, 6, 4, 2 };
+  for (int i = 0; i < SENSORS_NUM; i++) {
+    dht[i] = new DHT(sensorsPin[i], DHTTYPE);
+    dht[i]->begin();
+  }
 }
 
 void LeakageSensor::update() {
   // delay(2000);
-  this->humidity = dht.readHumidity();
-  this->temperature = dht.readTemperature();
+  int i;
+  for (i = 0 ; i < SENSORS_NUM ; i++)
+  {
+    this->humidity[i] = dht[i]->readHumidity();
+    this->temperature[i] = dht[i]->readTemperature();
 
-  // Check if any reads failed and exit early (to try again).
-  if (isnan(humidity) || isnan(temperature)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
+
+
+    // Check if any reads failed and exit early (to try again).
+    if (isnan(this->humidity[i]) || isnan(this->temperature[i])) {
+      //Serial.println(F("Failed to read from DHT sensor! SENSOR NUMBER:"));
+      //Serial.print(i);
+      //Serial.println();
+      continue;
+    }
+
+    Serial.print("Temperature:");
+    Serial.print(this->temperature[i]);
+    Serial.println();
+    Serial.println(i);
+    Serial.print(" c");
+    Serial.print(" //Humidity: ");
+    Serial.print(this->humidity[i]);
+    Serial.println(i);
+    Serial.println("\n");
+
+    Serial.print(" %\n");
   }
-
-  Serial.print("Temperature:");
-  Serial.print(temperature);
-  Serial.print(" c");
-  Serial.print(" //Humidity: ");
-  Serial.print(humidity);
-  Serial.print(" %/n");
 }
 
-void LeakageSensor::setSensor(int i) {
-  this->sensor_num = (uint8_t)i;
-}
+//  void LeakageSensor::setNumber(int i) {
+//    this->sensor_num = i;
+//  }
 
-uint8_t LeakageSensor::getHumidity() {
+uint8_t* LeakageSensor::getHumidity() {
   this->update();
   return ((uint8_t)this->humidity);
 }
 
-uint8_t LeakageSensor::getTemperature() {
+uint8_t* LeakageSensor::getTemperature() {
   this->update();
   return ((uint8_t)this->temperature);
-}
-
-uint8_t LeakageSensor::getSensorNum() {
-  return this->sensor_num;
 }

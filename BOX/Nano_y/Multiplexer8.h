@@ -9,9 +9,6 @@
 #define S1 6
 #define S2 7
 
-//Mux output pin
-//#define LEAK 2
-
 void init_mux()
 {
   pinMode(S0, OUTPUT);
