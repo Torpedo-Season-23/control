@@ -8,7 +8,7 @@ void setup() {
 }
 
 void loop() {
-  s.receiveData();
+  // s.receiveData();
   s.activateUART();
-  s.sendData();
+  // s.sendData();
 }

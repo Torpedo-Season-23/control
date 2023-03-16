@@ -9,7 +9,10 @@ void CommunicationClient::init() {
 void CommunicationClient::defaultFrame(uint8_t* frame) {
   for (int i = 2; i < 8; i++)
   {
-    frame[i] = 0x00;
+    // frame[i] = 0x00;
+    frame[1] = 89;
+    frame[0] = 24+1;
+    frame[i] = i+1;
   }
 }
 

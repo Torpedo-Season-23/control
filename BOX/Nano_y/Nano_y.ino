@@ -7,7 +7,6 @@
 TorpedoMPU IMU;
 PressureSensor pressur_S;
 Nano_X uart_data;
-//int sensors_num = 0;
 LeakageSensor leakage;
 void handler() {
   Serial.println("In Interrupt!");
@@ -32,23 +31,27 @@ void setup() {
 
 
 void loop() {
-  ///long current = millis();
-  ///if (current - currentTime > 100) {
-    //noInterrupts();
-    //Serial.print("HERE!");
-    ///uart_data.Set_IMU_Angles(IMU.getangles());
-    ///uart_data.Set_Pressure(pressur_S.getPressure());
+  long current = millis();
+  if (current - currentTime > 100) {
+    noInterrupts();
+    Serial.print("HERE!");
+    uart_data.Set_IMU_Angles(IMU.getangles());
+    uart_data.Set_Pressure(pressur_S.getPressure());
+    
 
-   /// currentTime = current;
+   currentTime = current;
 
-    // uint8_t arr[8] = 0;
-    // for (int i = 0; i < 8; i++) {
-    //   arr[i] = leakSensors[i].getHumidity();
-    // }
+    uint8_t arr[8] = {0};
+    uint8_t *leakArr = leakage.getHumidity();
+    for (int i = 0; i < 8; i++) {
+
+      arr[i] =leakArr[i] ;
+    }
     leakage.update();
-  ///}
-  //interrupts();
-  ///Serial.println("Waiting to receive...");
-  ///uart_data.receive();
-  //uart_data.Send_Data();
+    
+  }
+  interrupts();
+  Serial.println("Waiting to receive...");
+  uart_data.receive();
+  uart_data.Send_Data();
 }

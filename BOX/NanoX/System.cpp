@@ -31,7 +31,8 @@ void System::receiveData()
 
 void System::activateUART()
 {
-      uart_y.sendFrame(udpReceiveFrame);
+  client.defaultFrame(udpReceiveFrame);
+  uart_y.sendFrame(udpReceiveFrame);
   digitalWrite(PIN, LOW);
   uart_y.receiveFrame(udpSendFrame);
   digitalWrite(PIN, HIGH);
