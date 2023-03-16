@@ -8,7 +8,7 @@ class System {
 private:
   CommunicationClient client;
   UART_Y uart_y;
-  Converter converter;
+  //Converter converter;
   uint8_t udpReceiveFrame[UDP_REC_FRAME];
   uint8_t udpSendFrame[UDP_SEND_FRAME];
 
@@ -17,6 +17,6 @@ public:
   void init();
   void sendData();
   void receiveData();
-  void useData(){};  //for converters
   void activateUART();
+  void useData();  //for converters
 };

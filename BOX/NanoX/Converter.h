@@ -40,7 +40,7 @@ private:
 
 public:
   double Converter_array[2];
-  int Converter_PINs[2] = { A2, A3 };
+  uint8_t Converter_PINs[2] = { A2, A3 };
   int *check_conv[2];
 
   Converter() {

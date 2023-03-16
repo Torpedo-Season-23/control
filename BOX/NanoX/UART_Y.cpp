@@ -1,37 +1,24 @@
 #include "UART_Y.h"
 #include "Converter.h"
-Converter converter;
+//Converter converter;
 
 SoftwareSerial serialY(RX_Y, TX_Y);
-Converter conv;
 void UART_Y::begin() {
   serialY.begin(9600);
 }
 
 void UART_Y::receiveFrame(uint8_t* data) {
-
   while (1) {
-
     byte x;
-    while (!serialY.available())
-      ;
-    x = serialY.read();
+    x = this->readByte();
     if (x != '(') continue;
-
     for (int i = 0; i < UART_y_FRAME_SIZE; i++) {
-      while (!serialY.available())
-        ;
-      data[i] = serialY.read();
+      data[i] = this->readByte();
     }
-
-    while (!serialY.available())
-      ;
-    x = serialY.read();
+    x = this->readByte();
     if (x != ')') continue;
 
-
-    //*********DEBUGGING*********//
-
+    #ifdef PRINT_ON
     for (int i = 0; i < 16; i++) {
       Serial.print(data[i]);
       Serial.print(" ");
@@ -56,12 +43,7 @@ void UART_Y::receiveFrame(uint8_t* data) {
       Serial.print(z);
       Serial.print(" ");
     }
-    for (int i = Converters_INDEx; i < Converters_INDEx + 6; i++) {
-      converter.checkConverter(this->rec_frame);
-      data[i] = conv.Set_data();
-      // data[i] = conv.Debug();
-    }
-
+    #endif
     return;
   }
 }
@@ -73,4 +55,10 @@ void UART_Y::sendFrame(uint8_t* sendingFrame) {
   serialY.write('(');
   serialY.write(sendingFrame, UDP_REC_FRAME);
   serialY.write(')');
+}
+
+
+inline byte UART_Y::readByte(){
+  while (!serialY.available());
+  return serialY.read();
 }

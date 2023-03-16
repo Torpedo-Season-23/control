@@ -9,6 +9,7 @@ void setup() {
 
 void loop() {
   s.receiveData();
-  s.activateUART();
+ // s.activateUART();
+  //Read Here From Converters
   s.sendData();
 }
