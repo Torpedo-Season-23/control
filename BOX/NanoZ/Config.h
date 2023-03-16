@@ -16,8 +16,8 @@
 #define ACC_BYTE_INDEX 0
 
 //uart pins
-#define RX_Z 9
-#define TX_Z 8
+#define RX_Z 8
+#define TX_Z 7
 
 //Motors speeds
 #define MOT_ZERO_SPEED 1500
@@ -28,6 +28,6 @@
 //debuging
 // #define THRUSTERS_PRINT_ON
 // #define ACC_PRINT_ON
-// #define UART_PRINT_ON
+#define UART_PRINT_ON
 
 #endif

@@ -19,7 +19,7 @@ void Nano_X::Start_Uart() {
   leakage_values[0] = 10; //debugging
 }
 void Nano_X::Set_IMU_Angles(int angles[3]) {
-  IMU_Angles[0] = 0;//angles[0];
+  IMU_Angles[0] =0;// angles[0];
   IMU_Angles[1] = 0;//angles[1];
   IMU_Angles[2] =0;// angles[2];
 }

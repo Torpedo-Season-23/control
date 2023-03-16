@@ -8,9 +8,10 @@ void Uartz::startUart() {
 
 void Uartz::receiveFrame() {
   uint8_t frame[UART_Z_FRAME_SIZE];
- 
+
   while (true) {
     byte x;
+    
     while (!serial.available())
       ;
     x = serial.read();
@@ -25,6 +26,10 @@ void Uartz::receiveFrame() {
     x = serial.read();
     if (x != ')') continue;
 
+
+for(int i = 0 ; i < 8 ; i ++){
+  uartFrame[i] = frame[i];
+}
 
 //debuging
 #ifdef UART_PRINT_ON

@@ -12,14 +12,15 @@ void UART_Y::receiveFrame(uint8_t* data) {
     byte x;
     x = this->readByte();
     if (x != '(') continue;
-    for (int i = 0; i < UART_y_FRAME_SIZE; i++) {
+    for (int i = 0; i < 8; i++) {
       data[i] = this->readByte();
+
     }
     x = this->readByte();
     if (x != ')') continue;
 
     #ifdef PRINT_ON
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 8; i++) {
       Serial.print(data[i]);
       Serial.print(" ");
     }
@@ -37,23 +38,24 @@ void UART_Y::receiveFrame(uint8_t* data) {
     Serial.println(y);
     Serial.print(" ");
 
-    Serial.print("Leakage: ");
-    for (int i = LEAKAGE_INDEX; i < UART_y_FRAME_SIZE; i++) {
-      int z = data[i];
-      Serial.print(z);
-      Serial.print(" ");
-    }
+    // Serial.print("Leakage: ");
+    // for (int i = LEAKAGE_INDEX; i < UART_y_FRAME_SIZE; i++) {
+    //   int z = data[i];
+    //   Serial.print(z);
+    //   Serial.print(" ");
+    // }
     #endif
     return;
   }
 }
 
 void UART_Y::sendFrame(uint8_t* sendingFrame) {
-  for (int i = 0; i < 8; i++) {
-    this->rec_frame[i] = sendingFrame[i];
+  for (int i = 1; i < 8; i++) {
+    // this->rec_frame[i] = sendingFrame[i];
+    this->rec_frame[i] = i;
   }
   serialY.write('(');
-  serialY.write(sendingFrame, UDP_REC_FRAME);
+  serialY.write(this->rec_frame, UDP_REC_FRAME);
   serialY.write(')');
 }
 
