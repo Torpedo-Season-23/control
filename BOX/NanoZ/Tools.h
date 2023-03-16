@@ -4,10 +4,10 @@
 
 class Tools {
 
-  const int toolPins[TOOLS_COUNT] = { 0 };
+  const int toolPins[TOOLS_COUNT] = { A0, A1, A2, A3, A4, A5, 4, 2 }; 
 
 public:
-  uint8_t *toolsFrame;
+  uint8_t toolsFrame[TOOLS_COUNT];
   void init();
   void applySignal();
 };

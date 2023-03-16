@@ -10,7 +10,7 @@ class Thrusters {
   Servo Motors[MOTORS_COUNT];
 
 public:
-  uint16_t *thrustersFrame;
+  uint16_t thrustersFrame[MOTORS_COUNT] ;
   void init();
   void applySignal();
 };

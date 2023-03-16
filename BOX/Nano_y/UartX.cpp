@@ -1,7 +1,7 @@
 #include "UartX.h"
 #include "config.h"
 #include <Arduino.h>
-SoftwareSerial softSerial(8, 7);
+SoftwareSerial softSerial(9, 8);
 
 Nano_X::Nano_X() {
   this->IMU_Angles[0] = 0;
@@ -19,9 +19,9 @@ void Nano_X::Start_Uart() {
   leakage_values[0] = 10; //debugging
 }
 void Nano_X::Set_IMU_Angles(int angles[3]) {
-  IMU_Angles[0] = angles[0];
-  IMU_Angles[1] = angles[1];
-  IMU_Angles[2] = angles[2];
+  IMU_Angles[0] = 0;//angles[0];
+  IMU_Angles[1] = 0;//angles[1];
+  IMU_Angles[2] =0;// angles[2];
 }
 
 void Nano_X::Set_Pressure(int Pressure) {

@@ -8,6 +8,7 @@ void Uartz::startUart() {
 
 void Uartz::receiveFrame() {
   uint8_t frame[UART_Z_FRAME_SIZE];
+ 
   while (true) {
     byte x;
     while (!serial.available())
@@ -24,7 +25,7 @@ void Uartz::receiveFrame() {
     x = serial.read();
     if (x != ')') continue;
 
-  uartFrame = frame;
+
 //debuging
 #ifdef UART_PRINT_ON
     Serial.print("Frame is ");
@@ -35,15 +36,14 @@ void Uartz::receiveFrame() {
 #endif
 
     return;
-  }
+  
+}
 }
 
 void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
-  uint16_t thrusters[MOTORS_COUNT] = { 0 };
-  uint8_t tools[TOOLS_COUNT] = { 0 };
+  
   uint8_t loopLimit = max(MOTORS_COUNT, TOOLS_COUNT);
   
-
   for (int i = 0; i < loopLimit; i++) {
 
     //Extract Motors directions byte (the second byte) & Motors speeds (form 2 to 7)
@@ -56,7 +56,7 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
       //check the limits
       if(speedValue > MOT_MAX_SPEED) speedValue = MOT_MAX_SPEED;
       if (speedValue < MOT_MIN_SPEED)speedValue = MOT_MIN_SPEED;
-      thrusters[i] = speedValue;
+      thrustersFrame[i] = speedValue;
       #ifdef THRUSTERS_PRINT_ON
       Serial.print(uartFrame[DIRECTIONS_BYTE_INDEX] & 1);
       #endif
@@ -67,9 +67,9 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
     if (i < TOOLS_COUNT) {
       
       if (uartFrame[ACC_BYTE_INDEX] & 1 == 1) {
-        tools[i] = 255;
+        toolsFrame[i] = 255;
       } else {
-        tools[i] = 0;
+        toolsFrame[i] = 0;
       }
       #ifdef ACC_PRINT_ON
       Serial.print(uartFrame[ACC_BYTE_INDEX] & 1);
@@ -78,8 +78,6 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
     }
   }
   Serial.println();
-  thrustersFrame = thrusters;
-  toolsFrame = tools;
 
   //Debuging
 #ifdef THRUSTERS_PRINT_ON

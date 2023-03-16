@@ -7,7 +7,7 @@
 
 class Uartz {
 public:
-  uint8_t* uartFrame;
+  uint8_t uartFrame[ACTUAL_DATA];
   void startUart();
   void receiveFrame();
   void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame);

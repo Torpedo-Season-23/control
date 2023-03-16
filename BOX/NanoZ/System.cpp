@@ -8,7 +8,7 @@ void System::init() {
 }
 
 void System::getData() {
-  Serial.print("Waiting to receive...");
+  // Serial.print("Waiting to receive...");
   uartz.receiveFrame();
   uartz.extractData(thrusters.thrustersFrame, tools.toolsFrame);
 }
