@@ -3,8 +3,7 @@
 
 //initiatize the ethertnet module
 void CommunicationClient::init() {
-
-  Ethernet.begin(this->mac, this->boxIP);
+  Ethernet.begin(this->mac, IPAddress(192,168,1,7));
 }
 void CommunicationClient::defaultFrame(uint8_t* frame) {
   for (int i = 2; i < 8; i++)
@@ -34,8 +33,10 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
 }
 
 void CommunicationClient::sendData(uint8_t* frame) {
-
-  udp.beginPacket(this->consoleIP, CONSOLE_PORT);
+  Serial.print("Sending...");
+  int x=udp.beginPacket(IPAddress(192,168,1,9), CONSOLE_PORT);
+  //Serial.print("Begin Packet: ");
+  //Serial.println(x);
   int size = udp.write(frame, UDP_SEND_FRAME);
   udp.endPacket();
   udp.stop();

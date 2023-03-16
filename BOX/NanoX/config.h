@@ -17,10 +17,11 @@
 #define PRESSURE_INDEX ANGLE_INDEX + 3*2
 #define LEAKAGE_INDEX PRESSURE_INDEX + 2
 #define Converters_INDEx ANGLE_INDEX + 3*2 + 2
-#define PIN A0 //Interrupt pin
+#define INTERRUPT_PIN A0 //Interrupt pin
 
 
 
 
+// #define PRINT_ON //Uncomment this line to print debug messages
 
 #endif

@@ -16,9 +16,8 @@ private:
 
 public:
   CommunicationClient() {
-    this->boxIP = (192, 168, 1, 7);
-    ;
-    this->consoleIP = (192, 168, 1, 9);
+    this->boxIP = IPAddress(192, 168, 1, 7);
+    this->consoleIP = IPAddress(192, 168, 1, 9);
   }
 
   void init();

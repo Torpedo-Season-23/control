@@ -13,5 +13,7 @@ class UART_Y{
         void begin();
         void receiveFrame(uint8_t* frame);
         void sendFrame(uint8_t*);
+    private:
+      inline byte readByte();
 };
 #endif

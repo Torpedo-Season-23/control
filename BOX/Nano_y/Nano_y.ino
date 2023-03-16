@@ -26,7 +26,7 @@ void setup() {
 
   IMU.check();
   pressur_S.init();
-  attachInterrupt(digitalPinToInterrupt(3), handler, LOW);
+ // attachInterrupt(digitalPinToInterrupt(3), handler, LOW);
 }
 
 
@@ -48,6 +48,7 @@ void loop() {
       arr[i] =leakArr[i] ;
     }
     leakage.update();
+<<<<<<< HEAD
     
   }
   interrupts();
@@ -55,3 +56,11 @@ void loop() {
   uart_data.receive();
   uart_data.Send_Data();
 }
+=======
+  ///}
+  //interrupts();
+  ///Serial.println("Waiting to receive...");
+  ///uart_data.receive();
+  //uart_data.Send_Data();
+}
+>>>>>>> 4f7eed13799d6bb496f2889e5f9930832f45e2d8

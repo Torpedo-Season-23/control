@@ -117,7 +117,7 @@ uint8_t *Converter::Debug() {
 }
 
 void Converter::print_data() {
-  data();
+  this->data();
 
   Serial.print("Iout = ");
   Serial.print(Converter_array[0]);
