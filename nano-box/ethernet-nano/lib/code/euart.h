@@ -5,8 +5,7 @@
 
 class EUART {
  private:
-  UART *sUart;
-  UART *mUart;
+  UART *uart;
   uint8_t frameReceived[UART_FRAME_RECEIVED_SIZE];
   uint8_t frameSent[UART_FRAME_SENT_SIZE];
 

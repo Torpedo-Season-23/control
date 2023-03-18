@@ -49,9 +49,8 @@ void BoxEthernet::receive() {
     udp->read(this->frameReceived, this->packetSize);
     this->lastTimeReceived = millis();
   } else {
-    if (millis() - this->lastTimeReceived > CRITICAL_TIME) {
+    if (millis() - this->lastTimeReceived > CRITICAL_TIME)
       this->reset();
-    }
   }
 }
 

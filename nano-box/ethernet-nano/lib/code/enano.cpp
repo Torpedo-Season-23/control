@@ -15,6 +15,7 @@ void ENano::update() {
   this->uart->setFrameSent(this->mapper->getUartSentFrame());
   this->uart->send();
 
+  this->uart->receive();
   this->ethernet->send();
 }
 

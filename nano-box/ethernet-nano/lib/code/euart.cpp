@@ -1,26 +1,23 @@
 EUART::EUART() {
-  this->sUart = new UART(SENSORS_SOFTWARE_SERIAL_RX, SENSORS_SOFTWARE_SERIAL_TX);
-  this->mUart = new UART(MOTORS_SOFTWARE_SERIAL_RX, MOTORS_SOFTWARE_SERIAL_TX);
+  this->uart = new UART(MOTORS_SOFTWARE_SERIAL_RX, MOTORS_SOFTWARE_SERIAL_TX);
 }
 
 void EUART::init() {
-  this->sUart->init();
-  this->mUart->init();
+  this->uart->init();
 }
 
 void EUART::receive() {
-  this->sUart->receive();
-  memcpy(this->frameReceived, this->sUart->getFrameReceived(), UART_FRAME_RECEIVED_SIZE);
+  this->uart->receive();
+  memcpy(this->frameReceived, this->uart->getFrameReceived(), UART_FRAME_RECEIVED_SIZE);
 }
 
 void EUART::send() {
-  this->mUart->setFrameSent(this->frameSent);
-  this->mUart->send();
+  this->uart->setFrameSent(this->frameSent);
+  this->uart->send();
 }
 
 void EUART::reset() {
-  this->sUart->reset();
-  this->mUart->reset();
+  this->uart->reset();
 }
 
 void EUART::setFrameSent(uint8_t frame[UART_FRAME_SENT_SIZE]) {
