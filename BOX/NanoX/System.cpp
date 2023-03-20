@@ -15,11 +15,21 @@ void System::sendData()
     client.sendData(udpSendFrame);
     delay(10);
 
+    for(int i = 0 ; i < 16 ; i ++){
+      Serial.print(udpSendFrame[i]);
+      Serial.print(" ");
+ 
+    }
+      Serial.println();
+
+
 }
 
 void System::receiveData()
 {
       bool i = client.receiveData(udpReceiveFrame);
+
+ 
   if (!i)
   {
     client.defaultFrame(udpReceiveFrame);
@@ -33,7 +43,7 @@ void System::activateUART()
 {
   uart_y.sendFrame(udpReceiveFrame);
  
- digitalWrite(INTERRUPT_PIN, LOW);
+//  digitalWrite(INTERRUPT_PIN, LOW);
   
 //  uart_y.receiveFrame(udpSendFrame);
    

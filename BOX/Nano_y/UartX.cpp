@@ -1,7 +1,7 @@
 #include "UartX.h"
 #include "config.h"
 #include <Arduino.h>
-SoftwareSerial softSerial(9, 8);
+SoftwareSerial softSerial(RX_Y,TX_Y);
 
 Nano_X::Nano_X() {
   this->IMU_Angles[0] = 0;
@@ -16,12 +16,12 @@ void Nano_X::Start_Uart() {
   softSerial.begin(9600);
   IMU_Angles[0] = 0;  //already initialized?
   pressure = 0;
-  leakage_values[0] = 10; //debugging
+  leakage_values[0] = 10;  //debugging
 }
 void Nano_X::Set_IMU_Angles(int angles[3]) {
-  IMU_Angles[0] =0;// angles[0];
-  IMU_Angles[1] = 0;//angles[1];
-  IMU_Angles[2] =0;// angles[2];
+  IMU_Angles[0] = angles[0];
+  IMU_Angles[1] = angles[1];
+  IMU_Angles[2] = angles[2];
 }
 
 void Nano_X::Set_Pressure(int Pressure) {
@@ -29,7 +29,7 @@ void Nano_X::Set_Pressure(int Pressure) {
 }
 
 void Nano_X::Set_Leakage(uint8_t leakValues[8]) {
-  for(int i = 0 ; i < SENSORS_NUM ; i++)
+  for (int i = 0; i < SENSORS_NUM; i++)
     leakage_values[i] = leakValues[i];
 }
 
@@ -59,51 +59,59 @@ void Nano_X::Prepare_frame(uint8_t Dataframe[16]) {
 }
 
 void Nano_X::Send_Data() {
-  // Serial.println("Sent...");
+  Serial.println("Sending...");
 
   uint8_t Dataframe[16];
   Prepare_frame(Dataframe);
-  // softSerial.write('(');
   softSerial.write('(');
+  // softSerial.write('(');
   softSerial.write(Dataframe, 16);
-  softSerial.write(')');
   // softSerial.write(')');
+  softSerial.write(')');
+  
+ 
 }
 
 void Nano_X::receive() {
-  //Serial.print("Waiting to receive: ");
-  //Serial.println(softSerial.available());
+  // Serial.print("Waiting to receive: ");
+  Serial.println(softSerial.available());
+  // noInterrupts();
   uint8_t recFrame[8];
   while (1) {
+  // Serial.println("Inside Receiving...");
     byte x;
-    while (!softSerial.available())
-      ;
+    while (!softSerial.available());
+      // Serial.println("hello");
     x = softSerial.read();
     if (x != '(') continue;
+  // noInterrupts();
+  Serial.println("before frame");
     for (int i = 0; i < 8; i++) {
       while (!softSerial.available())
         ;
+        
       recFrame[i] = softSerial.read();
+Serial.println(recFrame[i]);   
     }
 
     while (!softSerial.available())
       ;
     x = softSerial.read();
+    Serial.println("after frame");
     if (x != ')') continue;
-    noInterrupts();
+   
     Serial.print("Frame is ");
     for (int i = 0; i < 8; i++) {
       Serial.print(recFrame[i]);
       Serial.print(" ");
     }
     Serial.println();
+    // interrupts();
 
     // Serial.println();
     // for (int i = 0; i < 8; i++) { //ACCESSORIES
-    //   this->accessories[i] = bitRead(recFrame[0],i); //(recFrame[0] >> (i)) & 0x01      
+    //   this->accessories[i] = bitRead(recFrame[0],i); //(recFrame[0] >> (i)) & 0x01
     // }
-
-    interrupts();
     return;
   }
 }

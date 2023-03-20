@@ -8,7 +8,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("gggggggg");
+  // Serial.println("gggggggg");
   sys.getData();
   sys.setData();
 }

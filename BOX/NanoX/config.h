@@ -7,7 +7,7 @@
 
 /*from BOX to CONSOLE*/
 #define UDP_REC_FRAME 8 //(bytes): 1 Accessories, 1 directions + converters on/off, 6 thrusters speeds "respectively"
-#define UDP_SEND_FRAME 22 //(bytes): 6 IMU angles, 2 pressure, 8 leakage, 3*2 converters(2 bytes for current, 1 for temperature) "respectively"
+#define UDP_SEND_FRAME 16 //22 //(bytes): 6 IMU angles, 2 pressure, 8 leakage, 3*2 converters(2 bytes for current, 1 for temperature) "respectively"
 
 /*from SENSORS NANO to ETHERNET NANO*/
 #define UART_y_FRAME_SIZE 8
@@ -22,6 +22,6 @@
 
 
 
-#define PRINT_ON //Uncomment this line to print debug messages
+// #define PRINT_ON //Uncomment this line to print debug messages
 
 #endif
