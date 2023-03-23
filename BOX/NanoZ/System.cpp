@@ -2,15 +2,17 @@
 
 
 void System::init() {
-  uartz.startUart();
+ thrusters.init();
   tools.init();
-  thrusters.init();
+  uartz.startUart();
+
 }
 
 void System::getData() {
   // Serial.print("Waiting to receive...");
   uartz.receiveFrame();
   uartz.extractData(thrusters.thrustersFrame, tools.toolsFrame);
+
 }
 
 void System::setData() {

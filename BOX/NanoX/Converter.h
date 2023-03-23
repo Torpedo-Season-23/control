@@ -3,8 +3,10 @@
 #include <math.h>
 #ifndef _Converter_H_
 #define _Converter_H_
+#define TEST_CONVERTER 
 
-const byte address = 0x78;
+const byte address_1 = 0x78;
+const byte address_2 = 0x76;
 const byte VIN = 0x88;
 const byte VOUT = 0x8B;
 const byte IOUT = 0x8c;
@@ -33,25 +35,36 @@ class Converter {
 private:
   twobytes tbval;
   int VOUT_MODE;
+  bool converter = HIGH ;
   void init();
   double linear11(twobytes tbval);
   twobytes CommandExec2(byte DeviceAddr, byte Command);
   double directf(twobytes tbval);
+  void data_conv();
 
 public:
-  double Converter_array[2];
-  uint8_t Converter_PINs[2] = { A2, A3 };
-  int *check_conv[2];
+  double converterArray[2];
+  double Conv_data[6];
+  int Converter_PINs[3]  = {A1,A2,A3};
+  int controlPins[2] = {2 , 4 };
+  int check_conv[2]={1,1};
 
   Converter() {
-    this->Converter_array[0] = 0;
-    this->Converter_array[1] = 0;
+    this->converterArray[0] = 0;
+    this->converterArray[1] = 0;
+  
     this->VOUT_MODE = -9;
+    this->Conv_data[0]=0;
+    this->Conv_data[1]=0;
+    this->Conv_data[2]=0;
+    this->Conv_data[3]=0;
+    this->Conv_data[4]=0;
+    this->Conv_data[5]=0;
+
   }
-  uint8_t *data();
-  uint8_t *Set_data();
   void print_data();
-  uint8_t *Debug();
-  int *checkConverter(uint8_t *frame);
+  void switchPin();
+  uint8_t *getData(bool converter);
+  // int *checkConverter(uint8_t *frame);
 };
 #endif

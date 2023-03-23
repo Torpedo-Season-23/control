@@ -42,10 +42,12 @@ void System::receiveData()
 void System::activateUART()
 {
   uart_y.sendFrame(udpReceiveFrame);
+  Serial.print("aaaaa");
  
 //  digitalWrite(INTERRUPT_PIN, LOW);
   
-//  uart_y.receiveFrame(udpSendFrame);
+ uart_y.receiveFrame(udpSendFrame);
+ Serial.print("jjjj");
    
   // digitalWrite(INTERRUPT_PIN, HIGH);
 
