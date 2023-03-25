@@ -43,6 +43,43 @@ void PSGamepad::Update() {
         this->flags[3] = 0;
       }
     }
+     if (this->PS3.getButtonClick(UP)) {
+      if (this->flags[4] == 0) {
+        this->acc_array[4] = 1;
+        this->flags[4] = 1;
+      } else {
+        this->acc_array[4] = 0;
+        this->flags[4] = 0;
+      }
+    }
+     if (this->PS3.getButtonClick(RIGHT)) {
+      if (this->flags[5] == 0) {
+        this->acc_array[5] = 1;
+        this->flags[5] = 1;
+      } else {
+        this->acc_array[5] = 0;
+        this->flags[5] = 0;
+      }
+    }
+     if (this->PS3.getButtonClick(DOWN)) {
+      if (this->flags[6] == 0) {
+        this->acc_array[6] = 1;
+        this->flags[6] = 1;
+      } else {
+        this->acc_array[6] = 0;
+        this->flags[6] = 0;
+      }
+    }
+     if (this->PS3.getButtonClick(LEFT)) {
+      if (this->flags[7] == 0) {
+        this->acc_array[7] = 1;
+        this->flags[7] = 1;
+      } else {
+        this->acc_array[7] = 0;
+        this->flags[7] = 0;
+      }
+    }
+    
     //set led
     this->PS3.setLedOn(LED1);
 
@@ -55,7 +92,7 @@ void PSGamepad::Update() {
       if (this->speed < 2) this->speed++;
     }
   }
-  delay(50);
+  delay(20);
 }
 void PSGamepad::update_vmotion() {
   int8_t direction = 0;

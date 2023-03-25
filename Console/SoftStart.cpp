@@ -1,73 +1,116 @@
 #include "softStart.h"
+// #include "Output_signals.h"
+#include "Arduino.h"
+float exponent = 4;
 
-/**
- * We have 3 different conditions
- * 1: We are increasing the speed.
- * 2: We are decreasing the speed or stopping.
- * 3: We are changing directions
- */
-void Motor::setSpeed(uint16_t newSpeed){
-    if(newSpeed == this->currentSpeed){
-        // this->counter = 0;
-        return ;
-       
+int dir = up; // direction of increasing the speed
+long int time1[8], time2[8], speed_counter[8] = {0};
+//speed_counter is a counter of steps taken by the motor to reach the wanted speed
+
+void soft_start_initial_value() {
+  //needed to check time step
+  for (char i = 0; i < MOTORS_COUNT; i++) {
+    time1[i] = millis();
+    time2[i] = millis();
+  }
+}
+void soft_start( char type, int motor_speed, int *motor_controlled_speed, char i) {
+  //check if TIME_STEP has been passed or not
+  if ( (time2[i] - time1[i]) >= TIME_STEP) {
+    time1[i] = millis(); //update time1 for the motor
+    speed_counter[i]++; //update the number of stages
+    //give the motor the next stage speed
+    switch (type) {
+      case up:
+        *motor_controlled_speed = SOFT_START_UP;
+        break;
+      case down:
+        *motor_controlled_speed = SOFT_START_DOWN;
+        break;
     }
-    long currentTime= millis();  
-    if(currentTime- this->lastUpdatedTime < 30)
-        return ;
-    this->lastUpdatedTime= currentTime;
-    if (newSpeed > 1500)// Forward is required.
-    { 
-        if (this->currentSpeed > newSpeed)this->decreaseSpeed(newSpeed);
-        else if (this->currentSpeed >= 1500)this->increaseSpeed(newSpeed);
-        else this->changeDirection(newSpeed);
-        return ;
+    //if speed difference <= 30 no more soft start needed
+    if (abs(motor_speed - *motor_controlled_speed) <= STEP_SPEED) {
+      *motor_controlled_speed = motor_speed;
+      speed_counter[i] = 0; // set stage count back to 0
     }
-    if(this->currentSpeed < newSpeed)this->decreaseSpeed(newSpeed);
-    else if(this->currentSpeed<=1500) this->increaseSpeed(newSpeed);
-    else this->changeDirection(newSpeed);
-    return ;
+  }
+  time2[i] = millis(); //update time2 for the motor
 }
 
-void Motor::increaseSpeed(uint16_t newSpeed){
-    uint16_t positiveRequiredSpeed= GET_POSITIVE_SPEED(newSpeed);
-    uint16_t positiveCurrentSpeed= GET_POSITIVE_SPEED(this->currentSpeed);
-    if(this->counter == 0 ){
-        this->counter= (uint8_t) (log2(0.39*positiveCurrentSpeed)+1);
-    }
-    if(this->counter < 10)
-        this->counter++;
-    uint16_t newCalculatedSpeed= ((1<<this->counter)*INCREAMENT_FACTOR < positiveRequiredSpeed) ? (1<<this->counter)*INCREAMENT_FACTOR :positiveRequiredSpeed; //New Speed is 2^(d+1)
-    this->currentSpeed= newSpeed > MOTOR_STATIC_SPEED ? newCalculatedSpeed + MOTOR_STATIC_SPEED :MOTOR_STATIC_SPEED-newCalculatedSpeed; 
-}
-void Motor::decreaseSpeed(uint16_t newSpeed){
-    this->counter= 0;
-    this->currentSpeed=newSpeed;
-}
-void Motor::changeDirection(uint16_t newSpeed){
-    this->counter= 0;
-    this->currentSpeed= MOTOR_STATIC_SPEED;
-}
 
-//Motors Class
-void Motors::print(){
-    for(int i=0;i<MOTORS_NUMBER;i++){
-        Serial.print(this->motors[i].getSpeed());
-    Serial.print("  ");
-
+void motor_soft_start (int motor_speed, int *motor_controlled_speed, int *thrusterArr, char i) {
+  //motor speed limits
+  if (motor_speed < 1100 || motor_speed > 1900)
+    motor_speed = 1500;
+  if ( motor_speed == MOT_ZERO_SPEED ) {
+    *motor_controlled_speed = MOT_ZERO_SPEED;//stop speed
+    speed_counter[i] = 0;
+  }
+  //if changing direction => set speed to (stop speed) first
+  else if ( (motor_speed > MOT_ZERO_SPEED) && (*motor_controlled_speed < MOT_ZERO_SPEED) ) {
+    *motor_controlled_speed = MOT_ZERO_SPEED;
+    speed_counter[i] = 0;
+  }
+  //lowering the speed doesnt require soft start
+  else if ( (motor_speed > MOT_ZERO_SPEED) && (motor_speed < *motor_controlled_speed)) {
+    *motor_controlled_speed = motor_speed;
+    speed_counter[i] = TIME_STEP_RETURN_UP;
+    // Serial.print("(no soft start) TIME_STEP_RETURN_UP : ");
+    // Serial.print(TIME_STEP_RETURN_UP);
+    // Serial.print("    , Speed counter : ");
+    // Serial.print(speed_counter[i]);
+    // Serial.print("    , Exp : ");
+    // Serial.println(EXPONENT);
+  }
+  //if changing direction => set speed to (stop speed) first
+  else if ( (motor_speed < MOT_ZERO_SPEED) && (*motor_controlled_speed > MOT_ZERO_SPEED) ) {
+    *motor_controlled_speed = MOT_ZERO_SPEED;
+    speed_counter[i] = 0;
+  }
+  //lowering the speed doesnt require soft start
+  else if ((motor_speed < MOT_ZERO_SPEED) && (motor_speed > *motor_controlled_speed)) {
+    *motor_controlled_speed = motor_speed;
+    speed_counter[i] = TIME_STEP_RETURN_DOWN;
+      //  Serial.print("(no soft start) TIME_STEP_RETURN_DOWN : ");
+      //   Serial.print(TIME_STEP_RETURN_DOWN);
+      //   Serial.print("    , Speed counter : ");
+      //   Serial.print(speed_counter[i]);
+      //   Serial.print("    , Exp : ");
+      //   Serial.println(EXPONENT);
+  }
+  // soft start up
+  else if ( (motor_speed > MOT_ZERO_SPEED) && (*motor_controlled_speed >= MOT_ZERO_SPEED) && (*motor_controlled_speed < motor_speed) ) {
+    if (speed_counter[i] == 0) {
+      speed_counter[i] = TIME_STEP_RETURN_UP;//update the count of speed change
     }
+      //   Serial.print("TIME_STEP_RETURN_UP : ");
+      //  Serial.print(TIME_STEP_RETURN_UP);
+      //  Serial.print("    , Speed counter : ");
+      //   Serial.print(speed_counter[i]);
+      //   Serial.print("    , Exp : ");
+      //   Serial.println(EXPONENT);
+    soft_start(up, motor_speed, motor_controlled_speed, i);//control speed rate of change
+    dir = up;
+  }
 
-    for(int t = 0 ; t < MOTORS_NUMBER ; t++){
-      Serial.print(this->motors[t].counter);
+  // soft start down
+  else if ( (motor_speed < MOT_ZERO_SPEED) && (*motor_controlled_speed <= MOT_ZERO_SPEED) && (*motor_controlled_speed > motor_speed) ) {
+    if (speed_counter[i] == 0) {
+      speed_counter[i] = TIME_STEP_RETURN_DOWN;//update the count of speed change
     }
-    
-    Serial.println();
+      //  Serial.print("TIME_STEP_RETURN_DOWN : ");
+      //   Serial.print(TIME_STEP_RETURN_DOWN);
+      //   Serial.print("    , Speed counter : ");
+      //   Serial.print(speed_counter[i]);
+      //   Serial.print("    , Exp : ");
+      //   Serial.println(EXPONENT);
+    soft_start(down, motor_speed, motor_controlled_speed, i);//control speed rate of change
+    dir = down;
+  }
+
+  // Serial.println(*motor_controlled_speed);
+
+  //set controlled speed to the motor
+  thrusterArr[i] = *motor_controlled_speed;
+
 }
-void Motors::update(int* motorsValues){
-    for(int i= 0;i<MOTORS_NUMBER;i++){
-        this->motors[i].setSpeed(motorsValues[i]);
-        motorsValues[i]= this->motors[i].getSpeed();
-    }
-    this->print();
-}
-
