@@ -3,9 +3,9 @@ import math as m
 from Controller import myController
 from numpy.linalg import eigh, norm,inv
 class Vectors:
-    A=np.array([[-0.707 , -0.707, 0.707,0.707],# -45  45  225 135
-    [-0.707 , 0.707,  -0.707, 0.707],# -45  45  225 135
-    [-0.966 , 0.966,  0.966 , -0.966]]) # -255  -105  255 105
+    A=np.array([ [0.5, -0.5,  -0.5, 0.5],
+    [-0.866 , -0.866,-0.866,-0.866],
+    [42.046 , 42.046, - 42.046, -42.046]]) #
     ##Values of third row to be adjust by current design
     S_Astred =  [[0] * 3] * 3
     V_transpose =  [[0] * 4] * 4
@@ -23,12 +23,13 @@ class Vectors:
         td=np.array([x ,y, m])# Values to be adjusted by controller
         f= np.round(Vectors.V_transpose.T@Vectors.S_Astred@Vectors.U.T@td)
 
-        print(f)
-        print(self.V_transpose.T@self.S_Astred@self.U.T)
-        print(Vectors.V_transpose.T)
-        print(Vectors.S_Astred)
-        print(Vectors.U.T)
-        print(td)
+        # print(f)
+        print(f"last =  {self.V_transpose.T@self.S_Astred@self.U.T}")
+        # print(Vectors.V_transpose.T)
+        # print(Vectors.S_Astred)
+        # print(Vectors.U.T)
+        # print(td)
         for i in range (4):
             f[i]=np.round(np.interp(f[i],[-45,45],[1100,1900]),decimals=2)
         return f
+    
