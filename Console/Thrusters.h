@@ -8,20 +8,16 @@
 #define Down 5
 
 
-class Thrusters
-{
-private:
-    double config_matrix[4][3]={{-0.35360679, -0.35360679, -0.25879917},
-                                {-0.35360679,  0.35360679 , 0.25879917},
-                                {0.35360679, -0.35360679 , 0.25879917},
-                                {0.35360679  ,0.35360679 ,-0.25879917}};
+class Thrusters{
+
+    
+protected:
     int thruster_frame[6]={0}; //UR , BR , UL ,BL , UP , DOWN
 public:
-    void set_h_forces(int *array);
-    void set_v_forces(int *array);
-    void soft_start();
-    int * get_thruster_frame();
-
+    virtual void set_h_forces(int *array)=0;
+    virtual void set_v_forces(int *array)=0;
+    virtual void soft_start(){};
+    virtual int * get_thruster_frame()=0;
 };
 
 #endif

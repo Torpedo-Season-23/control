@@ -1,4 +1,4 @@
-#include "softStart.h"
+#include "SoftStart.h"
 
 /**
  * We have 3 different conditions
@@ -70,4 +70,3 @@ void Motors::update(int* motorsValues){
     }
     this->print();
 }
-

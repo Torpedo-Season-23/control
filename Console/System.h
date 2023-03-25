@@ -3,10 +3,11 @@
 
 #include "IController.h"
 #include "Thrusters.h"
+#include "VectorAlgorithm.h"
 #include "communication.h"
 #include "psgamepad.h"
 #include "lf310.h"
-#include "softStart.h"
+#include "SoftStart.h"
 #include <Arduino.h>
 
 
@@ -15,7 +16,7 @@ uint8_t sentFrame[8];
 
 class System {
 private:
-  Thrusters thruster;
+  VectorAlgorithm thruster;
   IController* gamepad;
   Communication console;
   Motors motors;
@@ -40,8 +41,8 @@ void System ::Update() {
   int* array = gamepad->get_hframe();
   int* v = gamepad->get_vframe();
   int* acc = gamepad->get_accframe();
-  thruster.set_h_forces(gamepad->get_hframe());
-  thruster.set_v_forces(gamepad->get_vframe());
+  thruster.set_h_forces(array);
+  thruster.set_v_forces(v);
   int* res = thruster.get_thruster_frame();
 
   motors.update(res);
