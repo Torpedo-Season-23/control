@@ -9,8 +9,7 @@
 #define S1 6
 #define S2 7
 
-void init_mux()
-{
+void init_mux() {
   pinMode(S0, OUTPUT);
   pinMode(S1, OUTPUT);
   pinMode(S2, OUTPUT);
@@ -21,17 +20,15 @@ void init_mux()
 }
 
 
-void select_mux(uint8_t sensor_num)
-{
+void select_mux(uint8_t sensor_num) {
   LeakageSensor l;
-  int selectPin[3] = {S0, S1, S2};
-  for(int i=0 ; i<3 ; i++)
-  {
+  int selectPin[3] = { S0, S1, S2 };
+  for (int i = 0; i < 3; i++) {
     digitalWrite(selectPin[i], bitRead(sensor_num, i));
   }
 
- // uint8_t reading = analogRead(DHTPIN); //Q?
- // return reading;
+  // uint8_t reading = analogRead(DHTPIN); //Q?
+  // return reading;
 }
 
 #endif

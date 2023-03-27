@@ -1,34 +1,31 @@
-#include "UART_Y.h"
+#include "UART.h"
 #include "Converter.h"
 //Converter converter;
 
-SoftwareSerial serialY(RX_Y, TX_Y);
-void UART_Y::begin() {
-  serialY.begin(9600);
+SoftwareSerial serialYZ(RX_Y, TX_Y);
+void UART_YZ::begin() {
+  serialYZ.begin(9600);
 }
 
-void UART_Y::receiveFrame(uint8_t* data) {
+void UART_YZ::receiveFrame(uint8_t* data) {
+  //return;
   while (1) {
     byte x;
-    
     x = this->readByte();
-    // Serial.println("torpedo");
     if (x != '(') continue;
     for (int i = 0; i < 16; i++) {
       data[i] = this->readByte();
-
     }
     x = this->readByte();
     if (x != ')') continue;
 
-    #ifdef PRINT_ON
+#ifdef PRINT_ON
     for (int i = 0; i < 16; i++) {
       Serial.print(data[i]);
       Serial.print(" ");
     }
     Serial.println();
     Serial.println("Received From Sensors!");
-
     Serial.print("Angles: ");
     for (int i = ANGLE_INDEX; i < PRESSURE_INDEX; i += 2) {
       int x = data[i] << 8 | data[i + 1];
@@ -37,33 +34,38 @@ void UART_Y::receiveFrame(uint8_t* data) {
     }
     Serial.print(" Pressure: ");
     int y = data[PRESSURE_INDEX] << 8 | data[PRESSURE_INDEX + 1];
-    Serial.println(y);
+    Serial.print(y);
     Serial.print(" ");
 
     Serial.print("Leakage: ");
-    for (int i = LEAKAGE_INDEX; i < UART_y_FRAME_SIZE; i++) {
+    for (int i = LEAKAGE_INDEX; i < UART_YZ_FRAME_SIZE; i++) {
       int z = data[i];
       Serial.print(z);
       Serial.print(" ");
     }
-    #endif
+#endif
     return;
   }
 }
 
-void UART_Y::sendFrame(uint8_t* sendingFrame) {
+void UART_YZ::sendFrame(uint8_t* sendingFrame) {
 
+  Serial.print("UART Sent Frame: ");
   for (int i = 0; i < 8; i++) {
     this->rec_frame[i] = sendingFrame[i];
+    Serial.print(sendingFrame[i]);
+    Serial.print(" ");
     // this->rec_frame[i] = this->counter++;
   }
-  serialY.write('(');
-  serialY.write(this->rec_frame, UDP_REC_FRAME);
-  serialY.write(')');
+  Serial.println();
+  serialYZ.write('(');
+  serialYZ.write(this->rec_frame, UDP_REC_FRAME);
+  serialYZ.write(')');
 }
 
 
-inline byte UART_Y::readByte(){
-  while (!serialY.available());
-  return serialY.read();
+inline byte UART_YZ::readByte() {
+  while (!serialYZ.available())
+    ;
+  return serialYZ.read();
 }

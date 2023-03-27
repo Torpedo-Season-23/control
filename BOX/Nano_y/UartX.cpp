@@ -1,7 +1,7 @@
 #include "UartX.h"
 #include "config.h"
 #include <Arduino.h>
-SoftwareSerial softSerial(RX_Y,TX_Y);
+SoftwareSerial softSerial(RX_Y, TX_Y);
 
 Nano_X::Nano_X() {
   this->IMU_Angles[0] = 0;
@@ -68,8 +68,6 @@ void Nano_X::Send_Data() {
   softSerial.write(Dataframe, 16);
   // softSerial.write(')');
   softSerial.write(')');
-  
- 
 }
 
 void Nano_X::receive() {
@@ -78,35 +76,38 @@ void Nano_X::receive() {
   // noInterrupts();
   uint8_t recFrame[8];
   while (1) {
-  // Serial.println("Inside Receiving...");
+    // Serial.println("Inside Receiving...");
     byte x;
-    while (!softSerial.available());
-      // Serial.println("hello");
+    while (!softSerial.available())
+      ;
+    // Serial.println("hello");
     x = softSerial.read();
     if (x != '(') continue;
-  // noInterrupts();
-  Serial.println("before frame");
+    // noInterrupts();
+    Serial.println("before frame");
     for (int i = 0; i < 8; i++) {
       while (!softSerial.available())
         ;
-        
+
       recFrame[i] = softSerial.read();
-Serial.println(recFrame[i]);   
+      Serial.println(recFrame[i]);
     }
 
     while (!softSerial.available())
       ;
     x = softSerial.read();
-    Serial.println("after frame");
+
+    // Serial.println("after frame");
     if (x != ')') continue;
-   
+    noInterrupts();
+
     Serial.print("Frame is ");
     for (int i = 0; i < 8; i++) {
       Serial.print(recFrame[i]);
       Serial.print(" ");
     }
     Serial.println();
-    // interrupts();
+    interrupts();
 
     // Serial.println();
     // for (int i = 0; i < 8; i++) { //ACCESSORIES

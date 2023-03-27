@@ -16,8 +16,8 @@
 #define ACC_BYTE_INDEX 0
 
 //uart pins
-#define RX_Z 8
-#define TX_Z 20
+#define RX_Z 7
+#define TX_Z 8
 
 //Motors speeds
 #define MOT_ZERO_SPEED 1500

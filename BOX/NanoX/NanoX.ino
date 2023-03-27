@@ -4,7 +4,7 @@
 #include "Converter.h"
 
 System s;
-UART_Y uart_y;
+UART_YZ uart_yz;
 
 Converter convt;
 
@@ -13,30 +13,13 @@ void setup() {
   s.init();
   pinMode(INTERRUPT_PIN, OUTPUT);
   digitalWrite(INTERRUPT_PIN, LOW);
-  uart_y.begin();
+  uart_yz.begin();
 }
 
 void loop() {
   s.receiveData();
-  // Serial.print("cccccc");
   s.activateUART();
-  // uart_y.sendFrame(udpReceiveFrame);
-    
-  // uart_y.receiveFrame(udpSendFrame);
-    
-  convt.switchPin();
-
+  // convt.switchPin();
   s.sendData();
-  // Serial.println("hello");
-
-  // Serial.println("torpedo");
-  // uart_y.sendFrame(udpReceiveFrame);
-  // Serial.println("edo");
-  // digitalWrite(INTERRUPT_PIN, HIGH);
-  // uart_y.receiveFrame(udpSendFrame);
-  // digitalWrite(INTERRUPT_PIN, LOW);
-  // s.receiveData();
-  //  // s.activateUART();
-  //   //Read Here From Converters
-  // s.sendData();
+  delay(20);
 }
