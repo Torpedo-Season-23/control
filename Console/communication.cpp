@@ -21,7 +21,7 @@ void Communication::receiveData(uint8_t* receivedFrame) {
     for (int i = 0; i < 10; i++) Serial.print(receivedFrame[i]);
     Serial.println("--------");
   }
-  this->udp.stop();
+ // this->udp.stop();
 }
 
 void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //modify received frame
@@ -35,6 +35,7 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   for (int i = IMU + PRESSURE; i < SENSORS; i++) {
     sensors[i] = receivedFrame[j];
     j++;
+    
   }
 }
 
@@ -89,11 +90,11 @@ void Communication::sendData(uint8_t* sentFrame) {
     Serial.println("Problem resolving the hostname or port.");
     this->comm_init();
   }
-  for(int i=0;i<8;i++){
+  /*for(int i=0;i<8;i++){
     Serial.print(" ");
     Serial.print(sentFrame[i]);}
-  Serial.println();    
+  Serial.println(); */   
   this->udp.write(sentFrame, sentFrameSize);
   this->udp.endPacket();
-  // this->udp.stop();
+   this->udp.stop();
 }

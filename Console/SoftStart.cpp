@@ -1,4 +1,4 @@
-#include "softStart.h"
+#include "SoftStart.h"
 // #include "Output_signals.h"
 #include "Arduino.h"
 float exponent = 4;

@@ -1,5 +1,5 @@
 #include "Thrusters.h"
-#include "softStart.h"
+#include "SoftStart.h"
 #include <Arduino.h>
 
 int motor_controlled_speed[MOTORS_COUNT] = { 0 };
