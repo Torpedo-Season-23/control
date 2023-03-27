@@ -1,12 +1,10 @@
 import numpy as np
-import math as m
-from Controller import myController
 from numpy.linalg import eigh, norm,inv
 class Vectors:
-    A=np.array([ [0.5, -0.5,  -0.5, 0.5],
-    [-0.866 , -0.866,-0.866,-0.866],
-    [42.046 , 42.046, - 42.046, -42.046]]) #
-    ##Values of third row to be adjust by current design
+    A=np.array([ [-0.5, 0.5,  0.5, -0.5],
+    [0.866 , 0.866,0.866,0.866],
+    [-0.9599 *44, -0.9599*44,  0.9599*44, 0.9599*44]]) 
+
     S_Astred =  [[0] * 3] * 3
     V_transpose =  [[0] * 4] * 4
     U =  [[0] * 3] * 3
@@ -24,12 +22,13 @@ class Vectors:
         f= np.round(Vectors.V_transpose.T@Vectors.S_Astred@Vectors.U.T@td)
 
         # print(f)
-        print(f"last =  {self.V_transpose.T@self.S_Astred@self.U.T}")
+        # print(self.V_transpose.T@self.S_Astred@self.U.T)
         # print(Vectors.V_transpose.T)
         # print(Vectors.S_Astred)
         # print(Vectors.U.T)
         # print(td)
+        # print(f"Upper left: {f[2]} Upper right: {f[0]}")      
+        # print(f"Back left:  {f[3]}  Back right: {f[1]}")    
         for i in range (4):
-            f[i]=np.round(np.interp(f[i],[-45,45],[1100,1900]),decimals=2)
+            f[i]=np.round(np.interp(f[i],[-37,37],[1100,1900]),decimals=2)
         return f
-    
