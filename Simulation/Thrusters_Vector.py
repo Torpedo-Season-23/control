@@ -3,7 +3,7 @@ from numpy.linalg import eigh, norm,inv
 class Vectors:
     A=np.array([ [-0.5, 0.5,  0.5, -0.5],
     [0.866 , 0.866,0.866,0.866],
-    [-0.9599 *44, -0.9599*44,  0.9599*44, 0.9599*44]]) 
+    [-0.9599 *0.44, -0.9599*0.44,  0.9599*0.44, 0.9599*0.44]]) 
 
     S_Astred =  [[0] * 3] * 3
     V_transpose =  [[0] * 4] * 4
@@ -30,5 +30,5 @@ class Vectors:
         # print(f"Upper left: {f[2]} Upper right: {f[0]}")      
         # print(f"Back left:  {f[3]}  Back right: {f[1]}")    
         for i in range (4):
-            f[i]=np.round(np.interp(f[i],[-37,37],[1100,1900]),decimals=2)
+            f[i]=np.round(np.interp(f[i],[-70,70],[1100,1900]),decimals=2)
         return f

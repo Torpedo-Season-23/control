@@ -1,7 +1,7 @@
 from Thrusters_Vector import Vectors
-X= 0
-Y= 0
-Moment=128
+X= 89
+Y= 50
+Moment=0
 
 ThrustersForces =[1500] * 4
 
