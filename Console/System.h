@@ -100,24 +100,25 @@ void System::Update() {
   // Serial.print(acc[7]);
 
   //UR , BR , UL ,BL , UP , DOWN
-  Serial.println();
-  Serial.print("UR: ");
-  Serial.print(res[1]);
-  Serial.print("\t");
-  Serial.print("BR: ");
-  Serial.print(res[0]);
-  Serial.print("\t");
+ 
   Serial.print("UL: ");
-  Serial.print(res[3]);
-  Serial.print("\t");
-  Serial.print("BL: ");
   Serial.print(res[2]);
-  Serial.print("UP: ");
-  Serial.print("\t");
-  Serial.print(res[4]);
-  Serial.print("\t");
-  Serial.print("DOWN: ");
-  Serial.println(res[5]);
+  Serial.print("\t\t");
+  Serial.print("UR: ");
+  Serial.println(res[0]);
+  Serial.print("BL: ");
+  Serial.print(res[3]);
+  Serial.print("\t\t");
+  Serial.print("BR: ");
+  Serial.println(res[1]);
+  Serial.println("---------End-------");
+// Serial.print("UP: ");
+  // Serial.print("\t");
+  // Serial.print(res[4]);
+  // Serial.print("\t");
+  // Serial.print("DOWN: ");
+  // Serial.println(res[5]);
+
   //Serial.print("Sensors:  ");
   // for (int i =0 ; i < 16; i++) {
   // Serial.print(receivedFrame[i]);
