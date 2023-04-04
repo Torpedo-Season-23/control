@@ -9,7 +9,7 @@ void Communication::receiveData(uint8_t* receivedFrame) {
   this->udp.begin(7000);
 
   int frameSize = this->udp.parsePacket();
-  Serial.println(frameSize);
+//  Serial.println(frameSize);/
   if (frameSize > 0) {
     this->udp.read(receivedFrame, receivedFrameSize);
     this->udp.flush();
@@ -20,6 +20,7 @@ void Communication::receiveData(uint8_t* receivedFrame) {
     Serial.print("--------");
     for (int i = 0; i < 10; i++) Serial.print(receivedFrame[i]);
     Serial.println("--------");
+//    delay(100);/
   }
  // this->udp.stop();
 }

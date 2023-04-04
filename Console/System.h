@@ -48,6 +48,12 @@ void System::Update() {
   uint8_t sentFrame[16];
   this->console.prepareData(acc, res, sentFrame);
   this->console.receiveData(receivedFrame);
+  Serial.print("Frame to be sent: ");
+  for(int i= 0;i<8;i++){
+    Serial.print(sentFrame[i]);
+    Serial.print("\t");
+  }
+  Serial.println();
   this->console.sendData(sentFrame);
 
 
@@ -100,7 +106,7 @@ void System::Update() {
   // Serial.print(acc[7]);
 
   //UR , BR , UL ,BL , UP , DOWN
-  Serial.println();
+ /* Serial.println();
   Serial.print("UR: ");
   Serial.print(res[1]);
   Serial.print("\t");
@@ -117,7 +123,7 @@ void System::Update() {
   Serial.print(res[4]);
   Serial.print("\t");
   Serial.print("DOWN: ");
-  Serial.println(res[5]);
+  Serial.println(res[5]);*/
   //Serial.print("Sensors:  ");
   // for (int i =0 ; i < 16; i++) {
   // Serial.print(receivedFrame[i]);
