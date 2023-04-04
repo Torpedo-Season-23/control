@@ -12,7 +12,7 @@
 #define MOSI_PIN 11
 #define SCLK_PIN 13
 
-/* UART */
+// /* UART */
 #define Imu_Angles_Index 0
 #define PRESSURE_index Imu_Angles_Index + 3 * 2
 

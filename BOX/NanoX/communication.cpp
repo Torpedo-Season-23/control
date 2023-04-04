@@ -16,13 +16,14 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
   int success;
   success = udp.parsePacket();
   if (success) {
+    // Serial.print("Received! Success is ");
+    // Serial.println(success);
     if (success != UDP_REC_FRAME) {
       Serial.println("Frame incomplete?");
     }
     udp.read(receivedFrame, success);
   }
   udp.flush();
-
   return success > 0;
 }
 
