@@ -114,9 +114,6 @@ void System::Update() {
   Serial.print(res[0]);
   Serial.print("\t");
   Serial.print("UL: ");
-  Serial.print(res[3]);
-  Serial.print("\t");
-  Serial.print("BL: ");
   Serial.print(res[2]);
   Serial.print("UP: ");
   Serial.print("\t");

@@ -13,8 +13,4 @@ public:
   void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame);
 };
 
-
-
-
-
 #endif

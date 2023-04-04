@@ -11,20 +11,14 @@ LeakageSensor leakage;
 bool send = false;
 
 void handler() {
-  // Serial.println("In Interrupt!");
-  // // uart_data.Set_Pressure(uart_data.pressure);
-  // //uint16_t angles[] = {20, 30, 60};
-  // // uart_data.Set_IMU_Angles(IMU.getangles());
-  // uart_data.Send_Data();
-
-  send = true;
-  
+  Serial.println("In Interrupt!");
+  uart_data.Send_Data();
 }
 
 long currentTime;
 
 void setup() {
- 
+
   currentTime = millis();
   Serial.begin(38400);
   uart_data.Start_Uart();
@@ -33,7 +27,7 @@ void setup() {
 
   IMU.check();
   pressur_S.init();
-  //attachInterrupt(digitalPinToInterrupt(3), handler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(3), handler, LOW);
 }
 
 
@@ -44,38 +38,8 @@ void loop() {
     uart_data.Set_IMU_Angles(IMU.getangles());
     uart_data.Set_Pressure(pressur_S.getPressure());
     uart_data.Set_Leakage(0);
-
     currentTime = current;
-
-    // uint8_t arr[8] = { 0 };
-    // uint8_t *leakArr = leakage.getHumidity();
-    // for (int i = 0; i < 8; i++) {
-
-    // arr[i] = leakArr[i];
-    // }
-    // leakage.update();
   }
-  // interrupts();
-  // Serial.println("Waiting to receive...");
-  // uart_data.receive();
-  // uart_data.Send_Data();
-
-
-  ///}
-  // interrupts();
-  // Serial.println("Waiting to receive...");
-  // uart_data.receive();
-  // handler();
-  // attachInterrupt(digitalPinToInterrupt(3), handler, HIGH);
-  // uart_data.Send_Data();
- // if(send){
-   uart_data.Send_Data();
-   Serial.println("send");
-    send = false;
- // }else{
-
-   uart_data.receive();
-//  }
-
-
+  //Serial.println("send");
+  uart_data.receive();
 }

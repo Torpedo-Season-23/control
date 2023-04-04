@@ -11,6 +11,5 @@ void Tools::init() {
 void Tools::applySignal() {
   for (int i = 0; i < TOOLS_COUNT; i++) {
     digitalWrite(toolPins[i], this->toolsFrame[i]);
-
   }
 }

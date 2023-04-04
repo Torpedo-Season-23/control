@@ -11,9 +11,11 @@ void Uartz::receiveFrame() {
 
   while (true) {
     byte x;
-    
+    Serial.println("Entered");
+
     while (!serial.available())
       ;
+    Serial.println("Enteredjjj");
     x = serial.read();
     if (x != '(') continue;
     for (int i = 0; i < ACTUAL_DATA; i++) {
@@ -27,9 +29,9 @@ void Uartz::receiveFrame() {
     if (x != ')') continue;
 
 
-for(int i = 0 ; i < 8 ; i ++){
-  uartFrame[i] = frame[i];
-}
+    for (int i = 0; i < 8; i++) {
+      uartFrame[i] = frame[i];
+    }
 
 //debuging
 #ifdef UART_PRINT_ON
@@ -41,14 +43,13 @@ for(int i = 0 ; i < 8 ; i ++){
 #endif
 
     return;
-  
-}
+  }
 }
 
 void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
-  
+
   uint8_t loopLimit = max(MOTORS_COUNT, TOOLS_COUNT);
-  
+
   for (int i = 0; i < loopLimit; i++) {
 
     //Extract Motors directions byte (the second byte) & Motors speeds (form 2 to 7)
@@ -59,26 +60,26 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
       uint16_t speedChange = map(uartFrame[i + MOTORS_SPEEDS_INDEX], 0, 255, 0, 400);
       uint16_t speedValue = 1500 + dir * speedChange;
       //check the limits
-      if(speedValue > MOT_MAX_SPEED) speedValue = MOT_MAX_SPEED;
-      if (speedValue < MOT_MIN_SPEED)speedValue = MOT_MIN_SPEED;
+      if (speedValue > MOT_MAX_SPEED) speedValue = MOT_MAX_SPEED;
+      if (speedValue < MOT_MIN_SPEED) speedValue = MOT_MIN_SPEED;
       thrustersFrame[i] = speedValue;
-      #ifdef THRUSTERS_PRINT_ON
+#ifdef THRUSTERS_PRINT_ON
       Serial.print(uartFrame[DIRECTIONS_BYTE_INDEX] & 1);
-      #endif
+#endif
       uartFrame[DIRECTIONS_BYTE_INDEX] >>= 1;
     }
 
     //Extract tools byte (the first byte in uartFrame)
     if (i < TOOLS_COUNT) {
-      
+
       if (uartFrame[ACC_BYTE_INDEX] & 1 == 1) {
         toolsFrame[i] = 255;
       } else {
         toolsFrame[i] = 0;
       }
-      #ifdef ACC_PRINT_ON
+#ifdef ACC_PRINT_ON
       Serial.print(uartFrame[ACC_BYTE_INDEX] & 1);
-      #endif
+#endif
       uartFrame[ACC_BYTE_INDEX] >>= 1;
     }
   }

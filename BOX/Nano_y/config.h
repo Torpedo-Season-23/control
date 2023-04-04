@@ -2,9 +2,9 @@
 #define CONFIG_H
 
 /* LEAKAGE */
-#define DHTTYPE DHT11  
+#define DHTTYPE DHT11
 #define SENSORS_NUM 8
-#define DHTPIN 2 
+#define DHTPIN 2
 
 /* PRESSURE */
 #define MCLK_PIN 10
@@ -12,12 +12,12 @@
 #define MOSI_PIN 11
 #define SCLK_PIN 13
 
-// /* UART */
+/* UART */
 #define Imu_Angles_Index 0
 #define PRESSURE_index Imu_Angles_Index + 3 * 2
 
-#define RX_Y 9
-#define TX_Y 8
+#define RX_Y 8
+#define TX_Y 9
 
 
 
