@@ -1,7 +1,12 @@
 #ifndef THRUSTERS_H
 #define THRUSTERS_H
 
-
+#define UpperRight 0
+#define BackRight 1
+#define UpperLeft 2
+#define BackLeft 3
+#define Up 4
+#define Down 5
 
 class Thrusters {
 private:

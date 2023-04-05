@@ -19,4 +19,17 @@
 #define THRUSTERS 6
 #define ACCESSORIES 8  //will be modified (1 byte anyways)
 
+//soft Start
+#define MOTORS_NUMBER 6
+#define MOTOR_STATIC_SPEED 1500
+#define MOTOR_HIGHEST_SPEED 1900
+#define MOTOR_LOWEST_SPEED 1100
+#define TIME_STEP 500
+#define INCREAMENT_FACTOR 3 
+#define log2(a) (log(a)/log(2))
+/*----------Outer Thruster Frame*/
+typedef enum FrameMotorIndices{
+    FRONT_LEFT=0,FRONT_RIGHT,BACKWARD_LEFT,BACKWARD_RIGHT,UPPER_FRONT,UPPER_BACK,LAST
+}FrameMotorIndices;
+
 #endif

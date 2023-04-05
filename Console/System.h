@@ -6,6 +6,8 @@
 #include "communication.h"
 #include "psgamepad.h"
 #include "lf310.h"
+#include "SoftStart.h"
+#include "IndexConverter.h"
 
 
 
@@ -14,8 +16,10 @@
 class System {
 private:
   Thrusters thruster;
+  Motors motors;
   IController* gamepad;
   Communication console;
+  IndexConverter indexConverter;
 public:
   System(IController* gamepad) {
     this->gamepad = gamepad;
@@ -29,6 +33,7 @@ public:
 void System::Init() {
   this->gamepad->init();
   this->console.comm_init();
+  this->indexConverter.init(thruster.get_thruster_frame());
 }
 void System::Update() {
   uint8_t receivedFrame[16];
@@ -41,9 +46,9 @@ void System::Update() {
   thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
   res = thruster.get_thruster_frame();
+  motors.update(res);
+  res= indexConverter.updateArray();
 
-  //int acc[20] = {0};
- 
 
   uint8_t sentFrame[16];
   this->console.prepareData(acc, res, sentFrame);

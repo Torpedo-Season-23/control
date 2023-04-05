@@ -2,7 +2,6 @@
 #include "SoftStart.h"
 #include <Arduino.h>
 
-int motor_controlled_speed[MOTORS_COUNT] = { 0 };
 
 int *Thrusters::get_thruster_frame() {
   return this->thruster_frame;
@@ -18,7 +17,6 @@ void Thrusters::set_h_forces(int *array) {
     
     
 
-    motor_soft_start(this->thruster_frame[i], (motor_controlled_speed + i), this->thruster_frame, i);
     //print frame after softstart
    
  
@@ -33,14 +31,12 @@ void Thrusters::set_v_forces(int *array) {
   // Serial.print(this->thruster_frame[4]);
   // Serial.print("  ");
 
-  motor_soft_start(this->thruster_frame[4], (motor_controlled_speed + 4), this->thruster_frame, (char)4);
   // Serial.print(this->thruster_frame[4]);
   // Serial.print("\t");
 
   // Serial.print(this->thruster_frame[5]);
   // Serial.print("  ");
 
-  motor_soft_start(this->thruster_frame[5], (motor_controlled_speed + 5), this->thruster_frame, (char)5);
 
   // Serial.print(this->thruster_frame[5]);
   //   Serial.print("\t");
