@@ -20,6 +20,6 @@
 #define INTERRUPT_PIN A0  //Interrupt pin
 
 
-// #define PRINT_ON //Uncomment this line to print debug messages
+ #define PRINT_ON //Uncomment this line to print debug messages
 
 #endif

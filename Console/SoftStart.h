@@ -37,11 +37,12 @@ private:
     float exponent;
     float timeStep; // Time between every 2 updates
     Motor motors[MOTORS_NUMBER];
-    void print();
 
 public:
     Motors(){};
     void update(int*);
+    void print();
+
 };
 
 

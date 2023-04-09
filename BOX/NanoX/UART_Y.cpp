@@ -16,7 +16,6 @@ void UART_Y::receiveFrame(uint8_t* data) {
     if (x != '(') continue;
     for (int i = 0; i < 16; i++) {
       data[i] = this->readByte();
-
     }
     x = this->readByte();
     if (x != ')') continue;
@@ -41,7 +40,7 @@ void UART_Y::receiveFrame(uint8_t* data) {
     Serial.print(" ");
 
     Serial.print("Leakage: ");
-    for (int i = LEAKAGE_INDEX; i < UART_y_FRAME_SIZE; i++) {
+    for (int i = LEAKAGE_INDEX; i < 16; i++) {
       int z = data[i];
       Serial.print(z);
       Serial.print(" ");
@@ -65,5 +64,8 @@ void UART_Y::sendFrame(uint8_t* sendingFrame) {
 
 inline byte UART_Y::readByte(){
   while (!serialY.available());
-  return serialY.read();
+  uint8_t x=serialY.read();
+  Serial.print("Byte: ");
+  Serial.print(x);
+  return x; 
 }

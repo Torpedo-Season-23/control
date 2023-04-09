@@ -12,6 +12,7 @@ void UART_YZ::receiveFrame(uint8_t* data) {
   while (1) {
     byte x;
     x = this->readByte();
+    Serial.println("HERE");
     if (x != '(') continue;
     for (int i = 0; i < 16; i++) {
       data[i] = this->readByte();
@@ -65,7 +66,8 @@ void UART_YZ::sendFrame(uint8_t* sendingFrame) {
 
 
 inline byte UART_YZ::readByte() {
-  while (!serialYZ.available())
-    ;
-  return serialYZ.read();
+  while (!serialYZ.available());
+  uint8_t x=serialYZ.read();
+  Serial.print(x);
+  return x;
 }

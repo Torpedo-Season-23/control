@@ -59,7 +59,7 @@ void Nano_X::Prepare_frame(uint8_t Dataframe[16]) {
 }
 
 void Nano_X::Send_Data() {
-  Serial.println("Sending...");
+  //Serial.println("Sending...");
 
   uint8_t Dataframe[16];
   Prepare_frame(Dataframe);
@@ -68,11 +68,6 @@ void Nano_X::Send_Data() {
   softSerial.write(Dataframe, 16);
   // softSerial.write(')');
   softSerial.write(')');
-<<<<<<< HEAD
-=======
-  
- 
->>>>>>> tested_system
 }
 
 void Nano_X::receive() {
@@ -81,7 +76,6 @@ void Nano_X::receive() {
   // noInterrupts();
   uint8_t recFrame[8];
   while (1) {
-<<<<<<< HEAD
     // Serial.println("Inside Receiving...");
     byte x;
     while (!softSerial.available())
@@ -97,49 +91,23 @@ void Nano_X::receive() {
 
       recFrame[i] = softSerial.read();
       Serial.println(recFrame[i]);
-=======
-  // Serial.println("Inside Receiving...");
-    byte x;
-    while (!softSerial.available());
-      // Serial.println("hello");
-    x = softSerial.read();
-    if (x != '(') continue;
-  // noInterrupts();
-  Serial.println("before frame");
-    for (int i = 0; i < 8; i++) {
-      while (!softSerial.available())
-        ;
-        
-      recFrame[i] = softSerial.read();
-Serial.println(recFrame[i]);   
->>>>>>> tested_system
     }
 
     while (!softSerial.available())
       ;
     x = softSerial.read();
-<<<<<<< HEAD
 
     // Serial.println("after frame");
     if (x != ')') continue;
     noInterrupts();
 
-=======
-    Serial.println("after frame");
-    if (x != ')') continue;
-   
->>>>>>> tested_system
     Serial.print("Frame is ");
     for (int i = 0; i < 8; i++) {
       Serial.print(recFrame[i]);
       Serial.print(" ");
     }
     Serial.println();
-<<<<<<< HEAD
     interrupts();
-=======
-    // interrupts();
->>>>>>> tested_system
 
     // Serial.println();
     // for (int i = 0; i < 8; i++) { //ACCESSORIES

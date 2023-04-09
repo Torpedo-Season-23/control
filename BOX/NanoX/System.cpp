@@ -39,11 +39,10 @@ void System::receiveData() {
 }
 
 void System::activateUART() {
-  uart_yz.sendFrame(udpReceiveFrame);
-
+  //uart_yz.sendFrame(udpReceiveFrame);
+  Serial.println("Waiting to receive...");
+  delay(10);
   digitalWrite(INTERRUPT_PIN, LOW);
-
   uart_yz.receiveFrame(udpSendFrame);
-
   digitalWrite(INTERRUPT_PIN, HIGH);
 }

@@ -12,9 +12,7 @@ void Uartz::receiveFrame() {
   while (true) {
     byte x;
     Serial.println("Entered");
-
-    while (!serial.available())
-      ;
+    while (!serial.available());
     Serial.println("Enteredjjj");
     x = serial.read();
     if (x != '(') continue;

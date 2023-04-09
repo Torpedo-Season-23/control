@@ -12,7 +12,7 @@ void setup() {
   Serial.begin(115200);
   s.init();
   pinMode(INTERRUPT_PIN, OUTPUT);
-  digitalWrite(INTERRUPT_PIN, LOW);
+  digitalWrite(INTERRUPT_PIN, HIGH);
   uart_yz.begin();
 }
 

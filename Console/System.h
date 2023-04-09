@@ -46,19 +46,27 @@ void System::Update() {
   thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
   res = thruster.get_thruster_frame();
+  
   motors.update(res);
   res= indexConverter.updateArray();
 
+  /*Serial.print("Thrusters: ");
+  for(int i= 0;i<6;i++){
+    Serial.print(res[i]);
+    Serial.print(" ");
+  }
+  Serial.println();*/
+  
 
   uint8_t sentFrame[16];
   this->console.prepareData(acc, res, sentFrame);
   this->console.receiveData(receivedFrame);
-  Serial.print("Frame to be sent: ");
+  /*Serial.print("Frame to be sent: ");
   for(int i= 0;i<8;i++){
     Serial.print(sentFrame[i]);
     Serial.print("\t");
   }
-  Serial.println();
+  Serial.println();*/
   this->console.sendData(sentFrame);
 
 

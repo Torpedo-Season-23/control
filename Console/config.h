@@ -29,7 +29,7 @@
 #define log2(a) (log(a)/log(2))
 /*----------Outer Thruster Frame*/
 typedef enum FrameMotorIndices{
-    FRONT_LEFT=0,FRONT_RIGHT,BACKWARD_LEFT,BACKWARD_RIGHT,UPPER_FRONT,UPPER_BACK,LAST
+    FRONT_LEFT=0,FRONT_RIGHT,UPPER_FRONT,BACKWARD_LEFT,BACKWARD_RIGHT,UPPER_BACK,LAST
 }FrameMotorIndices;
 
 #endif
