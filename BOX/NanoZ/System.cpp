@@ -15,6 +15,7 @@ void System::getData() {
 }
 
 void System::setData() {
+  //uartz.sendFrame();
   thrusters.applySignal();
   tools.applySignal();
 }

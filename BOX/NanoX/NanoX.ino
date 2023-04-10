@@ -1,5 +1,4 @@
 #include "System.h"
-#include "UART_Y.h"
 #include "config.h"
 #include "Converter.h"
 
@@ -19,7 +18,7 @@ void setup() {
 void loop() {
   s.receiveData();
   s.activateUART();
-  // convt.switchPin();
+  //convt.switchPin();
   s.sendData();
   delay(20);
 }

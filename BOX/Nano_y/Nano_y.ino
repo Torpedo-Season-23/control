@@ -11,7 +11,7 @@ LeakageSensor leakage;
 bool send = false;
 
 void handler() {
-  //Serial.println("In Interrupt!");
+  Serial.println("In Interrupt!");
   uart_data.Send_Data();
 }
 
@@ -26,14 +26,14 @@ void setup() {
 
   //IMU.check();
   pressur_S.init();
-  attachInterrupt(digitalPinToInterrupt(3), handler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(3), handler, LOW);
 }
 
 
 void loop() {
   long current = millis();
   if (current - currentTime > 100) {
-    Serial.print("HERE!");
+    //Serial.print("HERE!");
     uart_data.Set_IMU_Angles(IMU.getangles());
     uart_data.Set_Pressure(pressur_S.getPressure());
     uart_data.Set_Leakage(0);
@@ -41,6 +41,8 @@ void loop() {
   }
   //Serial.println("send");
   //uart_data.Send_Data();
-  Serial.print("Receiving...");
+  //Serial.println("Receiving...");
   uart_data.receive();
+  //uart_data.Send_Data();
+
 }

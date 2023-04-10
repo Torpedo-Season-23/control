@@ -8,8 +8,8 @@ void setup() {
 }
 
 void loop() {
-
+  long current= millis();
   sys.getData();
   sys.setData();
-  Serial.println("hello");
+  Serial.println(millis()-current);
 }

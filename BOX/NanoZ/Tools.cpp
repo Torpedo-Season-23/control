@@ -10,6 +10,6 @@ void Tools::init() {
 //set signals to tools
 void Tools::applySignal() {
   for (int i = 0; i < TOOLS_COUNT; i++) {
-    digitalWrite(toolPins[i], this->toolsFrame[i]);
+    digitalWrite(toolPins[i], LOW);
   }
 }

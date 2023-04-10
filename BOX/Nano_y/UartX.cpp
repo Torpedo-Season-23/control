@@ -2,7 +2,9 @@
 #include "config.h"
 #include <Arduino.h>
 SoftwareSerial softSerial(RX_Y, TX_Y);
+//SoftwareSerial sender(TX_Y, RX_Y);
 
+long current;
 Nano_X::Nano_X() {
   this->IMU_Angles[0] = 0;
   this->IMU_Angles[1] = 0;
@@ -71,29 +73,29 @@ void Nano_X::Send_Data() {
 }
 
 void Nano_X::receive() {
+  current=millis();
   // Serial.print("Waiting to receive: ");
-  Serial.println(softSerial.available());
+  //Serial.println(softSerial.available());
   // noInterrupts();
   uint8_t recFrame[8];
-  while (1) {
+  while (current-millis()<50) {
     // Serial.println("Inside Receiving...");
     byte x;
-    while (!softSerial.available())
-      ;
+    while (!softSerial.available() && current-millis()<50);
     // Serial.println("hello");
     x = softSerial.read();
     if (x != '(') continue;
     // noInterrupts();
-    Serial.println("before frame");
+    //Serial.println("before frame");
     for (int i = 0; i < 8; i++) {
-      while (!softSerial.available())
+      while (!softSerial.available() && current-millis()<50)
         ;
 
       recFrame[i] = softSerial.read();
-      Serial.println(recFrame[i]);
+      //Serial.println(recFrame[i]);
     }
 
-    while (!softSerial.available())
+    while (!softSerial.available() && current-millis()<50)
       ;
     x = softSerial.read();
 

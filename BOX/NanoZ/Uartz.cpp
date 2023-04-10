@@ -1,9 +1,16 @@
 #include "Uartz.h"
 
-SoftwareSerial serial(RX_Z, TX_Z);
+SoftwareSerial serial(RX_Z, -1);
 
 void Uartz::startUart() {
   serial.begin(9600);
+}
+
+void Uartz::sendFrame(){
+  uint8_t frame[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+  serial.write('(');
+  serial.write(frame,16);
+  serial.write(')');
 }
 
 void Uartz::receiveFrame() {

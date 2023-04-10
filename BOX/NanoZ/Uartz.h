@@ -10,6 +10,7 @@ public:
   uint8_t uartFrame[ACTUAL_DATA];
   void startUart();
   void receiveFrame();
+  void sendFrame();
   void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame);
 };
 
