@@ -18,9 +18,7 @@ void Uartz::receiveFrame() {
 
   while (true) {
     byte x;
-    Serial.println("Entered");
     while (!serial.available());
-    Serial.println("Enteredjjj");
     x = serial.read();
     if (x != '(') continue;
     for (int i = 0; i < ACTUAL_DATA; i++) {
@@ -83,7 +81,7 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
         toolsFrame[i] = 0;
       }
 #ifdef ACC_PRINT_ON
-      Serial.print(uartFrame[ACC_BYTE_INDEX] & 1);
+      Serial.print(uartFrame[ACC_BYTE_INDEX] & 1,BIN);
 #endif
       uartFrame[ACC_BYTE_INDEX] >>= 1;
     }
