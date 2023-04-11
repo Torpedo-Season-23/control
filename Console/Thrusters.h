@@ -19,6 +19,7 @@ public:
   void set_h_forces(int *array);
   void set_v_forces(int *array);
   int *get_thruster_frame();
+  int speed;
 };
 
 #endif
