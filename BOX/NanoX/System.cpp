@@ -8,6 +8,7 @@ void System::init() {
   uart_yz.begin();
   pinMode(INTERRUPT_PIN, OUTPUT);
   digitalWrite(INTERRUPT_PIN, HIGH);
+  //fixed values in swapping between converters ( 101 , 111)
   digitalWrite(converter.Converter_PINs[0], HIGH); 
   digitalWrite(converter.Converter_PINs[2], HIGH);
 }

@@ -82,11 +82,9 @@ void Converter::checkConverter(uint8_t *recFrame) {
 void Converter::switchPin(uint8_t *sendFrame) {
 
   converter = !converter;
-  //control which converter to send (swap converter every loop)
-  digitalWrite(Converter_PINs[0], HIGH);
+  //control which converter to send (swap converter every loop) (101 , 111)
   digitalWrite(Converter_PINs[1], converter);
-  digitalWrite(Converter_PINs[2], HIGH);
-
+  //get data
   getData(converter, sendFrame);
 
 //debug
