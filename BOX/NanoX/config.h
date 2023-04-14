@@ -7,7 +7,10 @@
 
 /*--------UDP--------*/
 #define UDP_REC_FRAME 8    //(bytes): 1 Accessories, 1 directions + converters on/off, 6 thrusters speeds "respectively"
-#define UDP_SEND_FRAME 16  //22 //(bytes): 6 IMU angles, 2 pressure, 8 leakage, 3*2 converters(2 bytes for current, 1 for temperature) "respectively" CONVERTERS STILL NOT ADDED
+#define CONTROL_CONVETER_BYTE 1 //two bits of controlling converters (on/off) are at index 1 inside UDP_REC_FRAME
+#define UDP_SEND_FRAME 22  //22 //(bytes): 6 IMU angles, 2 pressure, 8 leakage, 3*2 converters(2 bytes for current, 1 for temperature)
+#define UDP_CONVERTER_1_INDEX 16 //first converter  index in UDP_SEND_FRAME
+#define UDP_CONVERTER_2_INDEX UDP_CONVERTER_1_INDEX + 3 //first converter  index in UDP_SEND_FRAME
 
 /*--------UART--------*/
 #define UART_YZ_FRAME_SIZE 8
@@ -20,6 +23,6 @@
 #define INTERRUPT_PIN A0  //Interrupt pin
 
 
- #define PRINT_ON //Uncomment this line to print debug messages
-
+#define PRINT_ON //Uncomment this line to print debug messages
+// #define TEST_CONVERTER //Uncomment this line to print converters debug messages
 #endif

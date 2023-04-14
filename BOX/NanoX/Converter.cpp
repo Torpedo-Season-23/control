@@ -2,9 +2,8 @@
 
 void Converter::init() {
   Wire.begin();
-  // Wire.setClock(10000l);
 }
-
+//get (vin , Iout , temp) true value
 double Converter::linear11(twobytes tbval) {
   linear11_val_t t;
   t.tbdata = tbval;
@@ -33,6 +32,8 @@ twobytes Converter::CommandExec2(byte DeviceAddr, byte Command) {
 
   return res;
 }
+
+//get vout true value
 double Converter::directf(twobytes tbval) {
   linear11_val_t t;
   t.tbdata = tbval;
@@ -43,9 +44,11 @@ double Converter::directf(twobytes tbval) {
 
 void Converter::data_conv() {
   init();
+
+//get (vin , vout) only for debug
+#ifdef TEST_CONVERTER
   tbval = CommandExec2(address_1, VIN);
   double Vin = linear11(tbval);
-
   Serial.print("Vin = ");
   Serial.print(Vin);
   Serial.print(" V");
@@ -57,60 +60,59 @@ void Converter::data_conv() {
   Serial.print(Vout);
   Serial.print(" V");
   Serial.print("\t");
+#endif
 
+//get Iout
   tbval = CommandExec2(address_1, IOUT);
-  converterArray[0] = linear11(tbval);  //* 100;
-
+  converterArray[0] = linear11(tbval) *100;
+//get temp
   tbval = CommandExec2(address_1, TEMP_1);
   converterArray[1] = linear11(tbval);
-
 }
-// int *Converter::checkConverter(uint8_t *frame) {  //will be put in converters file
-//   for (int i = 6; i < 8; i++) {
-//     this->check_conv[i-6] = bitRead(frame[1], i);  //(frame[1] >> (i)) & 0x01
-//   }
-//   digitalWrite(controlPins[0], check_conv[0]);
-//   digitalWrite(controlPins[1] , check_conv[1]);
-// }
 
-void Converter::switchPin(){
-  
-  digitalWrite(controlPins[0] , check_conv[0]);
-  digitalWrite(controlPins[1] , check_conv[1]);
+
+void Converter::checkConverter(uint8_t *recFrame) {
+  for (int i = 6; i < 8; i++) {
+    this->check_conv[i - 6] = bitRead(recFrame[CONTROL_CONVETER_BYTE], i);  //(recFrame[1] >> (i)) & 0x01
+  }
+  digitalWrite(controlPins[0], check_conv[0]);
+  digitalWrite(controlPins[1], check_conv[1]);
+}
+
+void Converter::switchPin(uint8_t *sendFrame) {
+
   converter = !converter;
-  digitalWrite(Converter_PINs[0] , HIGH);
-  digitalWrite(Converter_PINs[1] ,converter);
-  digitalWrite(Converter_PINs[2] ,HIGH);
+  //control which converter to send (swap converter every loop)
+  digitalWrite(Converter_PINs[0], HIGH);
+  digitalWrite(Converter_PINs[1], converter);
+  digitalWrite(Converter_PINs[2], HIGH);
 
-  if(converter){
-    //getData(converter);
-    #ifdef TEST_CONVERTER
+  getData(converter, sendFrame);
+
+//debug
+#ifdef TEST_CONVERTER
+  if (converter) {
     Serial.println("Converter 1 ");
     Serial.println();
     print_data();
-    #endif
-
-  }else{
-    //getData(converter);
-    #ifdef TEST_CONVERTER
+  } else {
     Serial.println("Converter 2 ");
     Serial.println();
     print_data();
-    #endif
   }
+#endif
 }
 
-//
-uint8_t *Converter::getData(bool converter) {
-  uint8_t Conv_data[6];
-      data_conv();
-      int i = (converter)? 0 : 3;
-      Conv_data[i + 0] = highByte((uint8_t)converterArray[0]);
-      Conv_data[i + 1] = lowByte((uint8_t)converterArray[0]);
-      Conv_data[i + 2] = converterArray[1];
-  return Conv_data;
+//get converters data 
+void Converter::getData(bool converter, uint8_t *sendFrame) {
+  data_conv();
+  int i = (converter) ? UDP_CONVERTER_1_INDEX : UDP_CONVERTER_2_INDEX;
+  sendFrame[i + 0] = highByte((uint8_t)converterArray[0]);
+  sendFrame[i + 1] = lowByte((uint8_t)converterArray[0]);
+  sendFrame[i + 2] = converterArray[1];
 }
 
+//for debugging
 void Converter::print_data() {
   data_conv();
   Serial.print("Iout = ");

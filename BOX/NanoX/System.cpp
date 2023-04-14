@@ -8,6 +8,8 @@ void System::init() {
   uart_yz.begin();
   pinMode(INTERRUPT_PIN, OUTPUT);
   digitalWrite(INTERRUPT_PIN, HIGH);
+  digitalWrite(converter.Converter_PINs[0], HIGH); 
+  digitalWrite(converter.Converter_PINs[2], HIGH);
 }
 
 void System::sendData() {
@@ -45,3 +47,14 @@ void System::activateUART() {
   uart_yz.receiveFrame(udpSendFrame);
   digitalWrite(INTERRUPT_PIN, HIGH);
 }
+
+
+
+void System::updateConverters(){
+  converter.checkConverter(udpReceiveFrame);  //check power on converter
+  converter.switchPin(udpSendFrame);  //swap between converters every loop 
+}
+
+
+
+
