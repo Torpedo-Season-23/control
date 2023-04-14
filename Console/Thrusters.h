@@ -7,6 +7,9 @@
 #define BackLeft 3
 #define Up 4
 #define Down 5
+#define Xforce 0
+#define Yforce 1
+#define Moment 2
 
 class Thrusters {
 private:
