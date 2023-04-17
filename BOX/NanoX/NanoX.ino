@@ -5,13 +5,17 @@
 System s;
 UART_YZ uart_yz;
 
-Converter convt;
+//Converter convt;
 
 void setup() {
   Serial.begin(115200);
   s.init();
   pinMode(INTERRUPT_PIN, OUTPUT);
   digitalWrite(INTERRUPT_PIN, HIGH);
+  pinMode(2, OUTPUT);
+  pinMode(4, OUTPUT);
+  digitalWrite(2,HIGH);
+  //digitalWrite(4,HIGH);
   uart_yz.begin();
 }
 

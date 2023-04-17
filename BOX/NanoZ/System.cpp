@@ -2,9 +2,9 @@
 
 
 void System::init() {
-  thrusters.init();
   tools.init();
   uartz.startUart();
+  thrusters.init();
 }
 
 void System::getData() {

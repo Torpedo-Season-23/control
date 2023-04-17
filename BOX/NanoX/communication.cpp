@@ -1,6 +1,8 @@
 #include "communication.h"
 #include <Arduino.h>
 
+bool setZeros= false;
+long currentTime= millis();
 void CommunicationClient::init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 7));
 }
@@ -11,7 +13,13 @@ void CommunicationClient::defaultFrame(uint8_t* frame) {
 }
 
 bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
-
+  if(millis()-currentTime>3000){
+    setZeros= !setZeros;
+    currentTime= millis();
+  }
+  for(int i= 0;i<UDP_REC_FRAME;i++)
+    receivedFrame[i]= setZeros? 255:0;
+  return 1;
   this->udp.begin(BOX_PORT);
   int success;
   success = udp.parsePacket();

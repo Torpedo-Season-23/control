@@ -1,7 +1,7 @@
 #include "UART.h"
 #include "Converter.h"
 //Converter converter;
-#define WAITING_TIME 20
+#define WAITING_TIME 40
 SoftwareSerial serialYZ(RX_Y, TX_Y);
 long current=5;
 void UART_YZ::begin() {
@@ -51,7 +51,7 @@ void UART_YZ::receiveFrame(uint8_t* data) {
 #endif
     return;
   }
-  //Serial.print("Failed to receive");
+  Serial.print("Failed to receive");
 }
 
 void UART_YZ::sendFrame(uint8_t* sendingFrame) {

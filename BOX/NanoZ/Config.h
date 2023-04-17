@@ -26,8 +26,8 @@
 
 
 //debuging
-#define THRUSTERS_PRINT_ON
-#define ACC_PRINT_ON
+//#define THRUSTERS_PRINT_ON/
+//#define ACC_PRINT_ON/
 //#define UART_PRINT_ON
 
 #endif
