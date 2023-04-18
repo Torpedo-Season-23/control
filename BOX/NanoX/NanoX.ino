@@ -5,8 +5,6 @@
 System s;
 UART_YZ uart_yz;
 
-//Converter convt;
-
 void setup() {
   Serial.begin(115200);
   s.init();
@@ -22,7 +20,7 @@ void setup() {
 void loop() {
   s.receiveData();
   s.activateUART();
-  //convt.switchPin();
+  s.updateConverters();
   s.sendData();
   delay(20);
 }

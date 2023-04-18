@@ -43,6 +43,7 @@ void System::Update() {
   int* v = this->gamepad->get_vframe();
   int* acc = this->gamepad->get_accframe();
   thruster.speed= this->gamepad->getspeed();
+  // int testarray[3]={128,0,0};
   thruster.set_h_forces(this->gamepad->get_hframe());
   thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
