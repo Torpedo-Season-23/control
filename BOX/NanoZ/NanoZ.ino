@@ -9,7 +9,7 @@ void setup() {
 
 void loop() {
   long current= millis();
-  //sys.getData();
+  sys.getData();
   sys.setData();
   delay(20);
 }

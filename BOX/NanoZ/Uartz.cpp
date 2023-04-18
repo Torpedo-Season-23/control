@@ -4,7 +4,7 @@ long currentUART= millis();
 SoftwareSerial serial(RX_Z, A7);
 
 void Uartz::startUart() {
-  //serial.begin(9600);
+  serial.begin(9600);
 }
 
 void Uartz::sendFrame(){
