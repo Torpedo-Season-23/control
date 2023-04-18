@@ -1,5 +1,5 @@
 UART::UART(uint8_t rxPin, uint8_t txPin) {
-  this->softSerial = new SoftwareSerial(rxPin, txPin);
+  this->softSerial = new AltSoftSerial(rxPin, txPin);
 }
 
 void UART::init() { this->softSerial->begin(SOFTWARE_SERIAL_BAUD_RATE); }

@@ -1,8 +1,7 @@
 #ifndef _SOFT_START_H_
 #define _SOFT_START_H_
 
-#include <Servo.h>
-
+#include "../Servo/Servo.h"
 #include "../code/config.h"
 extern float exponent;  // need to be defined at ".ino" file
 

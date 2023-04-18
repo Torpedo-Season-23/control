@@ -1,7 +1,7 @@
 #ifndef _SERVO_ROV_MOTOR_H_
 #define _SERVO_ROV_MOTOR_H_
 
-#include <Servo.h>
+#include "../Servo/Servo.h"
 
 #include "../SoftStart/softstart.h"
 #include "config.h"

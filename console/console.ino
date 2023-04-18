@@ -1,14 +1,18 @@
-#include "lib/temp/System.h"
+#include "lib/nRF/RF24.h"
 
-PS3GamePad controller;
-System s(&controller);
+RF24 radio(9, 10);  // CE, CSN
 
 void setup() {
-  Serial.begin(115200);
-  Serial.println("Setup");
-  s.init();
+  Serial.begin(9600);
+  Serial.println("Hello World");
+  radio.begin();
 }
 
 void loop() {
-  s.update();
+  radio.stopListening();
+  char text[] = "Hello World";
+  radio.write(&text, sizeof(text));
+  Serial.println("Sent");
+  radio.startListening();
+  delay(1000);
 }
