@@ -17,7 +17,7 @@ void Thrusters::set_h_forces(int *array) {
       this->thruster_frame[i] += this->config_matrix[i][j] * array[j];
     
     maxNumber= max(abs(this->thruster_frame[i]),maxNumber);
-7    //this->thruster_frame[i] = map(this->thruster_frame[i], -36, 36, 1100, 1900);
+    //this->thruster_frame[i] = map(this->thruster_frame[i], -36, 36, 1100, 1900);
     //print frame after softstart
     // delay(100);
   }
