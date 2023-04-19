@@ -56,17 +56,21 @@ void UART_YZ::receiveFrame(uint8_t* data) {
 
 void UART_YZ::sendFrame(uint8_t* sendingFrame) {
 
-  Serial.print("UART Sent Frame: ");
+  //Serial.print("UART Sent Frame: ");
   for (int i = 0; i < 8; i++) {
     this->rec_frame[i] = sendingFrame[i];
-    Serial.print(sendingFrame[i]);
-    Serial.print(" ");
+    //Serial.print(sendingFrame[i]);
+    //Serial.print(" ");
     // this->rec_frame[i] = this->counter++;
   }
-  Serial.println();
+  //Serial.println();
   serialYZ.write('(');
   serialYZ.write(this->rec_frame, UDP_REC_FRAME);
   serialYZ.write(')');
+  /*Serial.write('(');
+  Serial.write(this->rec_frame, UDP_REC_FRAME);
+  Serial.write(')');*/
+  
 }
 
 
@@ -78,5 +82,6 @@ inline byte UART_YZ::readByte() {
   while ((!serialYZ.available()) && (millis()-current < WAITING_TIME));
   //while (!serialYZ.available());
   uint8_t x=serialYZ.read();
+  //Serial.println(x);
   return x;
 }

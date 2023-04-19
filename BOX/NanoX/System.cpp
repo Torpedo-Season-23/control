@@ -15,21 +15,21 @@ void System::init() {
 
 void System::sendData() {
   client.sendData(udpSendFrame);
-  Serial.println();
+  /*Serial.println();
   Serial.print("Sent frame to UDP: ");
   for (int i = 0; i < 16; i++) {
     Serial.print(udpSendFrame[i]);
     Serial.print(" ");
   }
-  Serial.println();
+  Serial.println();*/
 }
 
 void System::receiveData() {
   bool i = client.receiveData(udpReceiveFrame);
   if (!i) {
-    client.defaultFrame(udpReceiveFrame);
-    client.init();
-    // Serial.println("Nothing received :(");
+    //client.defaultFrame(udpReceiveFrame);
+    //client.init();
+     Serial.println("Nothing received :(");
     // delay(5);
   } else {
     Serial.print("Received frame from UDP: ");
@@ -43,7 +43,7 @@ void System::receiveData() {
 
 void System::activateUART() {
   uart_yz.sendFrame(udpReceiveFrame);
-  Serial.println("Waiting to receive...");
+  //Serial.println("Waiting to receive...");
   digitalWrite(INTERRUPT_PIN, LOW);
   uart_yz.receiveFrame(udpSendFrame);
   digitalWrite(INTERRUPT_PIN, HIGH);
@@ -55,7 +55,3 @@ void System::updateConverters(){
   converter.checkConverter(udpReceiveFrame);  //check power on converter
   converter.switchPin(udpSendFrame);  //swap between converters every loop 
 }
-
-
-
-

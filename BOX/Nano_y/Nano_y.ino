@@ -21,10 +21,10 @@ void setup() {
   currentTime = millis();
   Serial.begin(38400);
   uart_data.Start_Uart();
-  //IMU.start();
+  IMU.start();
   leakage.init();
 
-  //IMU.check();
+  IMU.check();
   pressur_S.init();
   attachInterrupt(digitalPinToInterrupt(3), handler, LOW);
 }

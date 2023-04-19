@@ -2,12 +2,11 @@
 #include <math.h>
 
 void Communication::comm_init() {
-  Ethernet.begin(this->mac, this->consoleIP);
+  Ethernet.begin(this->mac, IPAddress(192,168,1,9));
 }
 
 void Communication::receiveData(uint8_t* receivedFrame) {
   this->udp.begin(7000);
-
   int frameSize = this->udp.parsePacket();
 //  Serial.println(frameSize);/
   if (frameSize > 0) {
@@ -15,12 +14,12 @@ void Communication::receiveData(uint8_t* receivedFrame) {
     this->udp.flush();
   }
   if (frameSize == 0) {
-    // Serial.println("Not received :(");
+     //Serial.println("Not received :(");
   } else {
     Serial.print("--------");
     for (int i = 0; i < 10; i++) Serial.print(receivedFrame[i]);
     Serial.println("--------");
-//    delay(100);/
+    //delay(100);
   }
  // this->udp.stop();
 }
@@ -36,8 +35,13 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   for (int i = IMU + PRESSURE; i < SENSORS; i++) {
     sensors[i] = receivedFrame[j];
     j++;
-    
   }
+  for(int i=0;i<SENSORS;i++){
+    Serial.print(sensors[i]);
+    Serial.print("  ");
+  }
+  Serial.println();
+  
 }
 
 void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame) {  //modify sent frame

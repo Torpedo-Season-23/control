@@ -28,6 +28,9 @@ void Thruster::setSignal(uint16_t value){
 }
 
 void Thruster::handleBrake(uint16_t value){
+  this->currentValue=value;
+  this->writeSignal();
+  return;
   if(millis()-this->lastUpdatedTime<200)
     return;
   Serial.println("Braking");

@@ -145,8 +145,8 @@ public:
   }
 
   void TorpedoMPU::calculate() {
-    if (!dmpReady)
-      return;
+    /*if (!dmpReady)
+      return;*/
     mpuInterrupt = false;
     mpuIntStatus = getIntStatus();
     fifoCount = getFIFOCount();

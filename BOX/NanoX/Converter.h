@@ -41,7 +41,7 @@ class Converter {
 private:
   twobytes tbval;
   int VOUT_MODE; //needed to calculate vout true value
-  bool converter = HIGH; //to swap between convertes
+  int converter = HIGH; //to swap between convertes
   void init(); 
   double linear11(twobytes tbval); //(vin , iout , temp) data type 
   twobytes CommandExec2(byte DeviceAddr, byte Command); //get data from i2c

@@ -12,8 +12,9 @@ void setup() {
   digitalWrite(INTERRUPT_PIN, HIGH);
   pinMode(2, OUTPUT);
   pinMode(4, OUTPUT);
+  digitalWrite(4,HIGH);
   digitalWrite(2,HIGH);
-  //digitalWrite(4,HIGH);
+  
   uart_yz.begin();
 }
 

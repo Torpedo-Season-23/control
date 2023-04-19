@@ -12,6 +12,7 @@ public:
   void receiveFrame();
   void sendFrame();
   void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame);
+  inline byte readByte();
 };
 
 #endif

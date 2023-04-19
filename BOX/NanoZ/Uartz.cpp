@@ -1,38 +1,33 @@
 #include "Uartz.h"
 long currentUART= millis();
 
-SoftwareSerial serial(RX_Z, A7);
+//SoftwareSerial serial(RX_Z, -1);
 
 void Uartz::startUart() {
-  serial.begin(9600);
+  //serial.begin(9600);
 }
 
 void Uartz::sendFrame(){
   uint8_t frame[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-  serial.write('(');
-  serial.write(frame,16);
-  serial.write(')');
+  Serial.write('(');
+  Serial.write(frame,16);
+  Serial.write(')');
 }
 
 void Uartz::receiveFrame() {
   //return;
-    serial.begin(9600);
+    //serial.begin(9600);
   uint8_t frame[UART_Z_FRAME_SIZE];
   currentUART= millis();
 
   while (true) {
     byte x;
-while(!serial.available() && millis()-currentUART<100);
-    x = serial.read();
+    x = readByte();
     if (x != '(') continue;
     for (int i = 0; i < ACTUAL_DATA; i++) {
-while(!serial.available() && millis()-currentUART<100);
-        ;
-      frame[i] = serial.read();
+      frame[i] = readByte();
     }
-while(!serial.available() && millis()-currentUART<100);
-      ;
-    x = serial.read();
+    x =readByte();
     if (x != ')') continue;
 
 
@@ -48,7 +43,7 @@ while(!serial.available() && millis()-currentUART<100);
       Serial.print(" ");
     }
 #endif
-    serial.end();
+    //serial.end();
     return;
   }
 }
@@ -107,4 +102,9 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
   }
   Serial.println();
 #endif
+}
+
+inline byte Uartz::readByte(){
+  while(!Serial.available());
+  return Serial.read();
 }

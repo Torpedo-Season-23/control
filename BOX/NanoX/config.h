@@ -24,5 +24,5 @@
 
 
 #define PRINT_ON //Uncomment this line to print debug messages
-// #define TEST_CONVERTER //Uncomment this line to print converters debug messages
+ #define TEST_CONVERTER //Uncomment this line to print converters debug messages
 #endif
