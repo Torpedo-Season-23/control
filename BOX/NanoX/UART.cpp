@@ -34,8 +34,8 @@ void UART_YZ::receiveFrame(uint8_t* data) {
     Serial.print("Angles: ");
     for (int i = ANGLE_INDEX; i < PRESSURE_INDEX; i += 2) {
       int x = data[i] << 8 | data[i + 1];
-      Serial.print(x);
-      Serial.print(" ");
+      // Serial.print(x);
+      // Serial.print(" ");
     }
     Serial.print(" Pressure: ");
     int y = data[PRESSURE_INDEX] << 8 | data[PRESSURE_INDEX + 1];
@@ -43,11 +43,12 @@ void UART_YZ::receiveFrame(uint8_t* data) {
     Serial.print(" ");
 
     Serial.print("Leakage: ");
-    for (int i = LEAKAGE_INDEX; i < UART_YZ_FRAME_SIZE; i++) {
+    for (int i = LEAKAGE_INDEX; i < LEAKAGE_INDEX + 8; i++) {
       int z = data[i];
       Serial.print(z);
       Serial.print(" ");
     }
+    Serial.println();
 #endif
     return;
   }

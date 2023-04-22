@@ -36,7 +36,7 @@ void loop() {
     //Serial.print("HERE!");
     uart_data.Set_IMU_Angles(IMU.getangles());
     uart_data.Set_Pressure(pressur_S.getPressure());
-    uart_data.Set_Leakage(0);
+    uart_data.Set_Leakage(leakage.getHumidity());
     currentTime = current;
   }
   //Serial.println("send");
@@ -44,5 +44,5 @@ void loop() {
   //Serial.println("Receiving...");
   uart_data.receive();
   //uart_data.Send_Data();
-
+delay(500);
 }

@@ -127,6 +127,13 @@ void PressureSensor::update() {
 
          Serial.print("Pressure: ");
          Serial.print(pressure);
+
+
+
+
+
+
+         
          Serial.println(" mbar");
   
 }
