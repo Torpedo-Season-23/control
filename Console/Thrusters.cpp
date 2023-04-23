@@ -2,22 +2,19 @@
 #include "SoftStart.h"
 #include <Arduino.h>
 
-int *Thrusters::get_thruster_frame()
-{
+int *Thrusters::get_thruster_frame() {
   return this->thruster_frame;
 }
 
-void Thrusters::set_h_forces(int *array)
-{
+void Thrusters::set_h_forces(int *array) {
   // int16_t maXforceNumber = 0;
 
   for (int i = 0; i < 4; i++)
     this->thruster_frame[i] = 0;
-  for (char i = 0; i < 4; ++i)
-  {
+  for (char i = 0; i < 4; ++i) {
     for (int j = 0; j < 3; ++j)
       this->thruster_frame[i] += this->config_matrix[i][j] * array[j];
-      int range=0;
+    int range = 0;
     if (array[Xforce] != 0 && (array[Yforce] == 0 && array[Moment] == 0))
       range = 64;
     else if (array[Yforce] != 0 && (array[Xforce] == 0 && array[Moment] == 0))
@@ -32,8 +29,8 @@ void Thrusters::set_h_forces(int *array)
       range = 95;
     else if (array[Xforce] != 0 && array[Yforce] != 0 && array[Moment] != 0)
       range = 84;
-    
-    this->thruster_frame[i] = map(this->thruster_frame[i],-37, 37, 1100, 1900);
+
+    this->thruster_frame[i] = map(this->thruster_frame[i], -37, 37, 1100, 1900);
   }
 
   //     maXforceNumber= maXforce(abs(this->thruster_frame[i]),maXforceNumber);
@@ -47,8 +44,7 @@ void Thrusters::set_h_forces(int *array)
   //     this->thruster_frame[i] = map(this->thruster_frame[i], -1*maXforceNumber, maXforceNumber, 1500-this->speed, 1500+this->speed);
 }
 
-void Thrusters::set_v_forces(int *array)
-{
+void Thrusters::set_v_forces(int *array) {
   this->thruster_frame[4] = array[0];
   this->thruster_frame[5] = array[1];
   // Serial.print(this->thruster_frame[4]);
