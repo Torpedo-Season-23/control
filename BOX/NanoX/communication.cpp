@@ -30,6 +30,8 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
       //Serial.println("Frame incomplete?");
     }
     udp.read(receivedFrame, success);
+//    for(int i=2;i<6;i++)
+//      receivedFrame
   }
   udp.flush();
   return success > 0;

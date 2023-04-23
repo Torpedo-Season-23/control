@@ -25,7 +25,7 @@
 #define MOTOR_HIGHEST_SPEED 1900
 #define MOTOR_LOWEST_SPEED 1100
 #define TIME_STEP 500
-#define INCREAMENT_FACTOR 3 
+#define INCREAMENT_FACTOR 2
 #define log2(a) (log(a)/log(2))
 /*----------Outer Thruster Frame*/
 typedef enum FrameMotorIndices{

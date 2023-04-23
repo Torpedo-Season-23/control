@@ -7,7 +7,7 @@
 #define DHTPIN 2
 
 /* PRESSURE */
-#define MCLK_PIN 10
+#define MCLK_PIN 9
 #define MISO_PIN 12
 #define MOSI_PIN 11
 #define SCLK_PIN 13

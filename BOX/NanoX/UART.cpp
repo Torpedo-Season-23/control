@@ -1,7 +1,7 @@
 #include "UART.h"
 #include "Converter.h"
 //Converter converter;
-#define WAITING_TIME 40
+#define WAITING_TIME 30
 SoftwareSerial serialYZ(RX_Y, TX_Y);
 long current=5;
 void UART_YZ::begin() {
