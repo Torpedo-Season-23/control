@@ -113,7 +113,6 @@ void Xbox::Update() {
       // this->lf310.lf310Data.btn.dPad=0;
       break;
   }
-  delay(50);
 }
 void Xbox::update_vmotion() {
   if (this->lf310.buttonClickState.LTbutton) this->direction = -1;  //Down

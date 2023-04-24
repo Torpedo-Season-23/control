@@ -92,7 +92,6 @@ void PSGamepad::Update() {
       if (this->speed < 2) this->speed++;
     }
   }
-  delay(20);
 }
 void PSGamepad::update_vmotion() {
   int8_t direction = 0;

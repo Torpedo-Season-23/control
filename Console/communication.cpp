@@ -57,6 +57,7 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
     j++;
   }
 
+  Serial.println("Sensors reading: ");
   for (int i = 0; i < SENSORS; i++) {
     Serial.print(sensors[i]);
     Serial.print("  ");

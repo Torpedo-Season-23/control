@@ -14,8 +14,7 @@ void setup() {
   pinMode(4, OUTPUT);
   digitalWrite(4,HIGH);
   digitalWrite(2,HIGH);
-  delay(10);
-  
+
   uart_yz.begin();
 }
 
@@ -24,5 +23,4 @@ void loop() {
   s.activateUART();
   s.updateConverters();
   s.sendData();
-  delay(50);
 }
