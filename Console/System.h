@@ -8,6 +8,7 @@
 #include "lf310.h"
 #include "SoftStart.h"
 #include "Settings.h"
+#include "Lcd.h"
 
 
 
@@ -21,6 +22,7 @@ private:
   Communication console;
   IndexConverter indexConverter;
   FactorsController factors;
+  Lcd lcd;
 
 public:
   System(IController* gamepad) {
@@ -33,6 +35,7 @@ public:
 
 
 void System::Init() {
+  this->lcd.init();
   this->gamepad->init();
   this->console.comm_init();
   this->indexConverter.init(thruster.get_thruster_frame());
@@ -90,6 +93,7 @@ void System::Update() {
   this->console.receiveData(receivedFrame);
   this->console.sendData(sentFrame);
   this->console.getSensors(receivedFrame, sensors);
+  this->lcd.update(speed,communication,acc);
   }
 
 #endif
