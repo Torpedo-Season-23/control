@@ -24,15 +24,31 @@ void Nano_X::Set_IMU_Angles(int angles[3]) {
   IMU_Angles[0] = angles[0];
   IMU_Angles[1] = angles[1];
   IMU_Angles[2] = angles[2];
+  // Serial.print("IMU ANGLES: ");
+  // for(int i=0 ; i<3 ; i++)
+  // {
+  //   Serial.print(IMU_Angles[i]);
+  //   Serial.print("   ");
+  // }
+  // Serial.println();
 }
 
 void Nano_X::Set_Pressure(int Pressure) {
   pressure = Pressure;
+  Serial.println(pressure);
 }
 
 void Nano_X::Set_Leakage(uint8_t leakValues[8]) {
-  for (int i = 0; i < SENSORS_NUM; i++)
+  for (int i = 0; i < SENSORS_NUM; i++) {
     leakage_values[i] = leakValues[i];
+    Serial.println();
+    Serial.print("Leakage ");
+    Serial.print(i);
+    Serial.print(" ");
+    Serial.print(leakage_values[i]);
+    Serial.print(" ");
+  }
+  Serial.println();
 }
 
 void Nano_X::Prepare_frame(uint8_t Dataframe[16]) {
@@ -73,29 +89,30 @@ void Nano_X::Send_Data() {
 }
 
 void Nano_X::receive() {
-  current=millis();
+  current = millis();
   // Serial.print("Waiting to receive: ");
   //Serial.println(softSerial.available());
   // noInterrupts();
   uint8_t recFrame[8];
-  while (current-millis()<50) {
+  while (current - millis() < 50) {
     // Serial.println("Inside Receiving...");
     byte x;
-    while (!softSerial.available() && current-millis()<50);
+    while (!softSerial.available() && current - millis() < 50)
+      ;
     // Serial.println("hello");
     x = softSerial.read();
     if (x != '(') continue;
     // noInterrupts();
     //Serial.println("before frame");
     for (int i = 0; i < 8; i++) {
-      while (!softSerial.available() && current-millis()<50)
+      while (!softSerial.available() && current - millis() < 50)
         ;
 
       recFrame[i] = softSerial.read();
       //Serial.println(recFrame[i]);
     }
 
-    while (!softSerial.available() && current-millis()<50)
+    while (!softSerial.available() && current - millis() < 50)
       ;
     x = softSerial.read();
 

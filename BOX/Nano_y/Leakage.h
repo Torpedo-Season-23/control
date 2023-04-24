@@ -6,7 +6,7 @@
 class LeakageSensor {
 private:
   float temperature[SENSORS_NUM];
-  float humidity[SENSORS_NUM];
+  uint8_t humidity[SENSORS_NUM];
 
 public:
   LeakageSensor();

@@ -2,46 +2,66 @@
 #include <math.h>
 
 void Communication::comm_init() {
-  Ethernet.begin(this->mac, IPAddress(192,168,1,9));
+  Ethernet.begin(this->mac, IPAddress(192, 168, 1, 9));
 }
 
 void Communication::receiveData(uint8_t* receivedFrame) {
   this->udp.begin(7000);
   int frameSize = this->udp.parsePacket();
-//  Serial.println(frameSize);/
+  //  Serial.println(frameSize);/
   if (frameSize > 0) {
     this->udp.read(receivedFrame, receivedFrameSize);
     this->udp.flush();
   }
   if (frameSize == 0) {
-     //Serial.println("Not received :(");
+    //Serial.println("Not received :(");
   } else {
     Serial.print("--------");
-    for (int i = 0; i < 10; i++) Serial.print(receivedFrame[i]);
+    for (int i = 0; i < receivedFrameSize; i++) Serial.print(receivedFrame[i]);
     Serial.println("--------");
     //delay(100);
   }
- // this->udp.stop();
+  // this->udp.stop();
 }
 
 void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //modify received frame
 
-  // Serial.println("Readings:");
+
   int j = 0;
+  // IMU and Pressure readings
   for (int i = 0; i < IMU + PRESSURE; i++) {
     sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
     j += 2;
   }
-  for (int i = IMU + PRESSURE; i < SENSORS; i++) {
+  // Leakage readings
+  for (int i = IMU + PRESSURE; i < IMU + PRESSURE + LEAKAGE; i++) {
     sensors[i] = receivedFrame[j];
     j++;
   }
-  for(int i=0;i<SENSORS;i++){
+  // First Converter
+  for (int i = IMU + PRESSURE + LEAKAGE; i < IMU + PRESSURE + LEAKAGE + 1; i++) {
+    sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
+    j += 2;
+  }
+  for (int i = IMU + PRESSURE + LEAKAGE + 1; i < IMU + PRESSURE + LEAKAGE + 2; i++) {
+    sensors[i] = receivedFrame[j];
+    j++;
+  }
+  // Second Converter
+  for (int i = IMU + PRESSURE + LEAKAGE + 2; i < IMU + PRESSURE + LEAKAGE + 3; i++) {
+    sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
+    j += 2;
+  }
+  for (int i = IMU + PRESSURE + LEAKAGE + 3; i < SENSORS; i++) {
+    sensors[i] = receivedFrame[j];
+    j++;
+  }
+
+  for (int i = 0; i < SENSORS; i++) {
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
   Serial.println();
-  
 }
 
 void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame) {  //modify sent frame
@@ -55,7 +75,7 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   }
   sentFrame[0] = (uint8_t)x;
 
-  // last byte for thrusters' direction
+  // 2nd byte for thrusters' direction + converters on/off
   x = 0;
   //int weights[6] = { 1, 2, 4, 8, 16, 32};
   for (int i = THRUSTERS - 1; i >= 0; i--) {
@@ -69,7 +89,7 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   int j = 0;  // thrusters speed: 1100 - 1900
   for (int i = 2; i < sentFrameSize; i++) {
     thrusters[j] = abs(thrusters[j] - 1500);           //thrusters speed: 0 - 400
-    sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);    //thrusters speed: 0 - 255
+    sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);  //thrusters speed: 0 - 255
     j++;
   }
 
@@ -98,8 +118,8 @@ void Communication::sendData(uint8_t* sentFrame) {
   /*for(int i=0;i<8;i++){
     Serial.print(" ");
     Serial.print(sentFrame[i]);}
-  Serial.println(); */   
+  Serial.println(); */
   this->udp.write(sentFrame, sentFrameSize);
   this->udp.endPacket();
-   this->udp.stop();
+  this->udp.stop();
 }

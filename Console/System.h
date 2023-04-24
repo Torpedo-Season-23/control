@@ -39,7 +39,7 @@ void System::Init() {
 
 }
 void System::Update() {
-  uint8_t receivedFrame[16];
+  uint8_t receivedFrame[receivedFrameSize];
   this->gamepad->Update();
   int speed = this->gamepad->getspeed();
   int* array = this->gamepad->get_hframe();
@@ -85,19 +85,18 @@ void System::Update() {
   
 
   uint8_t sentFrame[16];
+  int16_t sensors[SENSORS];
   this->console.prepareData(acc, res, sentFrame);
   this->console.receiveData(receivedFrame);
-  /*Serial.print("Frame to be sent: ");
-  for(int i= 0;i<8;i++){
-    Serial.print(sentFrame[i]);
-    Serial.print("\t");
-  }
-  Serial.println();*/
   this->console.sendData(sentFrame);
+<<<<<<< HEAD
 
   int16_t sensors[SENSORS];
 
   // this->console.getSensors(receivedFrame, sensors);
+=======
+  this->console.getSensors(receivedFrame, sensors);
+>>>>>>> e1c6b7071b1267359264bd25a91609d665256c15
   }
 
 #endif

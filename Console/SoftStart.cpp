@@ -13,7 +13,7 @@ void Motor::setSpeed(uint16_t newSpeed){
        
     }
     long currentTime= millis();  
-    if(currentTime- this->lastUpdatedTime < 100)
+    if(currentTime- this->lastUpdatedTime < 200)
         return ;
     this->lastUpdatedTime= currentTime;
     if (newSpeed > 1500)// Forward is required.
