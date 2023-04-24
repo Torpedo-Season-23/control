@@ -7,7 +7,7 @@
 #include "psgamepad.h"
 #include "lf310.h"
 #include "SoftStart.h"
-#include "IndexConverter.h"
+#include "Settings.h"
 
 
 
@@ -20,6 +20,8 @@ private:
   IController* gamepad;
   Communication console;
   IndexConverter indexConverter;
+  FactorsController factors;
+
 public:
   System(IController* gamepad) {
     this->gamepad = gamepad;
@@ -34,6 +36,7 @@ void System::Init() {
   this->gamepad->init();
   this->console.comm_init();
   this->indexConverter.init(thruster.get_thruster_frame());
+
 }
 void System::Update() {
   uint8_t receivedFrame[16];
@@ -43,11 +46,14 @@ void System::Update() {
   int* v = this->gamepad->get_vframe();
   int* acc = this->gamepad->get_accframe();
   thruster.speed= this->gamepad->getspeed();
-  // int testarray[3]={128,0,0};
-  thruster.set_h_forces(this->gamepad->get_hframe());
+  int testarray[3]={128,0,0};
+  thruster.set_h_forces(testarray);
+  // thruster.set_h_forces(this->gamepad->get_hframe());
   thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
   res = thruster.get_thruster_frame();
+
+  factors.setFactors();
   /*Serial.println(speed);
   if (speed ==100)
   for(int i= 0;i<6;i++)
@@ -61,9 +67,16 @@ void System::Update() {
   
   
   motors.update(res);
-  res= indexConverter.updateArray();
+  Serial.print("Thrusters Before : ");
+  for(int i= 0;i<6;i++){
+    Serial.print(res[i]);
+    Serial.print(" ");
+  }
+  Serial.println();
 
-  Serial.print("Thrusters: ");
+  res= indexConverter.updateArray(factors.getFactors());
+
+  Serial.print("Thrusters After: ");
   for(int i= 0;i<6;i++){
     Serial.print(res[i]);
     Serial.print(" ");
@@ -84,7 +97,7 @@ void System::Update() {
 
   int16_t sensors[SENSORS];
 
-  this->console.getSensors(receivedFrame, sensors);
+  // this->console.getSensors(receivedFrame, sensors);
   }
 
 #endif
