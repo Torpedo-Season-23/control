@@ -72,15 +72,18 @@ void Converter::data_conv() {
 
 
 void Converter::checkConverter(uint8_t *recFrame) {
-  for (int i = 6; i < 8; i++) {
-    this->check_conv[i - 6] = bitRead(recFrame[CONTROL_CONVETER_BYTE], i);  //(recFrame[1] >> (i)) & 0x01
-  }
-  //digitalWrite(controlPins[0], check_conv[0]);
-  //digitalWrite(controlPins[1], check_conv[1]);
+  byte neededByte= recFrame[1] & 0b11;
+  Serial.print("Switching: ");
+  Serial.print(neededByte&1);
+  Serial.print(",\t");
+  Serial.print(neededByte&0b01);
+  
+  digitalWrite(controlPins[0], neededByte&1);
+  digitalWrite(controlPins[1], neededByte&0b10);
 }
 
 void Converter::switchPin(uint8_t *sendFrame) {
-
+  
   converter = converter==HIGH ? LOW:HIGH;
   //control which converter to send (swap converter every loop) (101 , 111)
   digitalWrite(Converter_PINs[1], converter);

@@ -1,6 +1,10 @@
 #include "communication.h"
 #include <math.h>
 
+
+bool conv1=true;
+bool conv2=true;
+
 void Communication::comm_init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 9));
 }
@@ -84,6 +88,12 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
       x += weights[i];  // 1500 will be added in Box
     }
   }
+  if(conv1)
+    x|=1;
+  if(conv2)
+    x|=0b10;
+  Serial.println(x);
+  delay(500);  
   sentFrame[1] = (uint8_t)x;
 
   // 6 bytes thrusters' speed
