@@ -11,8 +11,8 @@ public:
     this->thrusterPointers[FRONT_RIGHT] = &originalFrame[1];
     this->thrusterPointers[UPPER_FRONT] = &originalFrame[2];
     this->thrusterPointers[BACKWARD_LEFT] = &originalFrame[3];
-    this->thrusterPointers[BACKWARD_RIGHT] = &originalFrame[4];
-    this->thrusterPointers[UPPER_BACK] = &originalFrame[5];
+    this->thrusterPointers[BACKWARD_RIGHT] = &originalFrame[5];//done
+    this->thrusterPointers[UPPER_BACK] = &originalFrame[4];//done
   }
   uint16_t *updateArray(float* factorsFrame) {
    

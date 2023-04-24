@@ -89,14 +89,7 @@ void System::Update() {
   this->console.prepareData(acc, res, sentFrame);
   this->console.receiveData(receivedFrame);
   this->console.sendData(sentFrame);
-<<<<<<< HEAD
-
-  int16_t sensors[SENSORS];
-
-  // this->console.getSensors(receivedFrame, sensors);
-=======
   this->console.getSensors(receivedFrame, sensors);
->>>>>>> e1c6b7071b1267359264bd25a91609d665256c15
   }
 
 #endif
