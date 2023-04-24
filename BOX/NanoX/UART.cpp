@@ -2,6 +2,8 @@
 #include "Converter.h"
 //Converter converter;
 #define WAITING_TIME 30
+
+long lastUARTReceiveTime= millis();
 SoftwareSerial serialYZ(RX_Y, TX_Y);
 long current=5;
 void UART_YZ::begin() {
@@ -12,18 +14,21 @@ void UART_YZ::receiveFrame(uint8_t* data) {
   //return;
   /*this->readByte();
   return;*/
-  
+  uint8_t frame[16];
   current= millis();
   while (millis()-current< WAITING_TIME) {
     byte x;
     x = this->readByte();
     if (x != '(') continue;
     for (int i = 0; i < 16; i++) {
-      data[i] = this->readByte();
+      frame[i] = this->readByte();
     }
     x = this->readByte();
     if (x != ')') continue;
-
+      for(int i= 0;i<16;i++)
+        data[i]= frame[i];
+    lastUARTReceiveTime= millis();
+    
 #ifdef PRINT_ON
     for (int i = 0; i < 16; i++) {
       Serial.print(data[i]);
@@ -52,7 +57,11 @@ void UART_YZ::receiveFrame(uint8_t* data) {
 #endif
     return;
   }
-  Serial.print("Failed to receive");
+  if(millis()-lastUARTReceiveTime>2000){
+    Serial.print("Failed to Receive from UART!");
+    for(int i= 0;i<16;i++)
+      data[i]= 255;
+  }
 }
 
 void UART_YZ::sendFrame(uint8_t* sendingFrame) {

@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 bool setZeros= false;
-long currentTime= millis();
+long lastTimeOnReceive= millis();
 void CommunicationClient::init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 7));
 }
@@ -30,8 +30,17 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
       //Serial.println("Frame incomplete?");
     }
     udp.read(receivedFrame, success);
+    lastTimeOnReceive= millis();
+    
 //    for(int i=2;i<6;i++)
 //      receivedFrame
+  }
+  else{
+    if(millis()-lastTimeOnReceive>3000){//Haben't received for 3 seconds! 
+      Serial.println("No UDP Communication!");
+      for(int i= 2;i<6;i++)
+        receivedFrame[i]=0;
+    }
   }
   udp.flush();
   return success > 0;
