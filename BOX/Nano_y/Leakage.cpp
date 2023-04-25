@@ -50,9 +50,9 @@ void LeakageSensor::update() {
 
     // Check if any reads failed and exit early (to try again).
     if (isnan(this->humidity[i]) || isnan(this->temperature[i])) {
-      //Serial.println(F("Failed to read from DHT sensor! SENSOR NUMBER:"));
-      //Serial.print(i);
-      //Serial.println();
+      Serial.print(F("Failed to read from DHT sensor! SENSOR NUMBER:"));
+      Serial.print(i);
+      Serial.println();
       continue;
     }
 

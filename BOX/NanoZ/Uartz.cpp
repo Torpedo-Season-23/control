@@ -1,5 +1,7 @@
 #include "Uartz.h"
 long currentUART= millis();
+long lastTimeRead= millis();
+bool onHigh=false;
 
 //SoftwareSerial serial(RX_Z, -1);
 
@@ -17,6 +19,7 @@ void Uartz::sendFrame(){
 void Uartz::receiveFrame() {
   //return;
     //serial.begin(9600);
+    
   uint8_t frame[UART_Z_FRAME_SIZE];
   currentUART= millis();
 
@@ -34,6 +37,7 @@ void Uartz::receiveFrame() {
     for (int i = 0; i < 8; i++) {
       uartFrame[i] = frame[i];
     }
+    lastTimeRead= millis();
 
 //debuging
 #ifdef UART_PRINT_ON
@@ -46,6 +50,17 @@ void Uartz::receiveFrame() {
     //serial.end();
     return;
   }
+  Serial.print("HERE");
+  if(millis()-lastTimeRead > 3000){
+    /*if(onHigh)
+      uartFrame[0]= 255;
+    else 
+      uartFrame[0]= 0;
+      onHigh= !onHigh;
+  }
+      
+    delay(1000);*/
+  }  
 }
 
 void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
@@ -105,6 +120,6 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
 }
 
 inline byte Uartz::readByte(){
-  while(!Serial.available());
+  while(!Serial.available() && (millis() -currentUART < 200));
   return Serial.read();
 }

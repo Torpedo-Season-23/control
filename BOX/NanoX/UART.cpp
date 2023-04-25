@@ -1,7 +1,7 @@
 #include "UART.h"
 #include "Converter.h"
 //Converter converter;
-#define WAITING_TIME 30
+#define WAITING_TIME 20
 
 long lastUARTReceiveTime= millis();
 SoftwareSerial serialYZ(RX_Y, TX_Y);

@@ -21,6 +21,6 @@ void setup() {
 void loop() {
   s.receiveData();
   s.activateUART();
-  s.updateConverters();
-  s.sendData();
+  //s.updateConverters();
+  //s.sendData();
 }
