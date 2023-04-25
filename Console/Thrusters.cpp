@@ -30,7 +30,11 @@ void Thrusters::set_h_forces(int *array) {
     else if (array[Xforce] != 0 && array[Yforce] != 0 && array[Moment] != 0)
       range = 84;
 
+    if(i==3) // temporary:: the back right thruster is inverted
+    this->thruster_frame[i] = map(this->thruster_frame[i], -37, 37, 1900, 1100);
+    else
     this->thruster_frame[i] = map(this->thruster_frame[i], -37, 37, 1100, 1900);
+
   }
 
   //     maXforceNumber= maXforce(abs(this->thruster_frame[i]),maXforceNumber);

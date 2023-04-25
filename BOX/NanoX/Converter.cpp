@@ -72,14 +72,14 @@ void Converter::data_conv() {
 
 
 void Converter::checkConverter(uint8_t *recFrame) {
-  byte neededByte= recFrame[1] & 0b11;
+  byte neededByte= recFrame[1] & 0b11000000;
   Serial.print("Switching: ");
   Serial.print(neededByte&1);
   Serial.print(",\t");
-  Serial.print(neededByte&0b01);
+  Serial.print(neededByte&0b10);
   
-  digitalWrite(controlPins[0], neededByte&1);
-  digitalWrite(controlPins[1], neededByte&0b10);
+  digitalWrite(controlPins[0], neededByte&1000000);
+  digitalWrite(controlPins[1], neededByte&0b10000000);
 }
 
 void Converter::switchPin(uint8_t *sendFrame) {

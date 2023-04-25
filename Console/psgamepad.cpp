@@ -95,8 +95,8 @@ void PSGamepad::Update() {
 }
 void PSGamepad::update_vmotion() {
   int8_t direction = 0;
-  if (this->PS3.getButtonPress(L2)) direction = -1;  //Down
-  else if (this->PS3.getButtonPress(R2)) direction = 1;
+  if (this->PS3.getButtonPress(R2)) direction = -1;  //Down
+  else if (this->PS3.getButtonPress(L2)) direction = 1;
   this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 400);
   this->vertical_frame[1] = this->vertical_frame[0];
 }

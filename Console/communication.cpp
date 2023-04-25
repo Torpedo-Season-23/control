@@ -72,7 +72,8 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
 void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame) {  //modify sent frame
   // 1st byte for accessories
   int x = 0;
-  int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+  int weights[8] = { 1, 2, 4, 8, 16, 32, 64,128 };
+  int th_weights[6]={1, 32, 4, 8, 16, 2};
   for (int i = ACCESSORIES - 1; i >= 0; i--) {
     if (accessories[i] == 1) {
       x += weights[i];
@@ -85,13 +86,13 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   //int weights[6] = { 1, 2, 4, 8, 16, 32};
   for (int i = THRUSTERS - 1; i >= 0; i--) {
     if (thrusters[i] > 1500) {
-      x += weights[i];  // 1500 will be added in Box
+      x += th_weights[i];  // 1500 will be added in Box
     }
   }
-  if(conv1)
-    x|=1;
+    if(conv1)
+    x|=0b1000000;
   if(conv2)
-    x|=0b10;
+    x|=0b10000000;
   Serial.println(x);
   //delay(500);  
   sentFrame[1] = (uint8_t)x;

@@ -118,8 +118,8 @@ void Xbox::update_vmotion() {
   if (this->lf310.buttonClickState.LTbutton) this->direction = -1;  //Down
   else if (this->lf310.buttonClickState.RTbutton) this->direction = 1;
   else this->direction = 0;
-  this->vertical_frame[0] = 1500 + direction * map(speeds[this->speed], 0, 128, 0, 400);
-  this->vertical_frame[1] = this->vertical_frame[0];
+  this->vertical_frame[0] = 1500 + (-1*direction) * map(speeds[this->speed], 0, 128, 0, 400);
+  this->vertical_frame[1] =  1500 + (direction) * map(this->speeds[this->speed], 0, 128, 0, 400);
 }
 void Xbox::update_hmotion() {
   float Tx, Ty, Tm;

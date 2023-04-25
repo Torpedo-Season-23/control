@@ -6,10 +6,11 @@
 class IndexConverter{
    public:
     void init(uint16_t* originalFrame){
-        this->thrusterPointers[FRONT_LEFT]=&originalFrame[0];
+        this->thrusterPointers[FRONT_LEFT]=&originalFrame[0];// 0000 front_left
         this->thrusterPointers[FRONT_RIGHT]=&originalFrame[1];
         this->thrusterPointers[BACKWARD_LEFT]=&originalFrame[2];
         this->thrusterPointers[BACKWARD_RIGHT]=&originalFrame[3];
+
         this->thrusterPointers[UPPER_FRONT]=&originalFrame[4];
         this->thrusterPointers[UPPER_BACK]=&originalFrame[5];
     }

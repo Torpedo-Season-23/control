@@ -29,14 +29,31 @@
 #define INCREAMENT_FACTOR 2
 #define log2(a) (log(a) / log(2))
 /*----------Outer Thruster Frame*/
-typedef enum FrameMotorIndices {
-  FRONT_LEFT = 0,
-  FRONT_RIGHT,
-  UPPER_FRONT,
-  BACKWARD_LEFT,
-  BACKWARD_RIGHT,
-  UPPER_BACK,
-  LAST
-} FrameMotorIndices;
+// typedef enum FrameMotorIndices {
+//   FRONT_LEFT = 0,
+//   UPPER_BACK,
+//   FRONT_RIGHT,
+//   BACKWARD_LEFT,
+//   BACKWARD_RIGHT,
+//   UPPER_FRONT,
+//   LAST
+// } FrameMotorIndices;
+
+
+
+//BACK LEFT : 0
+//BACK RIGHT :2
+//FRONT RIGHT :3
+
+
+
+#define FRONT_LEFT 4
+
+#define FRONT_RIGHT 3
+#define BACKWARD_RIGHT 2
+#define BACKWARD_LEFT 0
+
+#define UPPER_BACK 1
+#define UPPER_FRONT 5
 
 #endif
