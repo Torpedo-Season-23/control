@@ -29,7 +29,7 @@ void System::receiveData() {
   if (!i) {
     //client.defaultFrame(udpReceiveFrame);
     //client.init();
-     Serial.println("Nothing received :(");
+     //Serial.println("Nothing received :(");
     // delay(5);
   } else {
     Serial.print("Received frame from UDP: ");
@@ -45,7 +45,6 @@ void System::activateUART() {
   uart_yz.sendFrame(udpReceiveFrame);
   //Serial.println("Waiting to receive...");
   digitalWrite(INTERRUPT_PIN, LOW);
-  Serial.print("Waiting to RECEIVE");
   uart_yz.receiveFrame(udpSendFrame);
   digitalWrite(INTERRUPT_PIN, HIGH);
 }

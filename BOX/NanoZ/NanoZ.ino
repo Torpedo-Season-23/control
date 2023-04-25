@@ -11,5 +11,5 @@ void loop() {
   long current= millis();
   sys.getData();
   sys.setData();
-  delay(20);
+  //delay(20);
 }
