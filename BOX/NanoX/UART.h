@@ -7,7 +7,7 @@
 
 class UART_YZ {
 private:
-  uint8_t rec_frame[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+  uint8_t rec_frame[8] = { 1,2,3,0,0,0,0,0 };
 public:
   UART_YZ(){};
   int counter = 0;

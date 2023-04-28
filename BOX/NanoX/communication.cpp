@@ -7,7 +7,7 @@ void CommunicationClient::init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 7));
 }
 void CommunicationClient::defaultFrame(uint8_t* frame) {
-  for (int i = 2; i < 8; i++) {
+  for (int i = 0; i < 8; i++) {
     frame[i] = 0;
   }
 }
@@ -36,10 +36,11 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
 //      receivedFrame
   }
   else{
-    if(millis()-lastTimeOnReceive>3000){//Haben't received for 3 seconds! 
+    if(millis()-lastTimeOnReceive>3000){//Haven't received for 3 seconds! 
       Serial.println("No UDP Communication!");
-      for(int i= 2;i<6;i++)
+      for(int i= 2;i<8;i++)
         receivedFrame[i]=0;
+      this->init();
     }
   }
   udp.flush();

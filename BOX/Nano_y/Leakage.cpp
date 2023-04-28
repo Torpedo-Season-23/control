@@ -26,49 +26,15 @@ void LeakageSensor::update() {
     this->humidity[i] = dht[i]->readHumidity();//
     this->temperature[i] = dht[i]->readTemperature();
 
-
-    // if (isnan(this->humidity[i]) || isnan(this->temperature[i])) {
-    //   Serial.print(F("Failed to read from DHT sensor! SENSOR NUMBER:"));
-    //   Serial.println(i);
-    //   continue;
-   // }
-    // Serial.println();
-    // Serial.print("Leakage ");
-    // Serial.print(i);
-    // Serial.print(" ");
-    // Serial.print(humidity[i]);
-    //Serial.print(" | ");
-
-    // Serial.print("Temperature:");
-    // Serial.print(this->temperature[i]);
-    // Serial.print(" c");
-    // Serial.print(" //Humidity: ");
-    // Serial.print(this->humidity[i]);
-    // Serial.print("\n");
-
-
-
     // Check if any reads failed and exit early (to try again).
     if (isnan(this->humidity[i]) || isnan(this->temperature[i])) {
-      Serial.print(F("Failed to read from DHT sensor! SENSOR NUMBER:"));
+      /*Serial.print(F("Failed to read from DHT sensor! SENSOR NUMBER:"));
       Serial.print(i);
-      Serial.println();
+      Serial.println();*/
       continue;
     }
 
-    // Serial.print("Temperature:");
-    // Serial.print(this->temperature[i]);
-    // Serial.println();
-    // Serial.println(i);
-    // Serial.print(" c");
-    // Serial.print(" //Humidity: ");
-    // Serial.print(this->humidity[i]);
-    // Serial.println(i);
-    // Serial.println("\n");
-
-    // Serial.print(" %\n");
   }
-  Serial.println();
 }
 
 uint8_t* LeakageSensor::getHumidity() {

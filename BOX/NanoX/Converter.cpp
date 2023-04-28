@@ -15,21 +15,22 @@ twobytes Converter::CommandExec2(byte DeviceAddr, byte Command) {
   twobytes res;
   Wire.beginTransmission(DeviceAddr);
   Wire.write(Command);
-  wen = Wire.endTransmission((uint8_t) false);
+
+  wen = Wire.endTransmission((uint8_t)false);
+
   if (wen != 0) {
     Serial.print("endTransmission error ");
     Serial.println(wen);
     res.lsb = 0xFF;
     res.msb = 0xFF;
   }
-  Wire.requestFrom((uint8_t)DeviceAddr, (uint8_t)2, (uint8_t) true);
+  Wire.requestFrom((uint8_t)DeviceAddr, (uint8_t)2, (uint8_t)true);
   if (Wire.available()) {
     res.lsb = Wire.read();
     res.msb = Wire.read();
   } else {
     Serial.println("No data on bus\r\n");
   }
-
   return res;
 }
 
@@ -44,18 +45,19 @@ double Converter::directf(twobytes tbval) {
 
 void Converter::data_conv() {
   init();
-
 //get (vin , vout) only for debug
-#ifdef TEST_CONVERTER
+
   tbval = CommandExec2(address_1, VIN);
   double Vin = linear11(tbval);
+  tbval = CommandExec2(address_1, VOUT);
+  double Vout = directf(tbval);
+
+#ifdef TEST_CONVERTER
   Serial.print("Vin = ");
   Serial.print(Vin);
   Serial.print(" V");
   Serial.print("\t");
 
-  tbval = CommandExec2(address_1, VOUT);
-  double Vout = directf(tbval);
   Serial.print("Vout = ");
   Serial.print(Vout);
   Serial.print(" V");
@@ -73,13 +75,8 @@ void Converter::data_conv() {
 
 void Converter::checkConverter(uint8_t *recFrame) {
   byte neededByte= recFrame[1] & 0b11000000;
-  Serial.print("Switching: ");
-  Serial.print(neededByte&1);
-  Serial.print(",\t");
-  Serial.print(neededByte&0b10);
-  
-  digitalWrite(controlPins[0], neededByte&1000000);
-  digitalWrite(controlPins[1], neededByte&0b10000000);
+/*  digitalWrite(controlPins[0], neededByte&1000000);
+  digitalWrite(controlPins[1], neededByte&0b10000000);*/
 }
 
 void Converter::switchPin(uint8_t *sendFrame) {
@@ -89,7 +86,7 @@ void Converter::switchPin(uint8_t *sendFrame) {
   digitalWrite(Converter_PINs[1], converter);
   //get data
   getData(converter, sendFrame);
-
+  
 //debug
 #ifdef TEST_CONVERTER
   if (converter) {
@@ -107,6 +104,7 @@ void Converter::switchPin(uint8_t *sendFrame) {
 //get converters data 
 void Converter::getData(bool converter, uint8_t *sendFrame) {
   data_conv();
+  
   int i = (converter) ? UDP_CONVERTER_1_INDEX : UDP_CONVERTER_2_INDEX;
   sendFrame[i + 0] = highByte((uint8_t)converterArray[0]);
   sendFrame[i + 1] = lowByte((uint8_t)converterArray[0]);

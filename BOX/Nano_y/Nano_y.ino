@@ -35,13 +35,11 @@ void loop() {
   //return;
   long current = millis();
   if (current - currentTime > 100) {
-    //Serial.print("HERE!");
     uart_data.Set_IMU_Angles(IMU.getangles());
     uart_data.Set_Pressure(pressur_S.getPressure());
     uart_data.Set_Leakage(leakage.getHumidity());
     currentTime = current;
   }
-    //uart_data.Send_Data();
   Serial.println("Receiving...");
   uart_data.receive();
 }

@@ -49,11 +49,11 @@ private:
   void data_conv(); 
 
 public:
-  double converterArray[2]; //contains data after conversion
-  double Conv_data[6]; //contains data to be send 
-  int Converter_PINs[3] = { A1, A2, A3 }; //pins to swap convertse (101) or (111)
-  int controlPins[2] = { 2, 4 }; //pins to control power(on/off) on converters 
-  int check_conv[2] = { 1, 1 }; // power value on two converters 
+  float converterArray[2]; //contains data after conversion
+  float Conv_data[6]; //contains data to be send 
+  uint8_t Converter_PINs[3] = { A1, A2, A3 }; //pins to swap convertse (101) or (111)
+  //uint8_t controlPins[2] = { 2, 4 }; //pins to control power(on/off) on converters 
+  uint8_t check_conv[2] = { 1, 1 }; // power value on two converters 
 
   Converter() {
     //set initial values

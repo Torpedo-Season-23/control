@@ -3,7 +3,6 @@
 #include "Converter.h"
 
 System s;
-UART_YZ uart_yz;
 
 void setup() {
   Serial.begin(115200);
@@ -15,12 +14,12 @@ void setup() {
   digitalWrite(4,HIGH);
   digitalWrite(2,HIGH);
 
-  uart_yz.begin();
 }
 
 void loop() {
+  Serial.println("Loop");
   s.receiveData();
   s.activateUART();
-  s.updateConverters();
+  //s.updateConverters();
   s.sendData();
 }

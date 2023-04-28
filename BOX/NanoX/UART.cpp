@@ -39,8 +39,8 @@ void UART_YZ::receiveFrame(uint8_t* data) {
     Serial.print("Angles: ");
     for (int i = ANGLE_INDEX; i < PRESSURE_INDEX; i += 2) {
       int x = data[i] << 8 | data[i + 1];
-      // Serial.print(x);
-      // Serial.print(" ");
+       Serial.print(x);
+       Serial.print(" ");
     }
     Serial.print(" Pressure: ");
     int y = data[PRESSURE_INDEX] << 8 | data[PRESSURE_INDEX + 1];
@@ -71,9 +71,9 @@ void UART_YZ::sendFrame(uint8_t* sendingFrame) {
     this->rec_frame[i] = sendingFrame[i];
     //Serial.print(sendingFrame[i]);
     //Serial.print(" ");
-    // this->rec_frame[i] = this->counter++;
   }
   //Serial.println();
+       //this->rec_frame[0] = 5;
   serialYZ.write('(');
   serialYZ.write(this->rec_frame, UDP_REC_FRAME);
   serialYZ.write(')');

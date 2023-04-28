@@ -121,5 +121,7 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
 
 inline byte Uartz::readByte(){
   while(!Serial.available() && (millis() -currentUART < 200));
-  return Serial.read();
+  byte x= Serial.read();
+  Serial.flush();
+  return x;
 }

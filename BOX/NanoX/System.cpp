@@ -5,12 +5,14 @@
 void System::init() {
 
   this->client.init();
+  
   uart_yz.begin();
   pinMode(INTERRUPT_PIN, OUTPUT);
   digitalWrite(INTERRUPT_PIN, HIGH);
   //fixed values in swapping between converters ( 101 , 111)
   digitalWrite(converter.Converter_PINs[0], HIGH); 
   digitalWrite(converter.Converter_PINs[2], HIGH);
+  this->client.defaultFrame(udpReceiveFrame);
 }
 
 void System::sendData() {
@@ -43,7 +45,6 @@ void System::receiveData() {
 
 void System::activateUART() {
   uart_yz.sendFrame(udpReceiveFrame);
-  //Serial.println("Waiting to receive...");
   digitalWrite(INTERRUPT_PIN, LOW);
   uart_yz.receiveFrame(udpSendFrame);
   digitalWrite(INTERRUPT_PIN, HIGH);
@@ -52,6 +53,8 @@ void System::activateUART() {
 
 
 void System::updateConverters(){
-  converter.checkConverter(udpReceiveFrame);  //check power on converter
+  //converter.checkConverter(udpReceiveFrame);  //check power on converter
+  Serial.println("Starting...");
   converter.switchPin(udpSendFrame);  //swap between converters every loop 
+  Serial.println("Returning...");
 }

@@ -18,5 +18,6 @@ public:
   void Prepare_frame(uint8_t Datafram[8]);
   void Send_Data();
   void receive();
+  inline byte readByte();
 };
 #endif
