@@ -15,6 +15,7 @@
 // /* UART */
 #define Imu_Angles_Index 0
 #define PRESSURE_index Imu_Angles_Index + 3 * 2
+#define RECEIVED_SIZE 10 
 
 #define RX_Y 8
 #define TX_Y 9
