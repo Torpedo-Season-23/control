@@ -34,7 +34,7 @@ void Uartz::receiveFrame() {
     if (x != ')') continue;
 
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < ACTUAL_DATA; i++) {
       uartFrame[i] = frame[i];
     }
     lastTimeRead= millis();
@@ -63,7 +63,7 @@ void Uartz::receiveFrame() {
   }  
 }
 
-void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
+void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame, uint8_t* brakesFrame) {
   uint8_t loopLimit = max(MOTORS_COUNT, TOOLS_COUNT);
 
   for (int i = 0; i < loopLimit; i++) {
@@ -93,6 +93,7 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
       } else {
         toolsFrame[i] = 0;
       }
+      
 #ifdef ACC_PRINT_ON
       Serial.print(uartFrame[ACC_BYTE_INDEX] & 1,BIN);
 #endif
@@ -100,6 +101,9 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
     }
   }
   Serial.println();
+
+  brakesFrame[0] = uartFrame[ACTUAL_DATA - 2];
+  brakesFrame[1] = uartFrame[ACTUAL_DATA - 1];
 
   //Debuging
 #ifdef THRUSTERS_PRINT_ON
@@ -109,6 +113,8 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
   }
   Serial.println();
 #endif
+
+
   //Debuging
 #ifdef ACC_PRINT_ON
   for (int i = 0; i < TOOLS_COUNT; i++) {

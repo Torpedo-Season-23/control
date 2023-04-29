@@ -99,12 +99,14 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
 
   // 6 bytes thrusters' speed
   int j = 0;  // thrusters speed: 1100 - 1900
-  for (int i = 2; i < sentFrameSize; i++) {
+  for (int i = 2; i < 2 + THRUSTERS ; i++) {
     thrusters[j] = abs(thrusters[j] - 1500);           //thrusters speed: 0 - 400
     sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);  //thrusters speed: 0 - 255
     j++;
   }
 
+  sentFrame[sentFrameSize - 2] = BRAKING_TIME;
+  sentFrame[sentFrameSize - 1] = BRAKING_SPEED;
   // int j = 0;
   // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed
   //   sentFrame[i] = lowByte(thrusters[j]);

@@ -67,7 +67,7 @@ void UART_YZ::receiveFrame(uint8_t* data) {
 void UART_YZ::sendFrame(uint8_t* sendingFrame) {
 
   //Serial.print("UART Sent Frame: ");
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < UDP_REC_FRAME; i++) {
     this->rec_frame[i] = sendingFrame[i];
     //Serial.print(sendingFrame[i]);
     //Serial.print(" ");

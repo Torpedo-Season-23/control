@@ -6,7 +6,7 @@
 #define CONSOLE_PORT 7000
 
 /*--------UDP--------*/
-#define UDP_REC_FRAME 8    // 1 Accessories, 1 directions + converters on/off, 6 thrusters speeds "respectively"
+#define UDP_REC_FRAME 10    // 1 Accessories, 1 directions + converters on/off, 6 thrusters speeds "respectively" + 2 for braking system
 #define CONTROL_CONVETER_BYTE 1 //two bits of controlling converters (on/off) are at index 1 inside UDP_REC_FRAME
 #define UDP_SEND_FRAME 22  // 6 IMU angles, 2 pressure, 8 leakage, 3*2 converters(2 bytes for current, 1 for temperature)
 #define UDP_CONVERTER_1_INDEX 16 //first converter  index in UDP_SEND_FRAME
