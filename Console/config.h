@@ -8,9 +8,9 @@
 #define NORMAL_SPEED_VALUE 85
 #define HIGH_SPEED_VALUE 128
 
-/*-----------------communication-----------------*/
+/*-----------------Communication-----------------*/
 #define receivedFrameSize 22  //6 imu, 2 pressure, 8 leakage, 2curr 1temp, 2curr 1 temp respectively
-#define sentFrameSize 8       //1 accessories, 1 directions+conv on/off, 6 speeds respectively
+#define sentFrameSize 10      //1 accessories, 1 directions+conv on/off, 6 speeds respectively + 2 for braking system
 #define SENSORS 16
 #define IMU 3
 #define PRESSURE 1
@@ -28,6 +28,10 @@
 #define TIME_STEP 500
 #define INCREAMENT_FACTOR 2
 #define log2(a) (log(a) / log(2))
+
+#define BRAKING_TIME 200
+#define BRAKING_SPEED 100
+
 /*----------Outer Thruster Frame*/
 // typedef enum FrameMotorIndices {
 //   FRONT_LEFT = 0,
@@ -39,13 +43,9 @@
 //   LAST
 // } FrameMotorIndices;
 
-
-
 //BACK LEFT : 0
 //BACK RIGHT :2
 //FRONT RIGHT :3
-
-
 
 #define FRONT_LEFT 4
 
