@@ -87,28 +87,23 @@ class Factor{
     
     //left
      //left Low
-    this->factors[LEFT][LOW_SPEED][FRONT_LEFT] = 1;
-    this->factors[LEFT][LOW_SPEED][FRONT_RIGHT] = 1;
+    this->factors[LEFT][LOW_SPEED][FRONT_LEFT] = .95;
+    this->factors[LEFT][LOW_SPEED][FRONT_RIGHT] = .9;
     this->factors[LEFT][LOW_SPEED][BACKWARD_LEFT] = 1;
     this->factors[LEFT][LOW_SPEED][BACKWARD_RIGHT] = 1;
-    this->factors[LEFT][LOW_SPEED][UPPER_BACK] = 1;
-    this->factors[LEFT][LOW_SPEED][UPPER_FRONT] = 1;
+
     //left Normal
-    this->factors[LEFT][NORMAL_SPEED][FRONT_LEFT] = 1;
-    this->factors[LEFT][NORMAL_SPEED][FRONT_RIGHT] = 1;
+    this->factors[LEFT][NORMAL_SPEED][FRONT_LEFT] = .8;
+    this->factors[LEFT][NORMAL_SPEED][FRONT_RIGHT] = .8;
     this->factors[LEFT][NORMAL_SPEED][BACKWARD_LEFT] = 1;
     this->factors[LEFT][NORMAL_SPEED][BACKWARD_RIGHT] = 1;
-    this->factors[LEFT][NORMAL_SPEED][UPPER_BACK] = 1;
-    this->factors[LEFT][NORMAL_SPEED][UPPER_FRONT] = 1;
+ 
     //left High
     this->factors[LEFT][HIGH_SPEED][FRONT_LEFT] = 1;
     this->factors[LEFT][HIGH_SPEED][FRONT_RIGHT] = 1;
     this->factors[LEFT][HIGH_SPEED][BACKWARD_LEFT] = 1;
     this->factors[LEFT][HIGH_SPEED][BACKWARD_RIGHT] = 1;
-    this->factors[LEFT][HIGH_SPEED][UPPER_BACK] = 1;
-    this->factors[LEFT][HIGH_SPEED][UPPER_FRONT] = 1;
-
-    
+  
   }
   void getFactor(int8_t dir ,int speed, uint16_t *thrusterFrame){
     
@@ -132,7 +127,7 @@ class Factor{
    
     for(int i= 0;i<6;i++){
             
-       int sp= (thrusterFrame[i]-1500) * this->factors[dir][speedIndex][i];
+       int sp= ((int16_t)thrusterFrame[i]-1500) * this->factors[dir][speedIndex][i];
       thrusterFrame[i]= 1500+sp;
     }
   }

@@ -61,12 +61,12 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
     j++;
   }
 
-  // Serial.println("Sensors reading: ");
-  // for (int i = 0; i < SENSORS; i++) {
-  //   Serial.print(sensors[i]);
-  //   Serial.print("  ");
-  // }
-  // Serial.println();
+  Serial.println("Sensors reading: ");
+  for (int i = 0; i < SENSORS; i++) {
+    Serial.print(sensors[i]);
+    Serial.print("  ");
+  }
+  Serial.println();
 }
 
 void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame) {  //modify sent frame
