@@ -14,11 +14,13 @@ void Thrusters::set_h_forces(int *array) {
   for (char i = 0; i < 4; ++i) {
     for (int j = 0; j < 3; ++j)
       this->thruster_frame[i] += this->config_matrix[i][j] * array[j];
-    int range = 0;
+    // Serial.print(this->thruster_frame[i]);
+    // Serial.print(" ");
+    int range = 36;
     if (array[Xforce] != 0 && (array[Yforce] == 0 && array[Moment] == 0))
       range = 64;
     else if (array[Yforce] != 0 && (array[Xforce] == 0 && array[Moment] == 0))
-      range = 37;
+      range = 36;
     else if (array[Moment] != 0 && (array[Xforce] == 0 && array[Yforce] == 0))
       range = 152;
     else if (array[Xforce] != 0 && array[Yforce] != 0 && array[Moment] == 0)
@@ -30,12 +32,13 @@ void Thrusters::set_h_forces(int *array) {
     else if (array[Xforce] != 0 && array[Yforce] != 0 && array[Moment] != 0)
       range = 84;
 
-    if(i==3) // temporary:: the back right thruster is inverted
-    this->thruster_frame[i] = map(this->thruster_frame[i], -37, 37, 1900, 1100);
+    if( i == 0  ) // temporary:: the back right thruster is inverted
+    this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1800, 1200);
     else
-    this->thruster_frame[i] = map(this->thruster_frame[i], -37, 37, 1100, 1900);
+    this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1200, 1800);
 
   }
+  // Serial.println();
 
   //     maXforceNumber= maXforce(abs(this->thruster_frame[i]),maXforceNumber);
   // 7    //this->thruster_frame[i] = map(this->thruster_frame[i], -36, 36, 1100, 1900);

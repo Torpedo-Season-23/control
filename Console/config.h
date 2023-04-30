@@ -47,13 +47,12 @@
 
 
 
-#define FRONT_LEFT 4
+#define FRONT_LEFT  5//1
+#define FRONT_RIGHT 2 //2 *
+#define BACKWARD_LEFT 3 //3*//ma3kos
+#define BACKWARD_RIGHT 1 //5*
 
-#define FRONT_RIGHT 3
-#define BACKWARD_RIGHT 2
-#define BACKWARD_LEFT 0
-
-#define UPPER_BACK 1
-#define UPPER_FRONT 5
+#define UPPER_BACK 0 //0*
+#define UPPER_FRONT 4 //4*
 
 #endif

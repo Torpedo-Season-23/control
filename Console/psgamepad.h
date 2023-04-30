@@ -6,6 +6,7 @@ private:
   PS3USB PS3;
   void update_vmotion();
   void update_hmotion();
+  void force_stop();
 public:
   PSGamepad() : PS3(&Usb) {}
   void Update();

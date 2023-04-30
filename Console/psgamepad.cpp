@@ -6,6 +6,7 @@ void PSGamepad::Update() {
   if (this->PS3.PS3Connected || this->PS3.PS3NavigationConnected) {
     this->update_hmotion();
     this->update_vmotion();
+    this->force_stop();
     //acc frame
     if (this->PS3.getButtonClick(TRIANGLE)) {
       if (this->flags[0] == 0) {
@@ -106,7 +107,7 @@ void PSGamepad::update_hmotion() {
   float factor, sum;
   Tx = PS3.getAnalogHat(LeftHatX);
   Ty = 255 - PS3.getAnalogHat(LeftHatY);
-  Tm = PS3.getAnalogHat(RightHatX);
+  Tm =PS3.getAnalogHat(RightHatX);
 
   Tx = map(Tx, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(Ty, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
@@ -119,5 +120,14 @@ void PSGamepad::update_hmotion() {
   Tm *= factor;  
   this->Td_array[0] = Tx;
   this->Td_array[1] = Ty;
-  this->Td_array[2] = Tm;
+  this->Td_array[2] = -Tm;
+}
+void PSGamepad::force_stop(){
+  if (this->PS3.getButtonPress(START)){
+    this->Td_array[0]=0;
+    this->Td_array[1]=0;
+    this->Td_array[2]=0;
+    Serial.println("force stop");
+  }
+  
 }

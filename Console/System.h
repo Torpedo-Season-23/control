@@ -63,12 +63,12 @@ void System::Update() {
   motors.update(res);
   res= indexConverter.updateArray();
 
-  Serial.print("Thrusters: ");
-  for(int i= 0;i<6;i++){
-    Serial.print(res[i]);
-    Serial.print(" ");
-  }
-  Serial.println();
+  // Serial.print("Thrusters: ");
+  // for(int i= 0;i<6;i++){
+  //   Serial.print(res[i]);
+  //   Serial.print(" ");
+  // }
+  // Serial.println();
   
 
   uint8_t sentFrame[16];

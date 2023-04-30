@@ -17,9 +17,9 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Loop");
+  // Serial.println("Loop");
   s.receiveData();
   s.activateUART();
-  //s.updateConverters();
+  s.updateConverters();
   s.sendData();
 }

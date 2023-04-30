@@ -2,8 +2,8 @@
 #include <math.h>
 
 
-bool conv1=true;
-bool conv2=true;
+bool conv1 = true;
+bool conv2 = true;
 
 void Communication::comm_init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 9));
@@ -20,10 +20,10 @@ void Communication::receiveData(uint8_t* receivedFrame) {
   if (frameSize == 0) {
     //Serial.println("Not received :(");
   } else {
-    Serial.print("--------");
-    for (int i = 0; i < receivedFrameSize; i++) Serial.print(receivedFrame[i]);
-    Serial.println("--------");
-    //delay(100);
+    // Serial.print("--------");
+    // for (int i = 0; i < receivedFrameSize; i++) Serial.print(receivedFrame[i]);
+    // Serial.println("--------");
+    // delay(100);
   }
   // this->udp.stop();
 }
@@ -61,19 +61,19 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
     j++;
   }
 
-  Serial.println("Sensors reading: ");
-  for (int i = 0; i < SENSORS; i++) {
-    Serial.print(sensors[i]);
-    Serial.print("  ");
-  }
-  Serial.println();
+  // Serial.println("Sensors reading: ");
+  // for (int i = 0; i < SENSORS; i++) {
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.println();
 }
 
 void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame) {  //modify sent frame
   // 1st byte for accessories
   int x = 0;
-  int weights[8] = { 1, 2, 4, 8, 16, 32, 64,128 };
-  int th_weights[6]={1, 32, 4, 8, 16, 2};
+  int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+  int th_weights[6] = { 1, 32, 4, 8, 16, 2 };
   for (int i = ACCESSORIES - 1; i >= 0; i--) {
     if (accessories[i] == 1) {
       x += weights[i];
@@ -89,21 +89,26 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
       x += th_weights[i];  // 1500 will be added in Box
     }
   }
-    if(conv1)
-    x|=0b1000000;
-  if(conv2)
-    x|=0b10000000;
-  Serial.println(x);
-  //delay(500);  
+  if (conv1)
+    x |= 0b1000000;
+  if (conv2)
+    x |= 0b10000000;
+  // Serial.println(x);
+  //delay(500);
   sentFrame[1] = (uint8_t)x;
 
   // 6 bytes thrusters' speed
   int j = 0;  // thrusters speed: 1100 - 1900
+  Serial.print("Thrusters:  ");
   for (int i = 2; i < sentFrameSize; i++) {
+    Serial.print(thrusters[j]);
+    Serial.print("  ");
+
     thrusters[j] = abs(thrusters[j] - 1500);           //thrusters speed: 0 - 400
     sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);  //thrusters speed: 0 - 255
     j++;
   }
+  Serial.println();
 
   // int j = 0;
   // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed
