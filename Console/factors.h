@@ -69,15 +69,15 @@ class Factor{
 
 
      //Right Low
-    this->factors[RIGHT][LOW_SPEED][FRONT_LEFT] = 1;
+    this->factors[RIGHT][LOW_SPEED][FRONT_LEFT] = 0.92;
     this->factors[RIGHT][LOW_SPEED][FRONT_RIGHT] = 1;
     this->factors[RIGHT][LOW_SPEED][BACKWARD_LEFT] = 1;
-    this->factors[RIGHT][LOW_SPEED][BACKWARD_RIGHT] = 1;
+    this->factors[RIGHT][LOW_SPEED][BACKWARD_RIGHT] = 0.92;
     //Right Normal
-    this->factors[RIGHT][NORMAL_SPEED][FRONT_LEFT] = 1;
+    this->factors[RIGHT][NORMAL_SPEED][FRONT_LEFT] = .95;
     this->factors[RIGHT][NORMAL_SPEED][FRONT_RIGHT] = 1;
     this->factors[RIGHT][NORMAL_SPEED][BACKWARD_LEFT] = 1;
-    this->factors[RIGHT][NORMAL_SPEED][BACKWARD_RIGHT] = 1;
+    this->factors[RIGHT][NORMAL_SPEED][BACKWARD_RIGHT] = .95;
     //Right High
     this->factors[RIGHT][HIGH_SPEED][FRONT_LEFT] = 1;
     this->factors[RIGHT][HIGH_SPEED][FRONT_RIGHT] = 1;
