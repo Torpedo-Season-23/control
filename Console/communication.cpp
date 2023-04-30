@@ -99,16 +99,16 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
 
   // 6 bytes thrusters' speed
   int j = 0;  // thrusters speed: 1100 - 1900
-  Serial.print("Thrusters:  ");
+  // Serial.print("Thrusters:  ");
   for (int i = 2; i < sentFrameSize; i++) {
-    Serial.print(thrusters[j]);
-    Serial.print("  ");
+    // Serial.print(thrusters[j]);
+    // Serial.print("  ");
 
     thrusters[j] = abs(thrusters[j] - 1500);           //thrusters speed: 0 - 400
     sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);  //thrusters speed: 0 - 255
     j++;
   }
-  Serial.println();
+  // Serial.println();
 
   // int j = 0;
   // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed

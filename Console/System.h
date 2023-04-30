@@ -8,7 +8,7 @@
 #include "lf310.h"
 #include "SoftStart.h"
 #include "IndexConverter.h"
-
+#include "factors.h"
 
 
 
@@ -20,6 +20,8 @@ private:
   IController* gamepad;
   Communication console;
   IndexConverter indexConverter;
+  Factor factor;
+  
 public:
   System(IController* gamepad) {
     this->gamepad = gamepad;
@@ -33,12 +35,14 @@ public:
 void System::Init() {
   this->gamepad->init();
   this->console.comm_init();
+  
   this->indexConverter.init(thruster.get_thruster_frame());
+
 }
 void System::Update() {
   uint8_t receivedFrame[receivedFrameSize];
   this->gamepad->Update();
-  int speed = this->gamepad->getspeed();
+  // int speed = this->gamepad->getspeed();
   int* array = this->gamepad->get_hframe();
   int* v = this->gamepad->get_vframe();
   int* acc = this->gamepad->get_accframe();
@@ -60,16 +64,21 @@ void System::Update() {
     res[i]= 1600;*/
   
   
-  motors.update(res);
-  res= indexConverter.updateArray();
-
-  // Serial.print("Thrusters: ");
-  // for(int i= 0;i<6;i++){
-  //   Serial.print(res[i]);
-  //   Serial.print(" ");
-  // }
-  // Serial.println();
   
+  res= indexConverter.updateArray();
+  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
+  motors.update(res);
+ 
+ 
+  Serial.print("Thrusters: ");
+  for(int i= 0;i<6;i++){
+    Serial.print(res[i]);
+    Serial.print(" ");
+  }
+  Serial.println();
+  
+  this->gamepad->getDirection();
+  Serial.println();
 
   uint8_t sentFrame[16];
   int16_t sensors[SENSORS];

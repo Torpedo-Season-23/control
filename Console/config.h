@@ -47,6 +47,7 @@
 
 
 
+
 #define FRONT_LEFT  5//1
 #define FRONT_RIGHT 2 //2 *
 #define BACKWARD_LEFT 3 //3*//ma3kos
@@ -54,5 +55,21 @@
 
 #define UPPER_BACK 0 //0*
 #define UPPER_FRONT 4 //4*
+
+
+//factors 
+#define FORWARD 0
+#define BACKWARD 1
+#define RIGHT 2
+#define LEFT 3
+#define OTHER -1
+#define DIRECTIONS 4
+//speeds for factors
+#define LOW_SPEED 0 
+#define NORMAL_SPEED 1
+#define HIGH_SPEED 2
+
+
+
 
 #endif

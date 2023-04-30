@@ -131,3 +131,44 @@ void PSGamepad::force_stop(){
   }
   
 }
+
+
+int8_t PSGamepad::getDirection(){
+//Y direction 
+  if(Td_array[1] > 21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])  ){
+    //  Serial.print("Forward");
+    return FORWARD;
+  }
+  if(Td_array[1] < -21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) >abs(Td_array[2])  ){
+    //  Serial.print("Backward");
+     return BACKWARD;     
+  }
+//X direction 
+  if(Td_array[0] > 21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])  ){
+    //  Serial.print("Right");
+     return RIGHT;
+  }
+  if(Td_array[0] < -21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) >abs(Td_array[2])  ){
+    //  Serial.print("Left");
+    return LEFT;
+  }
+
+  return OTHER;
+//M direction 
+  // if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) > abs(Td_array[1])  ){
+  //    Serial.print("Moment Left");
+  // }
+  // if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) >abs(Td_array[1])  ){
+  //    Serial.print("Moment Right");
+  // }
+
+  
+  
+  // Serial.print("x: ");
+  // Serial.print(Td_array[0]);
+  // Serial.print(" y: ");
+  // Serial.print(Td_array[1]);
+  // Serial.print(" m: ");
+  // Serial.print(Td_array[2]);
+  
+}

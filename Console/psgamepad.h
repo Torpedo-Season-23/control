@@ -7,8 +7,10 @@ private:
   void update_vmotion();
   void update_hmotion();
   void force_stop();
+  
 public:
   PSGamepad() : PS3(&Usb) {}
+  int8_t getDirection();
   void Update();
 };
 #endif

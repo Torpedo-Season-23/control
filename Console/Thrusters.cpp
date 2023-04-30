@@ -1,5 +1,6 @@
 #include "Thrusters.h"
 #include "SoftStart.h"
+#include "factors.h"
 #include <Arduino.h>
 
 int *Thrusters::get_thruster_frame() {
