@@ -18,12 +18,16 @@ void Communication::receiveData(uint8_t* receivedFrame) {
     this->udp.flush();
   }
   if (frameSize == 0) {
-    //Serial.println("Not received :(");
+    // Serial.println("Not received :(");
   } else {
     // Serial.print("--------");
-    // for (int i = 0; i < receivedFrameSize; i++) Serial.print(receivedFrame[i]);
+    // for (int i = 0; i < receivedFrameSize; i++) 
+    // {Serial.print(receivedFrame[i]);
+    // Serial.print(" ");}
     // Serial.println("--------");
-    // delay(100);
+    int16_t sensors[18];
+    this->getSensors(receivedFrame,sensors );
+    //delay(100);
   }
   // this->udp.stop();
 }
@@ -34,35 +38,69 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   int j = 0;
   // IMU and Pressure readings
   for (int i = 0; i < IMU + PRESSURE; i++) {
-    sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
+    sensors[i] = (int)receivedFrame[j + 1] + receivedFrame[j] * 256;
     j += 2;
   }
   // Leakage readings
   for (int i = IMU + PRESSURE; i < IMU + PRESSURE + LEAKAGE; i++) {
-    sensors[i] = receivedFrame[j];
+    sensors[i] =(int) receivedFrame[j];
     j++;
   }
   // First Converter
+
+  //Iout 
   for (int i = IMU + PRESSURE + LEAKAGE; i < IMU + PRESSURE + LEAKAGE + 1; i++) {
-    sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
+    sensors[i] = (int)receivedFrame[j + 1] + receivedFrame[j] * 256;
     j += 2;
   }
+//  
   for (int i = IMU + PRESSURE + LEAKAGE + 1; i < IMU + PRESSURE + LEAKAGE + 2; i++) {
     sensors[i] = receivedFrame[j];
     j++;
   }
+  sensors[14]=receivedFrame[16];
+  j++;
   // Second Converter
-  for (int i = IMU + PRESSURE + LEAKAGE + 2; i < IMU + PRESSURE + LEAKAGE + 3; i++) {
+  for (int i = IMU + PRESSURE + LEAKAGE + 3; i < IMU + PRESSURE + LEAKAGE + 4; i++) {
     sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
     j += 2;
   }
-  for (int i = IMU + PRESSURE + LEAKAGE + 3; i < SENSORS; i++) {
+  for (int i = IMU + PRESSURE + LEAKAGE + 4; i < SENSORS; i++) {
     sensors[i] = receivedFrame[j];
     j++;
   }
 
-  Serial.println("Sensors reading: ");
+  // Serial.print("IMU:  ");
+  // for(int i=0;i<IMU;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.print("Pressure:  ");
+  // for(int i=3;i<PRESSURE;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.print("LEAKAGE:  ");
+  // for(int i=4;i<LEAKAGE;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.print("Converter1:  ");
+  // for(int i=12;i<3;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }  
+  // Serial.print("Converter2:  ");
+  // for(int i=15;i<3;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.println();
+
+
+  Serial.print("Sensors reading: ");
   for (int i = 0; i < SENSORS; i++) {
+
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
@@ -101,11 +139,14 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   int j = 0;  // thrusters speed: 1100 - 1900
   // Serial.print("Thrusters:  ");
   for (int i = 2; i < sentFrameSize; i++) {
-    // Serial.print(thrusters[j]);
-    // Serial.print("  ");
-
-    thrusters[j] = abs(thrusters[j] - 1500);           //thrusters speed: 0 - 400
-    sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);  //thrusters speed: 0 - 255
+  //   Serial.print(thrusters[j]);
+  //   Serial.print("  ");
+    
+    thrusters[j] = abs(thrusters[j] - 1500);
+    if(i!=5)           //thrusters speed: 0 - 400
+    sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);
+    else 
+    sentFrame[i]=0;  //thrusters speed: 0 - 255
     j++;
   }
   // Serial.println();

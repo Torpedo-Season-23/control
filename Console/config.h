@@ -9,9 +9,9 @@
 #define HIGH_SPEED_VALUE 128
 
 /*-----------------communication-----------------*/
-#define receivedFrameSize 22  //6 imu, 2 pressure, 8 leakage, 2curr 1temp, 2curr 1 temp respectively
+#define receivedFrameSize 24  //6 imu, 2 pressure, 8 leakage, 2curr 1temp, 2curr 1 temp respectively
 #define sentFrameSize 8       //1 accessories, 1 directions+conv on/off, 6 speeds respectively
-#define SENSORS 16
+#define SENSORS 18
 #define IMU 3
 #define PRESSURE 1
 #define CURRENT 2

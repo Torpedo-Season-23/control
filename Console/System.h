@@ -67,25 +67,25 @@ void System::Update() {
   
   res= indexConverter.updateArray();
   this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
-  motors.update(res);
+  // motors.update(res);
  
  
-  Serial.print("Thrusters: ");
-  for(int i= 0;i<6;i++){
-    Serial.print(res[i]);
-    Serial.print(" ");
-  }
-  Serial.println();
+  // Serial.print("Thrusters: ");
+  // for(int i= 0;i<6;i++){
+  //   Serial.print(res[i]);
+  //   Serial.print(" ");
+  // }
+  // Serial.println();
   
-  this->gamepad->getDirection();
-  Serial.println();
+  // this->gamepad->getDirection();
+  // Serial.println();
 
   uint8_t sentFrame[16];
   int16_t sensors[SENSORS];
   this->console.prepareData(acc, res, sentFrame);
   this->console.receiveData(receivedFrame);
   this->console.sendData(sentFrame);
-  this->console.getSensors(receivedFrame, sensors);
+ // this->console.getSensors(receivedFrame, sensors);
   }
 
 #endif

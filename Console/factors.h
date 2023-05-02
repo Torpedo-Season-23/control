@@ -113,17 +113,17 @@ class Factor{
     uint8_t speedIndex = 0 ; 
     if(speed == 100){
       speedIndex = 0;
-      Serial.print("Low ||");
+      // Serial.print("Low ||");
     }
     if(speed == 250){
       speedIndex = 1;
-      Serial.print("Normal ||");
+      // Serial.print("Normal ||");
     }
     if(speed == 400){
       speedIndex = 2;
-      Serial.print("HIgh ||");
+      // Serial.print("HIgh ||");
     } 
-    Serial.println("");
+    // Serial.println("");
    
     for(int i= 0;i<6;i++){
             

@@ -61,7 +61,6 @@ void Motors::print(){
       Serial.print(this->motors[t].counter);
     }
     
-    Serial.println();
 }
 void Motors::update(int* motorsValues){
     for(int i= 0;i<MOTORS_NUMBER;i++){
