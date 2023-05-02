@@ -13,14 +13,15 @@
 
 class Thrusters {
 private:
-  double config_matrix[4][3] = {{-0.5    ,     0.2886836 , -0.58790925}, 
-                                { 0.5    ,     0.2886836 , -0.58790925}, 
-                                { 0.5    ,     0.2886836 ,  0.58790925}, 
-                                {-0.5    ,     0.2886836 ,  0.58790925}};
+  double config_matrix[4][3] = {{-0.5    ,     0.2886836 , -1.18979631}, 
+                                { 0.5    ,     0.2886836 , -1.18979631}, 
+                                { 0.5    ,     0.2886836 ,  1.18979631}, 
+                                {-0.5    ,     0.2886836 ,  1.18979631}};
   int thruster_frame[6] = { 0 };  //UR , BR , UL ,BL , UP , DOWN
 public:
   void set_h_forces(int *array);
   void set_v_forces(int *array);
+
   int *get_thruster_frame();
   int speed;
 };

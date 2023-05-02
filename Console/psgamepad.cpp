@@ -6,6 +6,7 @@ void PSGamepad::Update() {
   if (this->PS3.PS3Connected || this->PS3.PS3NavigationConnected) {
     this->update_hmotion();
     this->update_vmotion();
+    this->force_stop();
     //acc frame
     if (this->PS3.getButtonClick(TRIANGLE)) {
       if (this->flags[0] == 0) {
@@ -92,12 +93,11 @@ void PSGamepad::Update() {
       if (this->speed < 2) this->speed++;
     }
   }
-  delay(20);
 }
 void PSGamepad::update_vmotion() {
   int8_t direction = 0;
-  if (this->PS3.getButtonPress(L2)) direction = -1;  //Down
-  else if (this->PS3.getButtonPress(R2)) direction = 1;
+  if (this->PS3.getButtonPress(R2)) direction = -1;  //Down
+  else if (this->PS3.getButtonPress(L2)) direction = 1;
   this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 400);
   this->vertical_frame[1] = this->vertical_frame[0];
 }
@@ -107,7 +107,7 @@ void PSGamepad::update_hmotion() {
   float factor, sum;
   Tx = PS3.getAnalogHat(LeftHatX);
   Ty = 255 - PS3.getAnalogHat(LeftHatY);
-  Tm = PS3.getAnalogHat(RightHatX);
+  Tm =PS3.getAnalogHat(RightHatX);
 
   Tx = map(Tx, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(Ty, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
@@ -120,5 +120,55 @@ void PSGamepad::update_hmotion() {
   Tm *= factor;  
   this->Td_array[0] = Tx;
   this->Td_array[1] = Ty;
-  this->Td_array[2] = Tm;
+  this->Td_array[2] = -Tm;
+}
+void PSGamepad::force_stop(){
+  if (this->PS3.getButtonPress(START)){
+    this->Td_array[0]=0;
+    this->Td_array[1]=0;
+    this->Td_array[2]=0;
+    Serial.println("force stop");
+  }
+  
+}
+
+
+int8_t PSGamepad::getDirection(){
+//Y direction 
+  if(Td_array[1] > 21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])  ){
+    //  Serial.print("Forward");
+    return FORWARD;
+  }
+  if(Td_array[1] < -21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) >abs(Td_array[2])  ){
+    //  Serial.print("Backward");
+     return BACKWARD;     
+  }
+//X direction 
+  if(Td_array[0] > 21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])  ){
+    //  Serial.print("Right");
+     return RIGHT;
+  }
+  if(Td_array[0] < -21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) >abs(Td_array[2])  ){
+    //  Serial.print("Left");
+    return LEFT;
+  }
+
+  return OTHER;
+//M direction 
+  // if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) > abs(Td_array[1])  ){
+  //    Serial.print("Moment Left");
+  // }
+  // if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) >abs(Td_array[1])  ){
+  //    Serial.print("Moment Right");
+  // }
+
+  
+  
+  // Serial.print("x: ");
+  // Serial.print(Td_array[0]);
+  // Serial.print(" y: ");
+  // Serial.print(Td_array[1]);
+  // Serial.print(" m: ");
+  // Serial.print(Td_array[2]);
+  
 }

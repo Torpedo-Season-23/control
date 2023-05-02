@@ -9,15 +9,16 @@
 #define HIGH_SPEED_VALUE 128
 
 /*-----------------communication-----------------*/
-#define receivedFrameSize 16  //11 bytes, IMU: 3*2bytes, Pressure: 1*2bytes, Current: 2*1bytes, Leakage: 1byte respectively
-#define sentFrameSize 8      //8 bytes, Thrusters: 7bytes, Accessories: 1 byte respectively (will be changed if softstart is added)
-#define SENSORS 7
+#define receivedFrameSize 24  //6 imu, 2 pressure, 8 leakage, 2curr 1temp, 2curr 1 temp respectively
+#define sentFrameSize 8       //1 accessories, 1 directions+conv on/off, 6 speeds respectively
+#define SENSORS 18
 #define IMU 3
 #define PRESSURE 1
 #define CURRENT 2
-#define LEAKAGE 1
+#define TEMPERATURE 2
+#define LEAKAGE 8
 #define THRUSTERS 6
-#define ACCESSORIES 8  //will be modified (1 byte anyways)
+#define ACCESSORIES 8
 
 //soft Start
 #define MOTORS_NUMBER 6
@@ -25,11 +26,50 @@
 #define MOTOR_HIGHEST_SPEED 1900
 #define MOTOR_LOWEST_SPEED 1100
 #define TIME_STEP 500
-#define INCREAMENT_FACTOR 3 
-#define log2(a) (log(a)/log(2))
+#define INCREAMENT_FACTOR 2
+#define log2(a) (log(a) / log(2))
 /*----------Outer Thruster Frame*/
-typedef enum FrameMotorIndices{
-    FRONT_LEFT=0,FRONT_RIGHT,UPPER_FRONT,BACKWARD_LEFT,BACKWARD_RIGHT,UPPER_BACK,LAST
-}FrameMotorIndices;
+// typedef enum FrameMotorIndices {
+//   FRONT_LEFT = 0,
+//   UPPER_BACK,
+//   FRONT_RIGHT,
+//   BACKWARD_LEFT,
+//   BACKWARD_RIGHT,
+//   UPPER_FRONT,
+//   LAST
+// } FrameMotorIndices;
+
+
+
+//BACK LEFT : 0
+//BACK RIGHT :2
+//FRONT RIGHT :3
+
+
+
+
+#define FRONT_LEFT  5//1
+#define FRONT_RIGHT 2 //2 *
+#define BACKWARD_LEFT 3 //3*//ma3kos
+#define BACKWARD_RIGHT 1 //5*
+
+#define UPPER_BACK 0 //0*
+#define UPPER_FRONT 4 //4*
+
+
+//factors 
+#define FORWARD 0
+#define BACKWARD 1
+#define RIGHT 2
+#define LEFT 3
+#define OTHER -1
+#define DIRECTIONS 4
+//speeds for factors
+#define LOW_SPEED 0 
+#define NORMAL_SPEED 1
+#define HIGH_SPEED 2
+
+
+
 
 #endif
