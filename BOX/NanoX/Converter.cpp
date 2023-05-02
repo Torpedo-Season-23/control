@@ -2,6 +2,7 @@
 
 void Converter::init() {
   Wire.begin();
+  // Wire.setTimeout(20);
 }
 //get (vin , Iout , temp) true value
 double Converter::linear11(twobytes tbval) {
@@ -15,21 +16,22 @@ twobytes Converter::CommandExec2(byte DeviceAddr, byte Command) {
   twobytes res;
   Wire.beginTransmission(DeviceAddr);
   Wire.write(Command);
-  wen = Wire.endTransmission((uint8_t) false);
+  // Serial.println("here2");
+  wen = Wire.endTransmission((uint8_t)false);
+  // Serial.println("here3");
   if (wen != 0) {
-    Serial.print("endTransmission error ");
+    Serial.print("I2c endTransmission error ");
     Serial.println(wen);
-    res.lsb = 0xFF;
-    res.msb = 0xFF;
+    res.lsb = 0x00;
+    res.msb = 0x00;
   }
-  Wire.requestFrom((uint8_t)DeviceAddr, (uint8_t)2, (uint8_t) true);
+  Wire.requestFrom((uint8_t)DeviceAddr, (uint8_t)2, (uint8_t)true);
   if (Wire.available()) {
     res.lsb = Wire.read();
     res.msb = Wire.read();
   } else {
     Serial.println("No data on bus\r\n");
   }
-
   return res;
 }
 
@@ -44,20 +46,14 @@ double Converter::directf(twobytes tbval) {
 
 void Converter::data_conv() {
   init();
-
-//get (vin , vout) only for debug
+// Serial.println("here");
+//get vin only for debug
 #ifdef TEST_CONVERTER
   tbval = CommandExec2(address_1, VIN);
   double Vin = linear11(tbval);
+  
   Serial.print("Vin = ");
   Serial.print(Vin);
-  Serial.print(" V");
-  Serial.print("\t");
-
-  tbval = CommandExec2(address_1, VOUT);
-  double Vout = directf(tbval);
-  Serial.print("Vout = ");
-  Serial.print(Vout);
   Serial.print(" V");
   Serial.print("\t");
 #endif
@@ -68,25 +64,25 @@ void Converter::data_conv() {
 //get temp
   tbval = CommandExec2(address_1, TEMP_1);
   converterArray[1] = linear11(tbval);
+//get Vout
+  tbval = CommandExec2(address_1, VOUT);
+  converterArray[2] = directf(tbval);
 }
 
-
 void Converter::checkConverter(uint8_t *recFrame) {
-  for (int i = 6; i < 8; i++) {
-    this->check_conv[i - 6] = bitRead(recFrame[CONTROL_CONVETER_BYTE], i);  //(recFrame[1] >> (i)) & 0x01
-  }
-  digitalWrite(controlPins[0], check_conv[0]);
-  digitalWrite(controlPins[1], check_conv[1]);
+  byte neededByte= recFrame[1] & 0b11000000;
+/*  digitalWrite(controlPins[0], neededByte&1000000);
+  digitalWrite(controlPins[1], neededByte&0b10000000);*/
 }
 
 void Converter::switchPin(uint8_t *sendFrame) {
-
-  converter = !converter;
+  
+  converter = converter==HIGH ? LOW:HIGH;
   //control which converter to send (swap converter every loop) (101 , 111)
   digitalWrite(Converter_PINs[1], converter);
   //get data
   getData(converter, sendFrame);
-
+  
 //debug
 #ifdef TEST_CONVERTER
   if (converter) {
@@ -103,16 +99,25 @@ void Converter::switchPin(uint8_t *sendFrame) {
 
 //get converters data 
 void Converter::getData(bool converter, uint8_t *sendFrame) {
+  //  Serial.println("get");  
   data_conv();
+  
   int i = (converter) ? UDP_CONVERTER_1_INDEX : UDP_CONVERTER_2_INDEX;
   sendFrame[i + 0] = highByte((uint8_t)converterArray[0]);
   sendFrame[i + 1] = lowByte((uint8_t)converterArray[0]);
-  sendFrame[i + 2] = converterArray[1];
+  sendFrame[i + 2] = (uint8_t)converterArray[1];
+  sendFrame[i + 3] = (uint8_t)round(converterArray[2]);
 }
 
 //for debugging
 void Converter::print_data() {
   data_conv();
+  
+  Serial.print("Vout = ");
+  Serial.print(converterArray[2]);
+  Serial.print(" V");
+  Serial.print("\t");
+
   Serial.print("Iout = ");
   Serial.print(converterArray[0]);
   Serial.print(" A");
@@ -122,3 +127,16 @@ void Converter::print_data() {
   Serial.print(converterArray[1]);
   Serial.println("c");
 }
+
+void Converter::checkConnection(bool *converterOn){
+  init();
+  int wen = 0;
+  Wire.beginTransmission(address_1);
+  Wire.write(VIN);
+  wen = Wire.endTransmission((uint8_t)false);
+
+  if (wen != 0) {
+    *converterOn = false;
+  }  
+}
+

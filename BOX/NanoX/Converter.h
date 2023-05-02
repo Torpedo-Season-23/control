@@ -41,7 +41,7 @@ class Converter {
 private:
   twobytes tbval;
   int VOUT_MODE; //needed to calculate vout true value
-  bool converter = HIGH; //to swap between convertes
+  int converter = HIGH; //to swap between convertes
   void init(); 
   double linear11(twobytes tbval); //(vin , iout , temp) data type 
   twobytes CommandExec2(byte DeviceAddr, byte Command); //get data from i2c
@@ -49,27 +49,22 @@ private:
   void data_conv(); 
 
 public:
-  double converterArray[2]; //contains data after conversion
-  double Conv_data[6]; //contains data to be send 
-  int Converter_PINs[3] = { A1, A2, A3 }; //pins to swap convertse (101) or (111)
-  int controlPins[2] = { 2, 4 }; //pins to control power(on/off) on converters 
-  int check_conv[2] = { 1, 1 }; // power value on two converters 
+  float converterArray[3]; //contains data after conversion
+  uint8_t Converter_PINs[3] = { A1, A2, A3 }; //pins to swap convertse (101) or (111)
+  //uint8_t controlPins[2] = { 2, 4 }; //pins to control power(on/off) on converters 
+  uint8_t check_conv[2] = { 1, 1 }; // power value on two converters 
 
   Converter() {
     //set initial values
     this->converterArray[0] = 0;
     this->converterArray[1] = 0;
     this->VOUT_MODE = -9;
-    this->Conv_data[0] = 0;
-    this->Conv_data[1] = 0;
-    this->Conv_data[2] = 0;
-    this->Conv_data[3] = 0;
-    this->Conv_data[4] = 0;
-    this->Conv_data[5] = 0;
+  
   }
   void print_data();
   void switchPin(uint8_t *sendFrame);
   void getData(bool converter, uint8_t *sendFrame);
   void checkConverter(uint8_t *recFrame);
+  void checkConnection(bool *converterOn);
 };
 #endif
