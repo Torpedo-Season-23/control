@@ -70,8 +70,7 @@ void System::Update() {
   }
   Serial.println();
   
-
-  uint8_t sentFrame[16];
+  uint8_t sentFrame[sentFrameSize];
   int16_t sensors[SENSORS];
   this->console.prepareData(acc, res, sentFrame);
   this->console.receiveData(receivedFrame);

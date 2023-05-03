@@ -88,13 +88,13 @@ void Nano_X::Send_Data() {
 
 void Nano_X::receive() {
   current = millis();
-  uint8_t recFrame[8]= {1,2,3,4};
+  uint8_t recFrame[RECEIVED_SIZE]= {1,2,3,4};
   while (1/*current - millis() < 50*/) {
     // Serial.println("Inside Receiving...");
     byte x;
     x=readByte();
     if (x != '(') continue;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < RECEIVED_SIZE; i++) {
       recFrame[i] = readByte();
     }
     x=readByte();

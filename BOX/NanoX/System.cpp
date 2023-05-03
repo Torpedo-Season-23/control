@@ -35,7 +35,7 @@ void System::receiveData() {
     // delay(5);
   } else {
     Serial.print("Received frame from UDP: ");
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < UDP_REC_FRAME; i++) {
       Serial.print(udpReceiveFrame[i]);
       Serial.print(" ");
     }

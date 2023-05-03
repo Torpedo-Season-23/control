@@ -4,14 +4,15 @@
 #include <Servo.h>
 
 
-class Thruster{
-  public:
+class Thruster {
+public:
   Servo motor;
   uint16_t currentValue;
   long lastUpdatedTime;
+  uint8_t brakesFrame[2];
   void initialize(uint8_t pin);
   void setSignal(uint16_t value);
-  private:
+private:
   void writeSignal();
   void handleBrake(uint16_t value);
 };
