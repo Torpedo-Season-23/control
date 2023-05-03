@@ -24,15 +24,36 @@ void Uartz::receiveFrame() {
   currentUART= millis();
 
   while (true) {
+    //Serial.flush();
     byte x;
+    int y= 0;
+    do{
+      y= Serial.available();
+    }while(!y);
+    Serial.print("Y is \t");
+    Serial.println(y);
+    if(y !=10){
+      if(y>10){
+        Serial.end();
+        Serial.begin(9600);
+      }
+      continue;
+    }
     x = readByte();
     if (x != '(') continue;
+    Serial.println("Starting Frame: ");
     for (int i = 0; i < ACTUAL_DATA; i++) {
       frame[i] = readByte();
+      Serial.print(frame[i]);
+      Serial.print(" ");
+      
     }
     x =readByte();
+    Serial.print("\n---------------------Ending Frame is ");
+    Serial.println(x);
     if (x != ')') continue;
-
+    Serial.println("Success!");
+    
 
     for (int i = 0; i < 8; i++) {
       uartFrame[i] = frame[i];
@@ -120,8 +141,7 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
 }
 
 inline byte Uartz::readByte(){
-  while(!Serial.available() && (millis() -currentUART < 200));
+  while(!Serial.available() && (millis() -currentUART < 30));
   byte x= Serial.read();
-  Serial.flush();
   return x;
 }
