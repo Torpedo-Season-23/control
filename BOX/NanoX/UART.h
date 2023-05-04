@@ -6,11 +6,8 @@
 
 
 class UART_YZ {
-private:
-  uint8_t rec_frame[8] = { 1,2,3,0,0,0,0,0 };
 public:
   UART_YZ(){};
-  int counter = 0;
   void begin();
   void receiveFrame(uint8_t* frame);
   void sendFrame(uint8_t*);
