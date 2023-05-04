@@ -1,10 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/* LEAKAGE */
-#define DHTTYPE DHT11
-#define SENSORS_NUM 8
-#define DHTPIN 2
 
 /* PRESSURE */
 #define MCLK_PIN 10
@@ -15,11 +11,9 @@
 // /* UART */
 #define Imu_Angles_Index 0
 #define PRESSURE_index Imu_Angles_Index + 3 * 2
-#define RECEIVED_SIZE 10 
+#define FRAME_SIZE 8 
 
 #define RX_Y 8
 #define TX_Y 9
-
-
 
 #endif
