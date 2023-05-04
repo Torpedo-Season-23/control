@@ -2,8 +2,6 @@
 #include <math.h>
 
 
-bool conv1 = true;
-bool conv2 = true;
 
 void Communication::comm_init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 9));
@@ -41,34 +39,7 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
     sensors[i] = (int)receivedFrame[j + 1] + receivedFrame[j] * 256;
     j += 2;
   }
-  // Leakage readings
-  for (int i = IMU + PRESSURE; i < IMU + PRESSURE + LEAKAGE; i++) {
-    sensors[i] =(int) receivedFrame[j];
-    j++;
-  }
-  // First Converter
-  for (int i = IMU + PRESSURE + LEAKAGE; i < IMU + PRESSURE + LEAKAGE + 1; i++) {
-    sensors[i] = (int)receivedFrame[j + 1] + receivedFrame[j] * 256;
-    j += 2;
-  }
-//  
-  for (int i = IMU + PRESSURE + LEAKAGE + 1; i < IMU + PRESSURE + LEAKAGE + 2; i++) {
-    sensors[i] = receivedFrame[j];
-    j++;
-  }
-  sensors[14]=receivedFrame[16];
-  j++;
-  // Second Converter
-  for (int i = IMU + PRESSURE + LEAKAGE + 3; i < IMU + PRESSURE + LEAKAGE + 4; i++) {
-    sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
-    j += 2;
-  }
-<<<<<<< HEAD
-  for (int i = IMU + PRESSURE + LEAKAGE + 4; i < SENSORS; i++) {
-    sensors[i] = receivedFrame[j];
-    j++;
-  }
-
+  
   // Serial.print("IMU:  ");
   // for(int i=0;i<IMU;i++){
   //   Serial.print(sensors[i]);
@@ -100,34 +71,6 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   Serial.print("Sensors reading: ");
   for (int i = 0; i < SENSORS; i++) {
 
-=======
-  // Leakage readings
-  for (int i = IMU + PRESSURE; i < IMU + PRESSURE + LEAKAGE; i++) {
-    sensors[i] = receivedFrame[j];
-    j++;
-  }
-  // First Converter
-  for (int i = IMU + PRESSURE + LEAKAGE; i < IMU + PRESSURE + LEAKAGE + 1; i++) {
-    sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
-    j += 2;
-  }
-  for (int i = IMU + PRESSURE + LEAKAGE + 1; i < IMU + PRESSURE + LEAKAGE + 2; i++) {
-    sensors[i] = receivedFrame[j];
-    j++;
-  }
-  // Second Converter
-  for (int i = IMU + PRESSURE + LEAKAGE + 2; i < IMU + PRESSURE + LEAKAGE + 3; i++) {
-    sensors[i] = receivedFrame[j + 1] + receivedFrame[j] * 256;
-    j += 2;
-  }
-  for (int i = IMU + PRESSURE + LEAKAGE + 3; i < SENSORS; i++) {
-    sensors[i] = receivedFrame[j];
-    j++;
-  }
-
-  Serial.println("Sensors reading: ");
-  for (int i = 0; i < SENSORS; i++) {
->>>>>>> debug_comm
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
@@ -154,39 +97,24 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
       x += th_weights[i];  // 1500 will be added in Box
     }
   }
-  if (conv1)
-    x |= 0b1000000;
-  if (conv2)
-    x |= 0b10000000;
-<<<<<<< HEAD
   // Serial.println(x);
-=======
-  Serial.println(x);
->>>>>>> debug_comm
+
   //delay(500);
   sentFrame[1] = (uint8_t)x;
 
   // 6 bytes thrusters' speed
   int j = 0;  // thrusters speed: 1100 - 1900
-<<<<<<< HEAD
   Serial.print("Thrusters:  ");
   for (int i = 2; i < sentFrameSize; i++) {
     Serial.print(thrusters[j]);
     Serial.print("  ");
-    
+
     thrusters[j] = abs(thrusters[j] - 1500);         //thrusters speed: 0 - 400
     sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);;  //thrusters speed: 0 - 255
-=======
-  for (int i = 2; i < 2 + THRUSTERS ; i++) {
-    thrusters[j] = abs(thrusters[j] - 1500);           //thrusters speed: 0 - 400
-    sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);  //thrusters speed: 0 - 255
->>>>>>> debug_comm
     j++;
   }
   Serial.println();
 
-  sentFrame[sentFrameSize - 2] = BRAKING_TIME;
-  sentFrame[sentFrameSize - 1] = BRAKING_SPEED;
   // int j = 0;
   // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed
   //   sentFrame[i] = lowByte(thrusters[j]);
@@ -209,18 +137,12 @@ void Communication::sendData(uint8_t* sentFrame) {
     Serial.println("Problem resolving the hostname or port.");
     this->comm_init();
   }
-<<<<<<< HEAD
   // for(int i=2;i<8;i++){
   //   Serial.print(" ");
   //   // sentFrame[i]=100;
   //   Serial.print(sentFrame[i]);}
   Serial.println(); 
-=======
-  /*for(int i=0;i<8;i++){
-    Serial.print(" ");
-    Serial.print(sentFrame[i]);}
-  Serial.println(); */
->>>>>>> debug_comm
+
   this->udp.write(sentFrame, sentFrameSize);
   this->udp.endPacket();
   this->udp.stop();
