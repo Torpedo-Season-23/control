@@ -3,7 +3,7 @@
 System sys;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   sys.init();
 }
 
@@ -11,5 +11,5 @@ void loop() {
   long current= millis();
   sys.getData();
   sys.setData();
-  delay(20);
+  //delay(20);
 }

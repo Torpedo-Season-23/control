@@ -6,6 +6,7 @@
 class System {
 private:
   Thrusters thrusters;
+  Thruster thruster;
   Tools tools;
   Uartz uartz;
 

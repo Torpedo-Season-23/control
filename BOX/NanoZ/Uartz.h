@@ -11,7 +11,8 @@ public:
   void startUart();
   void receiveFrame();
   void sendFrame();
-  void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame);
+  void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame, uint8_t* brakesFrame);
+  inline byte readByte();
 };
 
 #endif

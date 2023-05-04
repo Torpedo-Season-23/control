@@ -9,6 +9,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("Loop");
   s.receiveData();
   s.activateUART();
   s.sendData();

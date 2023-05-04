@@ -28,15 +28,18 @@ void Thruster::setSignal(uint16_t value){
 }
 
 void Thruster::handleBrake(uint16_t value){
-  if(millis()-this->lastUpdatedTime<200)
+  this->currentValue=value;
+  this->writeSignal();
+  return;
+  if(millis()-this->lastUpdatedTime<this->brakesFrame[0])
     return;
   Serial.println("Braking");
   
   if(value > this->currentValue){//In backwards
-    this->currentValue += min(abs(value-this->currentValue),100);
+    this->currentValue += min(abs(value-this->currentValue),this->brakesFrame[1]);
   }
   else{
-        this->currentValue -= min(abs(value-this->currentValue),100);
+        this->currentValue -= min(abs(value-this->currentValue),this->brakesFrame[1]);
   }
   //Serial.println("New current is ");
   //Serial.println(value);

@@ -55,6 +55,7 @@ void UART_YZ::sendFrame(uint8_t* sendingFrame) {
   serialYZ.write('(');
   serialYZ.write(sendingFrame, UDP_REC_FRAME);
   serialYZ.write(')');
+  
 }
 
 
@@ -63,5 +64,6 @@ inline byte UART_YZ::readByte() {
     return -1;
   while ((!serialYZ.available()) && (millis()-current < WAITING_TIME));
   uint8_t x=serialYZ.read();
+  //Serial.println(x);
   return x;
 }

@@ -1,44 +1,64 @@
 #include "Uartz.h"
 long currentUART= millis();
+long lastTimeRead= millis();
+bool onHigh=false;
 
-SoftwareSerial serial(RX_Z, A7);
+//SoftwareSerial serial(RX_Z, -1);
 
 void Uartz::startUart() {
-  serial.begin(9600);
+  //serial.begin(9600);
 }
 
 void Uartz::sendFrame(){
   uint8_t frame[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-  serial.write('(');
-  serial.write(frame,16);
-  serial.write(')');
+  Serial.write('(');
+  Serial.write(frame,16);
+  Serial.write(')');
 }
 
 void Uartz::receiveFrame() {
   //return;
-    serial.begin(9600);
+    //serial.begin(9600);
+    
   uint8_t frame[UART_Z_FRAME_SIZE];
   currentUART= millis();
 
   while (true) {
+    //Serial.flush();
     byte x;
-while(!serial.available() && millis()-currentUART<100);
-    x = serial.read();
-    if (x != '(') continue;
-    for (int i = 0; i < ACTUAL_DATA; i++) {
-while(!serial.available() && millis()-currentUART<100);
-        ;
-      frame[i] = serial.read();
+    int y= 0;
+    do{
+      y= Serial.available();
+    }while(!y);
+    Serial.print("Y is \t");
+    Serial.println(y);
+    if(y !=10){
+      if(y>10){
+        Serial.end();
+        Serial.begin(9600);
+      }
+      continue;
     }
-while(!serial.available() && millis()-currentUART<100);
-      ;
-    x = serial.read();
+    x = readByte();
+    if (x != '(') continue;
+    Serial.println("Starting Frame: ");
+    for (int i = 0; i < ACTUAL_DATA; i++) {
+      frame[i] = readByte();
+      Serial.print(frame[i]);
+      Serial.print(" ");
+      
+    }
+    x =readByte();
+    Serial.print("\n---------------------Ending Frame is ");
+    Serial.println(x);
     if (x != ')') continue;
+    Serial.println("Success!");
+    
 
-
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < ACTUAL_DATA; i++) {
       uartFrame[i] = frame[i];
     }
+    lastTimeRead= millis();
 
 //debuging
 #ifdef UART_PRINT_ON
@@ -48,12 +68,23 @@ while(!serial.available() && millis()-currentUART<100);
       Serial.print(" ");
     }
 #endif
-    serial.end();
+    //serial.end();
     return;
   }
+  Serial.print("HERE");
+  if(millis()-lastTimeRead > 3000){
+    /*if(onHigh)
+      uartFrame[0]= 255;
+    else 
+      uartFrame[0]= 0;
+      onHigh= !onHigh;
+  }
+      
+    delay(1000);*/
+  }  
 }
 
-void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
+void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame, uint8_t* brakesFrame) {
   uint8_t loopLimit = max(MOTORS_COUNT, TOOLS_COUNT);
 
   for (int i = 0; i < loopLimit; i++) {
@@ -83,6 +114,7 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
       } else {
         toolsFrame[i] = 0;
       }
+      
 #ifdef ACC_PRINT_ON
       Serial.print(uartFrame[ACC_BYTE_INDEX] & 1,BIN);
 #endif
@@ -90,6 +122,9 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
     }
   }
   Serial.println();
+
+  brakesFrame[0] = uartFrame[ACTUAL_DATA - 2];
+  brakesFrame[1] = uartFrame[ACTUAL_DATA - 1];
 
   //Debuging
 #ifdef THRUSTERS_PRINT_ON
@@ -99,6 +134,8 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
   }
   Serial.println();
 #endif
+
+
   //Debuging
 #ifdef ACC_PRINT_ON
   for (int i = 0; i < TOOLS_COUNT; i++) {
@@ -107,4 +144,10 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
   }
   Serial.println();
 #endif
+}
+
+inline byte Uartz::readByte(){
+  while(!Serial.available() && (millis() -currentUART < 30));
+  byte x= Serial.read();
+  return x;
 }
