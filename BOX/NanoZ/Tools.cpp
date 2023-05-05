@@ -10,6 +10,7 @@ void Tools::init() {
 //set signals to tools
 void Tools::applySignal() {
   for (int i = 0; i < TOOLS_COUNT; i++) {
+    Serial.println(toolPins[i]);
     digitalWrite(toolPins[i], toolsFrame[i]);
   }
 }

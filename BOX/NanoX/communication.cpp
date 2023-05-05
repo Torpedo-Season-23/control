@@ -17,12 +17,14 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
   int success;
   success = udp.parsePacket();
   if (success) {
-    //Serial.print("Received! Success is ");
-    //Serial.println(success);
-    if (success != UDP_REC_FRAME) {
-      //Serial.println("Frame incomplete?");
-    }
+    /*Serial.print("Received! Success is ");
+    Serial.println(success);*/
+    
     udp.read(receivedFrame, success);
+    /*for(int i= 0;i<8;i++){
+      Serial.print(receivedFrame[i]);
+      Serial.print(" ");
+    }*/
     lastTimeOnReceive = millis();
   }
   else {
@@ -43,12 +45,12 @@ void CommunicationClient::sendData(uint8_t* frame) {
   // for(int i =0 ; i < UDP_SEND_FRAME ; i ++){
   //   frame[i] = 1;
   // }
-  Serial.print("Sent frame");
-  for (int i = 0 ; i < UDP_SEND_FRAME ; i ++) {
+  //Serial.print("Sent frame");
+  /*for (int i = 0 ; i < UDP_SEND_FRAME ; i ++) {
     Serial.print(frame[i] );
     Serial.print(" ");
   }
-  Serial.println();
+  Serial.println();*/
 
   int size = udp.write(frame, UDP_SEND_FRAME);
   udp.endPacket();

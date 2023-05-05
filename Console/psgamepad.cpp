@@ -9,13 +9,15 @@ void PSGamepad::Update() {
     this->force_stop();
     //acc frame
     if (this->PS3.getButtonClick(TRIANGLE)) {
-      if (this->flags[0] == 0) {
+      for(int i= 0;i<8;i++)
+        this->acc_array[i] ^= 1;
+      /*if (this->flags[0] == 0) {
         this->acc_array[0] = 1;
         this->flags[0] = 1;
       } else {
         this->acc_array[0] = 0;
         this->flags[0] = 0;
-      }
+      }*/
     }
     if (this->PS3.getButtonClick(CIRCLE)) {
       if (this->flags[1] == 0) {

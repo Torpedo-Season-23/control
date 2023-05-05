@@ -9,7 +9,6 @@ public:
   Servo motor;
   uint16_t currentValue;
   long lastUpdatedTime;
-  uint8_t brakesFrame[2];
   void initialize(uint8_t pin);
   void setSignal(uint16_t value);
 private:
@@ -19,7 +18,7 @@ private:
 
 class Thrusters {
   // motor pins
-  const int motorPins[MOTORS_COUNT] = { 3, 5, 6, 9, 10, 11 };
+  const int motorPins[MOTORS_COUNT] = { 3,5,6,7,8,9 };
   Thruster Motors[MOTORS_COUNT];
 
 public:

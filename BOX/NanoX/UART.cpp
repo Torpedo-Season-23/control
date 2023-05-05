@@ -45,16 +45,16 @@ void UART_YZ::receiveFrame(uint8_t* data) {
     return;
   }
   if(millis()-lastUARTReceiveTime>2000){
-    Serial.print("Failed to Receive from UART!");
+//    Serial.print("Failed to Receive from UART!");
     for(int i= 0;i<UDP_SEND_FRAME;i++)
       data[i]= 255;
   }
 }
 
 void UART_YZ::sendFrame(uint8_t* sendingFrame) {
-  serialYZ.write('(');
-  serialYZ.write(sendingFrame, UDP_REC_FRAME);
-  serialYZ.write(')');
+  Serial.write('(');
+  Serial.write(sendingFrame, UDP_REC_FRAME);
+  Serial.write(')');
   
 }
 

@@ -7,11 +7,11 @@
 
 class Uartz {
 public:
-  uint8_t uartFrame[ACTUAL_DATA];
+  uint8_t uartFrame[8];
   void startUart();
   void receiveFrame();
   void sendFrame();
-  void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame, uint8_t* brakesFrame);
+  void extractData(uint16_t* thrustersFrame, uint8_t* toolsFrame);
   inline byte readByte();
 };
 

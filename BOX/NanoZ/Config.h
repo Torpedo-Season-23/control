@@ -7,8 +7,8 @@
 #define TOOLS_COUNT 8
 
 //uart frame size
-#define UART_Z_FRAME_SIZE 12  // (1 gaurd | 1 Accessories | 1 Directions | 6 Motor | 2 Braking | 1 gaurd )(bytes)
-#define ACTUAL_DATA 10         // ( 1 Accessories | 1 directions | 6 Motor | 2 Braking )(bytes)
+#define UART_Z_FRAME_SIZE 10  // (1 gaurd | 1 Accessories | 1 Directions | 6 Motor | 2 Braking | 1 gaurd )(bytes)
+#define ACTUAL_DATA 8         // ( 1 Accessories | 1 directions | 6 Motor | 2 Braking )(bytes)
 
 //Nanoz data Indices
 #define MOTORS_SPEEDS_INDEX 2
