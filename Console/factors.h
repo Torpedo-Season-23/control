@@ -107,7 +107,7 @@ class Factor{
   }
   void getFactor(int8_t dir ,int speed, uint16_t *thrusterFrame){
     
-     if (dir == OTHER)
+    if (dir < 0)
       return;
 
     uint8_t speedIndex = 0 ; 
