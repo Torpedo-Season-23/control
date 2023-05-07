@@ -1,7 +1,12 @@
 *.DS_Store
 *.vscode
-<<<<<<< HEAD
-=======
 test/
 dummy/
->>>>>>> nano-box
+# Simulation/
+*.pyc
+*.pyo
+*.log
+*.pycache
+*.egg-info
+*.egg
+
