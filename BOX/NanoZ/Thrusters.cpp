@@ -68,7 +68,7 @@ void Thrusters::applySignal() {
   }
   for (int i = 0; i < MOTORS_COUNT; i++) {
     //apply speeds to thrusters
-    //Serial.println(thrustersFrame[i]);
+    // Serial.println(thrustersFrame[i]);
     Motors[i].setSignal(thrustersFrame[i]);
   }
   for(int i=0;i<6;i++){

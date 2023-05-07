@@ -55,7 +55,7 @@ void System::Update() {
   Serial.println(speed);
   if (speed ==100)
   for(int i= 0;i<6;i++)
-    res[i]= 1800;
+    res[i]= 1850;
   if (speed ==250)
   for(int i= 0;i<6;i++)
     res[i]= 1500;

@@ -1,7 +1,7 @@
 #ifndef Thrusters_H
 #define Thrusters_H
 #include "Config.h"
-#include <Servo.h>
+#include "Servo.h"
 
 
 class Thruster {
@@ -18,7 +18,7 @@ private:
 
 class Thrusters {
   // motor pins
-  const int motorPins[MOTORS_COUNT] = { 3,5,6,7,8,9 };
+  const int motorPins[MOTORS_COUNT] = { 3,5,6,9,10,11 };
   Thruster Motors[MOTORS_COUNT];
 
 public:
