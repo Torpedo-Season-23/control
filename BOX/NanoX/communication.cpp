@@ -17,22 +17,24 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
   int success;
   success = udp.parsePacket();
   if (success) {
-    /*Serial.print("Received! Success is ");
-    Serial.println(success);*/
-    
+    //Serial.print("Received! Success is ");
+    //Serial.println(success);
+
     udp.read(receivedFrame, success);
-    /*for(int i= 0;i<8;i++){
-      Serial.print(receivedFrame[i]);
-      Serial.print(" ");
-    }*/
+    /*
+      for(int i= 0;i<8;i++){
+       Serial.print(receivedFrame[i]);
+       Serial.print(" ");
+      }
+      Serial.println();*/
     lastTimeOnReceive = millis();
   }
   else {
     if (millis() - lastTimeOnReceive > 3000) { //Haven't received for 3 seconds!
-      Serial.println("No UDP Communication!");
+      //Serial.println("No UDP Communication!");
       for (int i = 2; i < 8; i++)
         receivedFrame[i] = 0;
-      this->init();
+      //      this->init();
     }
   }
   udp.flush();
@@ -42,11 +44,15 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
 void CommunicationClient::sendData(uint8_t* frame) {
 
   int x = udp.beginPacket(IPAddress(192, 168, 1, 9), CONSOLE_PORT);
+  if (!x) {
+    this->init();
+    return;
+  }
   // for(int i =0 ; i < UDP_SEND_FRAME ; i ++){
   //   frame[i] = 1;
   // }
-  //Serial.print("Sent frame");
-  /*for (int i = 0 ; i < UDP_SEND_FRAME ; i ++) {
+  /*Serial.print("Sent frame");
+  for (int i = 0 ; i < UDP_SEND_FRAME ; i ++) {
     Serial.print(frame[i] );
     Serial.print(" ");
   }

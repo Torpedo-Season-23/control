@@ -5,7 +5,7 @@
 void System::init() {
   this->client.init();
   
-  uart_yz.begin();
+ // uart_yz.begin();
   this->client.defaultFrame(udpReceiveFrame);
 }
 
@@ -19,5 +19,5 @@ void System::receiveData() {
 
 void System::activateUART() {
   uart_yz.sendFrame(udpReceiveFrame);
-  uart_yz.receiveFrame(udpSendFrame);
+  //uart_yz.receiveFrame(udpSendFrame);
 }

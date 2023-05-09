@@ -12,4 +12,5 @@ void loop() {
   s.receiveData();
   s.activateUART();
   s.sendData();
+  delay(10);
 }
