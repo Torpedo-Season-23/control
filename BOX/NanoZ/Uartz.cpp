@@ -21,25 +21,27 @@ void Uartz::receiveFrame() {
   uint8_t frame[UART_Z_FRAME_SIZE];
   currentUART= millis();
 
+ Serial.println("Starting Frame: ");
   while (true) {
-    Serial.end();
-    Serial.begin(9600);
+   //Serial.end();
+    //Serial.begin(9600);
     byte x;
     int y= 0;
+   
+
     x = readByte();
     if (x != '(') continue;
-    //Serial.println("Starting Frame: ");
     for (int i = 0; i < 8; i++) {
       frame[i] = readByte();
-      //Serial.print(frame[i]);
+      //Seri)al.print(frame[i]);
       //Serial.print(" ");
       
     }
     x =readByte();
-    //Serial.print("\n---------------------Ending Frame is ");
+    // Serial.print("\n---------------------Ending Frame is ");
     //Serial.println(x);
     if (x != ')') continue;
-    //Serial.println("Success!");
+    Serial.println("Success!");
     
 
     for (int i = 0; i < ACTUAL_DATA; i++) {
@@ -50,7 +52,7 @@ void Uartz::receiveFrame() {
 
 //debuging
 #ifdef UART_PRINT_ON
-    Serial.print("Frame is ");
+    // Serial.print("Frame is ");
     for (int i = 0; i < ACTUAL_DATA; i++) {
       Serial.print(uartFrame[i]);
       Serial.print(" ");
@@ -59,7 +61,7 @@ void Uartz::receiveFrame() {
     //serial.end();
     return;
   }
-  Serial.print("HERE");
+  // Serial.print("HERE");
   if(millis()-lastTimeRead > 3000){
     /*if(onHigh)
       uartFrame[0]= 255;
@@ -74,9 +76,14 @@ void Uartz::receiveFrame() {
 
 void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
   uint8_t loopLimit = max(MOTORS_COUNT, TOOLS_COUNT);
-  /*for(int i= 0;i<8;i++)
-    toolsFrame[i]= 255;
-   return;*/
+  // for(int i= 0;i<8;i++)
+  //   if(uartFrame[ACC_BYTE_INDEX] & 1 == 1){
+  //     toolsFrame[i]= 255;
+  //   }
+  //   else{
+  //     toolsFrame[i]= 0;
+  //   }
+  //  return;
 
   for (int i = 0; i < 8; i++) {
 
@@ -112,7 +119,7 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
       uartFrame[ACC_BYTE_INDEX] >>= 1;
     }
     
-  Serial.println();
+  // Serial.println();
 
 
   //Debuging
@@ -139,5 +146,6 @@ inline byte Uartz::readByte(){
   while(!Serial.available());
 
   byte x= Serial.read();
+  // Serial.println((char)x);
   return x;
 }

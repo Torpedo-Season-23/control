@@ -71,9 +71,9 @@ void Thrusters::applySignal() {
     // Serial.println(thrustersFrame[i]);
     Motors[i].setSignal(thrustersFrame[i]);
   }
-  for(int i=0;i<6;i++){
-    Serial.print(Motors[i].currentValue);
-    Serial.print(" ");
-  }
-  Serial.println();
+  // for(int i=0;i<6;i++){
+    // Serial.print(Motors[i].currentValue);
+    // Serial.print(" ");
+  // }
+  // Serial.println();
 }
