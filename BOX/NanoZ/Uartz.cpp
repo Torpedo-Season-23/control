@@ -22,8 +22,8 @@ void Uartz::receiveFrame() {
   currentUART= millis();
 
   while (true) {
-    Serial1.end();
-    Serial1.begin(9600);
+    Serial.end();
+    Serial.begin(9600);
     byte x;
     int y= 0;
     x = readByte();
@@ -136,8 +136,8 @@ void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
 }
 
 inline byte Uartz::readByte(){
-  while(!Serial1.available());
+  while(!Serial.available());
 
-  byte x= Serial1.read();
+  byte x= Serial.read();
   return x;
 }

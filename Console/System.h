@@ -9,6 +9,7 @@
 #include "SoftStart.h"
 #include "IndexConverter.h"
 #include "factors.h"
+#include "LCD.h"
 
 
 
@@ -21,7 +22,7 @@ private:
   Communication console;
   IndexConverter indexConverter;
   Factor factor;
-  
+  LCD lcd;
 public:
   System(IController* gamepad) {
     this->gamepad = gamepad;
@@ -35,9 +36,8 @@ public:
 void System::Init() {
   this->gamepad->init();
   this->console.comm_init();
-  
   this->indexConverter.init(thruster.get_thruster_frame());
-
+  this->lcd.init();
 }
 void System::Update() {
   uint8_t receivedFrame[receivedFrameSize];
@@ -55,7 +55,7 @@ void System::Update() {
   Serial.println(speed);
   if (speed ==100)
   for(int i= 0;i<6;i++)
-    res[i]= 1800;
+    res[i]= 1850;
   if (speed ==250)
   for(int i= 0;i<6;i++)
     res[i]= 1500;
@@ -69,15 +69,12 @@ void System::Update() {
   this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
   motors.update(res);
  
-
-
   uint8_t sentFrame[16];
   int16_t sensors[SENSORS];
   this->console.prepareData(acc, res, sentFrame);
   this->console.receiveData(receivedFrame);
   this->console.sendData(sentFrame);
-
-
+  this->lcd.update(sensors , acc ,this->gamepad->getspeed() , this->gamepad->getDirection());
   }
 
 #endif

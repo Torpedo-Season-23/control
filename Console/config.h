@@ -48,7 +48,13 @@
 #define BACKWARD 1
 #define RIGHT 2
 #define LEFT 3
-#define OTHER -1
+#define STOP -1
+#define UP -2
+#define DOWN -3
+#define M_LEFT -4
+#define M_RIGHT -5
+
+
 #define DIRECTIONS 4
 //speeds for factors
 #define LOW_SPEED 0 

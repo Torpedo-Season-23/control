@@ -154,8 +154,23 @@ int8_t PSGamepad::getDirection(){
     //  Serial.print("Left");
     return LEFT;
   }
-
-  return OTHER;
+//M direction 
+  if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])  ){
+    //  Serial.print("Right");
+     return M_LEFT;
+  }
+  if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) >abs(Td_array[0])  ){
+    //  Serial.print("Left");
+    return M_RIGHT;
+  }
+//Up , Down 
+  if(vertical_frame[0] < 1500)
+    return UP;
+  if(vertical_frame[0] > 1500)
+    return DOWN;
+//Stop 
+  return STOP;
+  
 //M direction 
   // if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) > abs(Td_array[1])  ){
   //    Serial.print("Moment Left");
