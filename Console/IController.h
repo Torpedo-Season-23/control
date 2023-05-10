@@ -35,6 +35,7 @@ public:
   int* get_accframe();
   int getspeed();
   virtual bool force_stop()=0;
+  virtual bool nrf()=0;
 
 };
 #endif

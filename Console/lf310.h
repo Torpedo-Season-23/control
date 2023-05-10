@@ -91,6 +91,7 @@ public:
   void Update();
   bool force_stop();
   int8_t getDirection();
+  bool nrf();
 };
 
 

@@ -20,6 +20,7 @@ int IController::getspeed() {
     return 400;
   // return this->speed;
 }
+
 void IController::init() {
 #if !defined(__MIPSEL__)
   while (!Serial)

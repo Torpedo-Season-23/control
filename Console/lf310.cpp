@@ -202,3 +202,12 @@ int8_t Xbox::getDirection(){
 
 }
 
+
+bool Xbox::nrf (){
+  if (this->lf310.buttonClickState.Startbutton) {
+    this->lf310.buttonClickState.Startbutton = 0;
+    return true;
+  }
+  else return false;
+}
+
