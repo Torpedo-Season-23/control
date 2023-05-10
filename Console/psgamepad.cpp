@@ -6,18 +6,18 @@ void PSGamepad::Update() {
   if (this->PS3.PS3Connected || this->PS3.PS3NavigationConnected) {
     this->update_hmotion();
     this->update_vmotion();
-    this->force_stop();
+    // this->force_stop();
     //acc frame
     if (this->PS3.getButtonClick(TRIANGLE)) {
       for(int i= 0;i<8;i++)
         this->acc_array[i] ^= 1;
-      /*if (this->flags[0] == 0) {
-        this->acc_array[0] = 1;
-        this->flags[0] = 1;
-      } else {
-        this->acc_array[0] = 0;
-        this->flags[0] = 0;
-      }*/
+      // if (this->flags[0] == 0) {
+      //   this->acc_array[0] = 1;
+      //   this->flags[0] = 1;
+      // } else {
+      //   this->acc_array[0] = 0;
+      //   this->flags[0] = 0;
+      // }
     }
     if (this->PS3.getButtonClick(CIRCLE)) {
       if (this->flags[1] == 0) {
@@ -100,7 +100,7 @@ void PSGamepad::update_vmotion() {
   int8_t direction = 0;
   if (this->PS3.getButtonPress(R2)) direction = -1;  //Down
   else if (this->PS3.getButtonPress(L2)) direction = 1;
-  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 400);
+  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 350);
   this->vertical_frame[1] = this->vertical_frame[0];
 }
 void PSGamepad::update_hmotion() {
@@ -124,13 +124,11 @@ void PSGamepad::update_hmotion() {
   this->Td_array[1] = Ty;
   this->Td_array[2] = -Tm;
 }
-void PSGamepad::force_stop(){
+bool PSGamepad::force_stop(){
   if (this->PS3.getButtonPress(START)){
-    this->Td_array[0]=0;
-    this->Td_array[1]=0;
-    this->Td_array[2]=0;
-    Serial.println("force stop");
+    return true;
   }
+  else return false;
   
 }
 

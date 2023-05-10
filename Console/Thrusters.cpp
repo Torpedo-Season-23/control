@@ -33,10 +33,16 @@ void Thrusters::set_h_forces(int *array) {
     else if (array[Xforce] != 0 && array[Yforce] != 0 && array[Moment] != 0)
       range = 84;
 
-    if( i == 0  ) // temporary:: the back right thruster is inverted
-    this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1900, 1100);
+    // if( ) // temporary:: the back right thruster is inverted
+    // this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1875, 1125);
+    // else
+    if ( i == 2 || i == 3)
+    this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1150, 1850);
     else
-    this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1100, 1900);
+    this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1850, 1150);
+    
+    // Serial.println("thruster orignal");
+    // for(int i=0;i<)
 
 
   }

@@ -90,6 +90,7 @@ public:
   Xbox()
     : lf310(&Usb) {}
   void Update();
+  bool force_stop();
 };
 
 

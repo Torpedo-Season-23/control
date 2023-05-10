@@ -77,11 +77,21 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   Serial.println();
 }
 
-void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame) {  //modify sent frame
+void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame ,bool attach) {  //modify sent frame
   // 1st byte for accessories
   int x = 0;
   int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
-  int th_weights[6] = { 1, 32, 4, 8, 16, 2 };
+ 
+ 
+// #define FRONT_RIGHT 0 //2 * mmmmmmmm  0
+// #define BACKWARD_RIGHT 1 //5 mmmmm  1
+// #define UPPER_FRONT 2 //4*         4
+// #define FRONT_LEFT  3//1           2
+// #define BACKWARD_LEFT 4 //3*       3
+// #define UPPER_BACK 5 //0*          5
+ 
+ 
+  int th_weights[6] = { 1, 2, 4 , 8, 16 , 32 };
   for (int i = ACCESSORIES - 1; i >= 0; i--) {
     if (accessories[i] == 1) {
       x += weights[i];
@@ -104,10 +114,10 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
 
   // 6 bytes thrusters' speed
   int j = 0;  // thrusters speed: 1100 - 1900
-  //Serial.print("Thrusters:  ");
+  Serial.print("Thrusters:  ");
   for (int i = 2; i < sentFrameSize; i++) {
-    //Serial.print(thrusters[j]);
-    // Serial.print("  ");
+    Serial.print(thrusters[j]);
+    Serial.print("  ");
 
     // if( j == 0 || j == 1 || j == 2){
       thrusters[j] = abs(thrusters[j] - 1500);         //thrusters speed: 0 - 400
@@ -118,7 +128,7 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
     
     j++;
   }
-  //Serial.println();
+  Serial.println();
 
   // int j = 0;
   // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed

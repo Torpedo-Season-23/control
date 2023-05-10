@@ -21,6 +21,7 @@ protected:
   USB Usb;
   virtual void update_vmotion() = 0;
   virtual void update_hmotion() = 0;
+
  
 public:
   IController(){};
@@ -33,6 +34,7 @@ public:
   int* get_vframe();
   int* get_accframe();
   int getspeed();
+  virtual bool force_stop()=0;
 
 };
 #endif

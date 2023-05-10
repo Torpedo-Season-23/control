@@ -139,3 +139,12 @@ void Xbox::update_hmotion() {
   this->Td_array[1] = Ty;
   this->Td_array[2] = Tm;
 }
+
+bool Xbox::force_stop(){
+  // if (this->PS3.getButtonPress(START)){
+  //   return true;
+  // }
+  // else return false;
+  
+}
+

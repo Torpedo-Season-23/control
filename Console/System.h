@@ -40,6 +40,7 @@ void System::Init() {
   this->lcd.init();
 }
 void System::Update() {
+  bool attach=this->gamepad->force_stop();
   uint8_t receivedFrame[receivedFrameSize];
   this->gamepad->Update();
   int speed = this->gamepad->getspeed();
@@ -52,26 +53,29 @@ void System::Update() {
   thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
   res = thruster.get_thruster_frame();
-  Serial.println(speed);
-  if (speed ==100)
-  for(int i= 0;i<6;i++)
-    res[i]= 1850;
-  if (speed ==250)
-  for(int i= 0;i<6;i++)
-    res[i]= 1500;
-  if (speed ==400)
-  for(int i= 0;i<6;i++)
-    res[i]= 1600;
+  // Serial.println(speed);
+  // if (speed ==100)
+  // for(int i= 0;i<6;i++)
+  //   res[i]= 1850;
+  // if (speed ==250)
+  // for(int i= 0;i<6;i++)
+  //   res[i]= 1500;
+  // if (speed ==400)
+  // for(int i= 0;i<6;i++)
+  //   res[i]= 1600;
   
   
+  // for(int i = 0 ; i < 8 ; i ++){
+  //   Serial.println(res[i]);
+  // }
   
   res= indexConverter.updateArray();
-  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
-  motors.update(res);
+  // this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
+  // motors.update(res);
  
   uint8_t sentFrame[16];
   int16_t sensors[SENSORS];
-  this->console.prepareData(acc, res, sentFrame);
+  this->console.prepareData(acc, res, sentFrame,attach);
   this->console.receiveData(receivedFrame);
   this->console.sendData(sentFrame);
   this->lcd.update(sensors , acc ,this->gamepad->getspeed() , this->gamepad->getDirection());
