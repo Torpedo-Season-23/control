@@ -70,8 +70,8 @@ void System::Update() {
   // }
   
   res= indexConverter.updateArray();
-  // this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
-  // motors.update(res);
+  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
+  motors.update(res);
  
   uint8_t sentFrame[16];
   int16_t sensors[SENSORS];

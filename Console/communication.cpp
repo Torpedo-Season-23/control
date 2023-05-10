@@ -83,12 +83,6 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
  
  
-// #define FRONT_RIGHT 0 //2 * mmmmmmmm  0
-// #define BACKWARD_RIGHT 1 //5 mmmmm  1
-// #define UPPER_FRONT 2 //4*         4
-// #define FRONT_LEFT  3//1           2
-// #define BACKWARD_LEFT 4 //3*       3
-// #define UPPER_BACK 5 //0*          5
  
  
   int th_weights[6] = { 1, 2, 4 , 8, 16 , 32 };

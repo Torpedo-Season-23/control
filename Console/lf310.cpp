@@ -115,11 +115,11 @@ void Xbox::Update() {
   }
 }
 void Xbox::update_vmotion() {
-  if (this->lf310.buttonClickState.LTbutton) this->direction = -1;  //Down
-  else if (this->lf310.buttonClickState.RTbutton) this->direction = 1;
-  else this->direction = 0;
-  this->vertical_frame[0] = 1500 + (-1*direction) * map(speeds[this->speed], 0, 128, 0, 400);
-  this->vertical_frame[1] =  1500 + (direction) * map(this->speeds[this->speed], 0, 128, 0, 400);
+  int8_t direction = 0;
+  if (this->lf310.buttonClickState.LTbutton) direction = 1;  //Down
+  else if (this->lf310.buttonClickState.RTbutton) direction = -1;
+  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 350);
+  this->vertical_frame[1] = this->vertical_frame[0];
 }
 void Xbox::update_hmotion() {
   float Tx, Ty, Tm;
@@ -146,5 +146,59 @@ bool Xbox::force_stop(){
   // }
   // else return false;
   
+}
+int8_t Xbox::getDirection(){
+  //Y direction 
+  if(Td_array[1] > 21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])  ){
+    //  Serial.print("Forward");
+    return FORWARD;
+  }
+  if(Td_array[1] < -21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) >abs(Td_array[2])  ){
+    //  Serial.print("Backward");
+     return BACKWARD;     
+  }
+//X direction 
+  if(Td_array[0] > 21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])  ){
+    //  Serial.print("Right");
+     return RIGHT;
+  }
+  if(Td_array[0] < -21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) >abs(Td_array[2])  ){
+    //  Serial.print("Left");
+    return LEFT;
+  }
+//M direction 
+  if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])  ){
+    //  Serial.print("Right");
+     return M_LEFT;
+  }
+  if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) >abs(Td_array[0])  ){
+    //  Serial.print("Left");
+    return M_RIGHT;
+  }
+//Up , Down 
+  if(vertical_frame[0] < 1500)
+    return UP;
+  if(vertical_frame[0] > 1500)
+    return DOWN;
+//Stop 
+  return STOP;
+  
+//M direction 
+  // if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) > abs(Td_array[1])  ){
+  //    Serial.print("Moment Left");
+  // }
+  // if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) >abs(Td_array[1])  ){
+  //    Serial.print("Moment Right");
+  // }
+
+  
+  
+  // Serial.print("x: ");
+  // Serial.print(Td_array[0]);
+  // Serial.print(" y: ");
+  // Serial.print(Td_array[1]);
+  // Serial.print(" m: ");
+  // Serial.print(Td_array[2]);
+
 }
 

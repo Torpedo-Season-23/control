@@ -85,12 +85,12 @@ private:
   LF310 lf310;
   void update_vmotion();
   void update_hmotion();
-  int8_t direction = 0;
 public:
   Xbox()
     : lf310(&Usb) {}
   void Update();
   bool force_stop();
+  int8_t getDirection();
 };
 
 
