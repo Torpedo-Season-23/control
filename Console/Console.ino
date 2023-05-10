@@ -11,7 +11,7 @@ struct msg {
 
 struct msg start_signal;
 
-PSGamepad controller;
+Xbox controller;
 System s(&controller);
 
 void setup() {
