@@ -83,6 +83,8 @@ private:
 class Xbox : public IController {
 private:
   LF310 lf310;
+  uint8_t isAutonomous;
+  long timeOfAutonomous;
   void update_vmotion();
   void update_hmotion();
 public:
@@ -91,6 +93,8 @@ public:
   void Update();
   bool force_stop();
   int8_t getDirection();
+  bool nrf();
+  void pitching();
 };
 
 

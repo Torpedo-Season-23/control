@@ -187,3 +187,14 @@ int8_t PSGamepad::getDirection(){
   // Serial.print(Td_array[2]);
   
 }
+
+bool PSGamepad::nrf(){
+  if (this->PS3.getButtonPress(START)){
+    return true;
+  }
+  else return false;
+  
+}
+void PSGamepad:: pitching(){
+  return;
+}

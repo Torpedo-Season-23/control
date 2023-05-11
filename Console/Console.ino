@@ -28,7 +28,7 @@ void setup() {
 void loop() {
   s.Update();
 
-  if (false) { // the start signal's button is pressed
+  if (controller.nrf()) { // the start signal's button is pressed
     for (int i = 0; i < 5; i++) 
       radio.write("AAAAAAAA", sizeof(5));
     

@@ -2,8 +2,8 @@
 #define LIGHTS_INDEX 2
 #define RIGHT_GRIPPER 4
 #define BACK_LEFT_GRIPPER 5
-
 #define BACK_RIGHT_GRIPPER 1
+
 
 void LF310::ParseHIDData(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
   if (HIDUniversal::VID != LF310_VID || HIDUniversal::PID != LF310_PID)
@@ -18,8 +18,11 @@ void LF310::ParseHIDData(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf)
 
 void Xbox::Update() {
   this->Usb.Task();
+  if(this->isAutonomous && (millis()-timeOfAutonomous > 5000))
+    this->isAutonomous=false;
   this->update_hmotion();
   this->update_vmotion();
+  this->pitching();
   //speed
   if (this->lf310.buttonClickState.LBbutton) {
     if (this->speed > 0) this->speed--;
@@ -73,45 +76,57 @@ void Xbox::Update() {
   switch (this->lf310.lf310Data.btn.dPad) {
     case DPAD_RIGHT:
       if (this->flags[5] == 0) {
-      this->acc_array[5] = 1;
-      this->flags[5] = 1;
-    } else {
-      this->acc_array[5] = 0;
-      this->flags[5] = 0;
-    }
-      this->lf310.lf310Data.btn.dPad=0;
+        this->acc_array[5] = 1;
+        this->flags[5] = 1;
+      } else {
+        this->acc_array[5] = 0;
+        this->flags[5] = 0;
+      }
+      this->lf310.lf310Data.btn.dPad = 0;
       break;
     case DPAD_UP:
-      if (this->flags[4] == 0) {
+      /*if(this->isAutonomous)
+        this->isAutonomous= false;
+        else{
+        this->isAutonomous=true;
+        this->timeOfAutonomous= millis();
+        }*/
+      /*if (this->flags[4] == 0) {
         this->acc_array[4] = 1;
         this->flags[4] = 1;
-      } else {
+        } else {
         this->acc_array[4] = 0;
         this->flags[4] = 0;
-      }
-      this->lf310.lf310Data.btn.dPad=0;
+        }*/
+      this->lf310.lf310Data.btn.dPad = 0;
       break;
     case DPAD_DOWN:
-    
-      if (this->flags[6] == 0) {
-      this->acc_array[6] = 1;
-      this->flags[6] = 1;
-    } else {
-      this->acc_array[6] = 0;
-      this->flags[6] = 0;
-    }
-      this->lf310.lf310Data.btn.dPad=0;
+
+      /*if (this->flags[6] == 0) {
+        this->acc_array[6] = 1;
+        this->flags[6] = 1;
+        } else {
+        this->acc_array[6] = 0;
+        this->flags[6] = 0;
+        }*/
+      if (this->isAutonomous)
+        this->isAutonomous = false;
+      else {
+        this->isAutonomous = true;
+        this->timeOfAutonomous = millis();
+      }
+      this->lf310.lf310Data.btn.dPad = 0;
       break;
     case DPAD_LEFT:
-    
-     if (this->flags[7] == 0) {
-      this->acc_array[7] = 1;
-      this->flags[7] = 1;
-    } else {
-      this->acc_array[7] = 0;
-      this->flags[7] = 0;
-    }
-      this->lf310.lf310Data.btn.dPad=0;
+
+      if (this->flags[7] == 0) {
+        this->acc_array[7] = 1;
+        this->flags[7] = 1;
+      } else {
+        this->acc_array[7] = 0;
+        this->flags[7] = 0;
+      }
+      this->lf310.lf310Data.btn.dPad = 0;
       break;
     case DPAD_OFF:
       // this->lf310.lf310Data.btn.dPad=0;
@@ -122,10 +137,15 @@ void Xbox::Update() {
   }
 }
 void Xbox::update_vmotion() {
+  if (this->isAutonomous) {
+    this->vertical_frame[1] = 1500;
+    this->vertical_frame[0] = 1500;
+    return;
+  }
   int8_t direction = 0;
   if (this->lf310.buttonClickState.LTbutton) direction = 1;  //Down
   else if (this->lf310.buttonClickState.RTbutton) direction = -1;
-  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 350);
+  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 400);
   this->vertical_frame[1] = this->vertical_frame[0];
 }
 void Xbox::update_hmotion() {
@@ -133,7 +153,14 @@ void Xbox::update_hmotion() {
   float factor, sum;
   Tx = map(this->lf310.lf310Data.X, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(255 - this->lf310.lf310Data.Y, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
+  
   Tm = -map(this->lf310.lf310Data.Z, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
+  if (this->isAutonomous) {
+    Ty = 64;
+    Tx = 0;
+    Tm = 0;
+  }
+
   if (Tx < 30 && Tx > -30) Tx = 0;
   if (Ty < 30 && Ty > -30) Ty = 0;
   if (Tm < 30 && Tm > -30) Tm = 0;
@@ -147,50 +174,50 @@ void Xbox::update_hmotion() {
   this->Td_array[2] = Tm;
 }
 
-bool Xbox::force_stop(){
+bool Xbox::force_stop() {
   // if (this->PS3.getButtonPress(START)){
   //   return true;
   // }
   // else return false;
-  
+
 }
-int8_t Xbox::getDirection(){
-  //Y direction 
-  if(Td_array[1] > 21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])  ){
+int8_t Xbox::getDirection() {
+  //Y direction
+  if (Td_array[1] > 21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])  ) {
     //  Serial.print("Forward");
     return FORWARD;
   }
-  if(Td_array[1] < -21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) >abs(Td_array[2])  ){
+  if (Td_array[1] < -21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])  ) {
     //  Serial.print("Backward");
-     return BACKWARD;     
+    return BACKWARD;
   }
-//X direction 
-  if(Td_array[0] > 21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])  ){
+  //X direction
+  if (Td_array[0] > 21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])  ) {
     //  Serial.print("Right");
-     return RIGHT;
+    return RIGHT;
   }
-  if(Td_array[0] < -21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) >abs(Td_array[2])  ){
+  if (Td_array[0] < -21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])  ) {
     //  Serial.print("Left");
     return LEFT;
   }
-//M direction 
-  if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])  ){
+  //M direction
+  if (Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])  ) {
     //  Serial.print("Right");
-     return M_LEFT;
+    return M_LEFT;
   }
-  if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) >abs(Td_array[0])  ){
+  if (Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])  ) {
     //  Serial.print("Left");
     return M_RIGHT;
   }
-//Up , Down 
-  if(vertical_frame[0] < 1500)
+  //Up , Down
+  if (vertical_frame[0] < 1500)
     return UP;
-  if(vertical_frame[0] > 1500)
+  if (vertical_frame[0] > 1500)
     return DOWN;
-//Stop 
+  //Stop
   return STOP;
-  
-//M direction 
+
+  //M direction
   // if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) > abs(Td_array[1])  ){
   //    Serial.print("Moment Left");
   // }
@@ -198,8 +225,8 @@ int8_t Xbox::getDirection(){
   //    Serial.print("Moment Right");
   // }
 
-  
-  
+
+
   // Serial.print("x: ");
   // Serial.print(Td_array[0]);
   // Serial.print(" y: ");
@@ -207,4 +234,29 @@ int8_t Xbox::getDirection(){
   // Serial.print(" m: ");
   // Serial.print(Td_array[2]);
 
+}
+
+bool Xbox::nrf(){
+  if(this->lf310.buttonClickState.Xbutton){
+    this->lf310.buttonClickState.Xbutton=0;
+    return true;
+  }
+  else return false;
+  
+}
+void Xbox::pitching(){
+  
+  int pitch=0;
+//  pitch = this->lf310.lf310Data.Rz ;
+  pitch = map(this->lf310.lf310Data.Rz, 0, 255, -128, 128);
+  if(pitch>40){
+    this->vertical_frame[0] = 1500 + map(this->speeds[this->speed], 0, 128, 0, 400);
+    this->vertical_frame[1] = 1500 -map(this->speeds[this->speed], 0, 128, 0, 400);
+  }
+  else if(pitch<-40){
+    this->vertical_frame[0] = 1500 - map(this->speeds[this->speed], 0, 128, 0, 400);
+    this->vertical_frame[1] = 1500 + map(this->speeds[this->speed], 0, 128, 0, 400);
+  }
+  
+  
 }

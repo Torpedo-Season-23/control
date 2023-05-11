@@ -12,5 +12,7 @@ public:
   int8_t getDirection();
   bool force_stop();
   void Update();
+  bool nrf();
+  void pitching();
 };
 #endif
