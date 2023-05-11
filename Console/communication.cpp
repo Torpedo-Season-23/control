@@ -101,7 +101,7 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
       x += th_weights[i];  // 1500 will be added in Box
     }
   }
-  // Serial.println(x);
+   Serial.println(sentFrame[0]);
 
   //delay(500);
   sentFrame[1] = (uint8_t)x;

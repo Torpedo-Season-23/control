@@ -30,7 +30,7 @@ void loop() {
 
   if (false) { // the start signal's button is pressed
     for (int i = 0; i < 5; i++) 
-      radio.write('A', sizeof('A'));
+      radio.write("AAAAAAAA", sizeof(5));
     
     Serial.print("Sent the float\'s start signal...");
   }

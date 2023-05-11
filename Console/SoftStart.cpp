@@ -37,7 +37,7 @@ void Motor::increaseSpeed(uint16_t newSpeed){
     }
     if(this->counter < 10)
         this->counter++;*/
-    uint16_t newCalculatedSpeed= (positiveCurrentSpeed+30 < positiveRequiredSpeed) ? positiveCurrentSpeed+30 :positiveRequiredSpeed; //New Speed is 2^(d+1)
+    uint16_t newCalculatedSpeed= (positiveCurrentSpeed+50 < positiveRequiredSpeed) ? positiveCurrentSpeed+50 :positiveRequiredSpeed; //New Speed is 2^(d+1)
     this->currentSpeed= newSpeed > MOTOR_STATIC_SPEED ? newCalculatedSpeed + MOTOR_STATIC_SPEED :MOTOR_STATIC_SPEED-newCalculatedSpeed; 
 }
 void Motor::decreaseSpeed(uint16_t newSpeed){

@@ -35,19 +35,19 @@ class Factor{
           factors[dir][spe][i]=1;
 
     //forward low
-    this->factors[FORWARD][LOW_SPEED][FRONT_LEFT] = 1;
+    this->factors[FORWARD][LOW_SPEED][FRONT_LEFT] = 0.9;
     this->factors[FORWARD][LOW_SPEED][FRONT_RIGHT] = 1;
-    this->factors[FORWARD][LOW_SPEED][BACKWARD_LEFT] = 1;
+    this->factors[FORWARD][LOW_SPEED][BACKWARD_LEFT] = .7;
     this->factors[FORWARD][LOW_SPEED][BACKWARD_RIGHT] = 1;
     //forward normal 
-    this->factors[FORWARD][NORMAL_SPEED][FRONT_LEFT] = 1;
+    this->factors[FORWARD][NORMAL_SPEED][FRONT_LEFT] = 0.85;
     this->factors[FORWARD][NORMAL_SPEED][FRONT_RIGHT] = 1;
-    this->factors[FORWARD][NORMAL_SPEED][BACKWARD_LEFT] = 1;
+    this->factors[FORWARD][NORMAL_SPEED][BACKWARD_LEFT] = 0.5;
     this->factors[FORWARD][NORMAL_SPEED][BACKWARD_RIGHT] = 1;
     //forward High
-    this->factors[FORWARD][HIGH_SPEED][FRONT_LEFT] = 1;
+    this->factors[FORWARD][HIGH_SPEED][FRONT_LEFT] = 0.87;
     this->factors[FORWARD][HIGH_SPEED][FRONT_RIGHT] = 1;
-    this->factors[FORWARD][HIGH_SPEED][BACKWARD_LEFT] = 1;
+    this->factors[FORWARD][HIGH_SPEED][BACKWARD_LEFT] = 0.55;
     this->factors[FORWARD][HIGH_SPEED][BACKWARD_RIGHT] = 1;
 
 
@@ -74,7 +74,7 @@ class Factor{
     this->factors[RIGHT][LOW_SPEED][BACKWARD_LEFT] = 1;
     this->factors[RIGHT][LOW_SPEED][BACKWARD_RIGHT] = 1;
     //Right Normal
-    this->factors[RIGHT][NORMAL_SPEED][FRONT_LEFT] = 1;
+    this->factors[RIGHT][NORMAL_SPEED][FRONT_LEFT] = 0.8;
     this->factors[RIGHT][NORMAL_SPEED][FRONT_RIGHT] = 1;
     this->factors[RIGHT][NORMAL_SPEED][BACKWARD_LEFT] = 1;
     this->factors[RIGHT][NORMAL_SPEED][BACKWARD_RIGHT] = 1;
@@ -87,15 +87,15 @@ class Factor{
     
     //left
      //left Low
-    this->factors[LEFT][LOW_SPEED][FRONT_LEFT] = 1;
+    this->factors[LEFT][LOW_SPEED][FRONT_LEFT] = 1.8;
     this->factors[LEFT][LOW_SPEED][FRONT_RIGHT] = 1;
-    this->factors[LEFT][LOW_SPEED][BACKWARD_LEFT] = 1;
+    this->factors[LEFT][LOW_SPEED][BACKWARD_LEFT] = 1.5;
     this->factors[LEFT][LOW_SPEED][BACKWARD_RIGHT] = 1;
 
     //left Normal
     this->factors[LEFT][NORMAL_SPEED][FRONT_LEFT] = 1;
     this->factors[LEFT][NORMAL_SPEED][FRONT_RIGHT] = 1;
-    this->factors[LEFT][NORMAL_SPEED][BACKWARD_LEFT] = 1;
+    this->factors[LEFT][NORMAL_SPEED][BACKWARD_LEFT] = 0.9;
     this->factors[LEFT][NORMAL_SPEED][BACKWARD_RIGHT] = 1;
  
     //left High

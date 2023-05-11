@@ -1,4 +1,9 @@
 #include "lf310.h"
+#define LIGHTS_INDEX 2
+#define RIGHT_GRIPPER 4
+#define BACK_LEFT_GRIPPER 5
+
+#define BACK_RIGHT_GRIPPER 1
 
 void LF310::ParseHIDData(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
   if (HIDUniversal::VID != LF310_VID || HIDUniversal::PID != LF310_PID)
@@ -26,42 +31,42 @@ void Xbox::Update() {
   }
   //acc frame
   if (this->lf310.buttonClickState.Ybutton) {
-    if (this->flags[0] == 0) {
-      this->acc_array[0] = 1;
-      this->flags[0] = 1;
+    if (this->flags[LIGHTS_INDEX] == 0) {
+      this->acc_array[LIGHTS_INDEX] = 1;
+      this->flags[LIGHTS_INDEX] = 1;
     } else {
-      this->acc_array[0] = 0;
-      this->flags[0] = 0;
+      this->acc_array[LIGHTS_INDEX] = 0;
+      this->flags[LIGHTS_INDEX] = 0;
     }
     this->lf310.buttonClickState.Ybutton = 0;
   }
   if (this->lf310.buttonClickState.Bbutton) {
-    if (this->flags[1] == 0) {
-      this->acc_array[1] = 1;
-      this->flags[1] = 1;
+    if (this->flags[RIGHT_GRIPPER] == 0) {
+      this->acc_array[RIGHT_GRIPPER] = 1;
+      this->flags[RIGHT_GRIPPER] = 1;
     } else {
-      this->acc_array[1] = 0;
-      this->flags[1] = 0;
+      this->acc_array[RIGHT_GRIPPER] = 0;
+      this->flags[RIGHT_GRIPPER] = 0;
     }
     this->lf310.buttonClickState.Bbutton = 0;
   }
   if (this->lf310.buttonClickState.Abutton) {
-    if (this->flags[2] == 0) {
-      this->acc_array[2] = 1;
-      this->flags[2] = 1;
+    if (this->flags[BACK_RIGHT_GRIPPER] == 0) {
+      this->acc_array[BACK_RIGHT_GRIPPER] = 1;
+      this->flags[BACK_RIGHT_GRIPPER] = 1;
     } else {
-      this->acc_array[2] = 0;
-      this->flags[2] = 0;
+      this->acc_array[BACK_RIGHT_GRIPPER] = 0;
+      this->flags[BACK_RIGHT_GRIPPER] = 0;
     }
     this->lf310.buttonClickState.Abutton = 0;
   }
   if (this->lf310.buttonClickState.Xbutton) {
-    if (this->flags[3] == 0) {
-      this->acc_array[3] = 1;
-      this->flags[3] = 1;
+    if (this->flags[BACK_LEFT_GRIPPER] == 0) {
+      this->acc_array[BACK_LEFT_GRIPPER] = 1;
+      this->flags[BACK_LEFT_GRIPPER] = 1;
     } else {
-      this->acc_array[3] = 0;
-      this->flags[3] = 0;
+      this->acc_array[BACK_LEFT_GRIPPER] = 0;
+      this->flags[BACK_LEFT_GRIPPER] = 0;
     }
     this->lf310.buttonClickState.Xbutton = 0;
   }
@@ -87,6 +92,7 @@ void Xbox::Update() {
       this->lf310.lf310Data.btn.dPad=0;
       break;
     case DPAD_DOWN:
+    
       if (this->flags[6] == 0) {
       this->acc_array[6] = 1;
       this->flags[6] = 1;
@@ -97,6 +103,7 @@ void Xbox::Update() {
       this->lf310.lf310Data.btn.dPad=0;
       break;
     case DPAD_LEFT:
+    
      if (this->flags[7] == 0) {
       this->acc_array[7] = 1;
       this->flags[7] = 1;
@@ -126,7 +133,7 @@ void Xbox::update_hmotion() {
   float factor, sum;
   Tx = map(this->lf310.lf310Data.X, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(255 - this->lf310.lf310Data.Y, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
-  Tm = map(this->lf310.lf310Data.Z, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
+  Tm = -map(this->lf310.lf310Data.Z, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   if (Tx < 30 && Tx > -30) Tx = 0;
   if (Ty < 30 && Ty > -30) Ty = 0;
   if (Tm < 30 && Tm > -30) Tm = 0;
@@ -201,4 +208,3 @@ int8_t Xbox::getDirection(){
   // Serial.print(Td_array[2]);
 
 }
-
