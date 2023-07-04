@@ -1,9 +1,11 @@
 #include "lf310.h"
 #define LIGHTS_INDEX 2
 #define RIGHT_GRIPPER 4
-#define BACK_LEFT_GRIPPER 5
+#define BACK_LEFT_GRIPPER 7
 #define BACK_RIGHT_GRIPPER 1
 
+
+bool NRFTrue= false;
 
 void LF310::ParseHIDData(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
   if (HIDUniversal::VID != LF310_VID || HIDUniversal::PID != LF310_PID)
@@ -18,7 +20,7 @@ void LF310::ParseHIDData(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf)
 
 void Xbox::Update() {
   this->Usb.Task();
-  if(this->isAutonomous && (millis()-timeOfAutonomous > 5000))
+  if(this->isAutonomous && (millis()-timeOfAutonomous > 3000))
     this->isAutonomous=false;
   this->update_hmotion();
   this->update_vmotion();
@@ -34,13 +36,11 @@ void Xbox::Update() {
   }
   //acc frame
   if (this->lf310.buttonClickState.Ybutton) {
-    if (this->flags[LIGHTS_INDEX] == 0) {
-      this->acc_array[LIGHTS_INDEX] = 1;
-      this->flags[LIGHTS_INDEX] = 1;
-    } else {
-      this->acc_array[LIGHTS_INDEX] = 0;
-      this->flags[LIGHTS_INDEX] = 0;
-    }
+//    for(int i= 0;i<8;i++)
+//      this->acc_array[i]^=1;
+    this->acc_array[LIGHTS_INDEX]^=1;
+    this->acc_array[0]^=1;
+    
     this->lf310.buttonClickState.Ybutton = 0;
   }
   if (this->lf310.buttonClickState.Bbutton) {
@@ -153,10 +153,9 @@ void Xbox::update_hmotion() {
   float factor, sum;
   Tx = map(this->lf310.lf310Data.X, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(255 - this->lf310.lf310Data.Y, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
-  
-  Tm = -map(this->lf310.lf310Data.Z, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
+  Tm = -map(this->lf310.lf310Data.Z, 0, 255, -this->speeds[0], this->speeds[0]);
   if (this->isAutonomous) {
-    Ty = 64;
+    Ty = 128;
     Tx = 0;
     Tm = 0;
   }
@@ -165,7 +164,9 @@ void Xbox::update_hmotion() {
   if (Ty < 30 && Ty > -30) Ty = 0;
   if (Tm < 30 && Tm > -30) Tm = 0;
   sum = abs(Tx) + abs(Ty) + abs(Tm);
-  factor = this->speeds[this->speed] / sum;
+  if(Tm&&!Tx&&!Ty){factor = this->speeds[0] / sum;
+  }
+  else factor = this->speeds[this->speed] / sum;
   Tx *= factor;
   Ty *= factor;
   Tm *= factor;
@@ -237,11 +238,14 @@ int8_t Xbox::getDirection() {
 }
 
 bool Xbox::nrf(){
-  if(this->lf310.buttonClickState.Xbutton){
-    this->lf310.buttonClickState.Xbutton=0;
-    return true;
-  }
-  else return false;
+  if(NRFTrue)return true;
+  
+  if(this->lf310.buttonClickState.Startbutton){
+    this->lf310.buttonClickState.Startbutton=0;
+    NRFTrue= true;
+  
+  return true;
+  }return false;
   
 }
 void Xbox::pitching(){
@@ -258,5 +262,14 @@ void Xbox::pitching(){
     this->vertical_frame[1] = 1500 + map(this->speeds[this->speed], 0, 128, 0, 400);
   }
   
+}
+
+
+bool Xbox::timer(){
+  if(this->lf310.buttonClickState.Backbutton){
+    this->lf310.buttonClickState.Backbutton=0;
+    return true;
+  }
+  else return false;
   
 }

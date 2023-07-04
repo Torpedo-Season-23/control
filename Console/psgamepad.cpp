@@ -1,6 +1,10 @@
 #include "Arduino.h"
 #include "psgamepad.h"
 
+
+bool timer(){
+  return true;
+}
 void PSGamepad::Update() {
   this->Usb.Task();
   if (this->PS3.PS3Connected || this->PS3.PS3NavigationConnected) {

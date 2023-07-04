@@ -11,6 +11,8 @@ private:
 public:
   void init();
   void update(int16_t *sensors, int* acc, int speed , int8_t dir);
+  void updateRTC();
+  void clear();
 };
 
 #endif

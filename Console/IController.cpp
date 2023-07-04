@@ -6,6 +6,7 @@ int* IController::get_hframe() {
 int* IController::get_vframe() {
   return this->vertical_frame;
 }
+
 // void IController::set_hframe(int array){this->Td_array=array}
 // void IController::set_vframe(int *array){this->vertical_frame=array}
 int* IController::get_accframe() {

@@ -14,5 +14,6 @@ public:
   void Update();
   bool nrf();
   void pitching();
+  bool timer();
 };
 #endif

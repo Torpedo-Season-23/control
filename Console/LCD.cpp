@@ -9,7 +9,7 @@ void LCD::init(){
 void LCD::update(int16_t *sensors , int* acc, int speed , int8_t dir){
 
 lcd.setCursor(0, 0);
-lcd.print("P:"); 
+/*lcd.print("P:"); 
 lcd.print(sensors[3]); 
 lcd.print(" "); 
 if(dir == FORWARD){
@@ -38,7 +38,7 @@ lcd.print("UP      ");
 }
 if(dir == DOWN){
 lcd.print("DOWN    "); 
-}
+}*/
 
 //Show ACCESSORIES
 for (int i = ACCESSORIES - 1; i >= 0; i--) {
@@ -60,3 +60,11 @@ if(speed > 250){
 
 }
 
+  void LCD::updateRTC(){
+    lcd.setCursor(0,0);
+    lcd.print("Received :)");
+  }
+void LCD::clear(){
+  lcd.setCursor(0,0);
+  lcd.print("               ");
+}
