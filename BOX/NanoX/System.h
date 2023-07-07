@@ -7,7 +7,7 @@ class System {
 private:
   CommunicationClient client;
   UART_YZ uart_yz;
-  uint8_t udpReceiveFrame[UDP_REC_FRAME]{ 255, 255, 180, 24, 24, 24, 0, 0 };
+  uint8_t udpReceiveFrame[UDP_REC_FRAME]{0};
   uint8_t udpSendFrame[UDP_SEND_FRAME] = { 0 };
  
 public:

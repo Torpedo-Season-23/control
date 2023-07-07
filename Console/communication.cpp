@@ -80,12 +80,8 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
 void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentFrame ,bool attach) {  //modify sent frame
   // 1st byte for accessories
   int x = 0;
-  int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+  int weights[8] = { 1, 2, 4, 8, 16, 32, 64, 128 }; // weights for Accessories
  
- 
- 
- 
-  int th_weights[6] = { 1, 2, 4 , 8, 16 , 32 };
   for (int i = ACCESSORIES - 1; i >= 0; i--) {
     if (accessories[i] == 1) {
       x += weights[i];
@@ -93,51 +89,21 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   }
   sentFrame[0] = (uint8_t)x;
 
-  // 2nd byte for thrusters' direction + converters on/off
-  x = 0;
-  //int weights[6] = { 1, 2, 4, 8, 16, 32};
-  for (int i = THRUSTERS - 1; i >= 0; i--) {
-    if (thrusters[i] > 1500) {
-      x += th_weights[i];  // 1500 will be added in Box
-    }
-  }
-   Serial.println(sentFrame[0]);
-
-  //delay(500);
-  sentFrame[1] = (uint8_t)x;
-
-  // 6 bytes thrusters' speed
+  // 12 bytes thrusters' speed
   int j = 0;  // thrusters speed: 1100 - 1900
-  Serial.print("Thrusters:  ");
-  for (int i = 2; i < sentFrameSize; i++) {
-    Serial.print(thrusters[j]);
-    Serial.print("  ");
-
-    // if( j == 0 || j == 1 || j == 2){
-      thrusters[j] = abs(thrusters[j] - 1500);         //thrusters speed: 0 - 400
-    sentFrame[i] = map(thrusters[j], 0, 400, 0, 255);  //thrusters speed: 0 - 255
-    // }else{
-      // sentFrame[i] = 0;       
-    // }
-    
+  for (int i = 1; i < sentFrameSize; i += 2) {  
+    uint16_t thrusterSpeed = (uint16_t) thrusters[j];  
+    sentFrame[i] = lowByte(thrusterSpeed);
+    sentFrame[i + 1] = highByte(thrusterSpeed);
     j++;
   }
+
+  Serial.print("sent frame ");
+  for (int i = 0; i < sentFrameSize; i++) {
+    Serial.print(sentFrame[i]);
+    Serial.print(" ");
+  }
   Serial.println();
-
-  // int j = 0;
-  // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed
-  //   sentFrame[i] = lowByte(thrusters[j]);
-  //   sentFrame[i + 1] = highByte(thrusters[j]);
-  //   j++;
-  // }
-
-
-  // Serial.print("sent frame ");
-  // for (int i = 0; i < 8; i++) {
-  //   Serial.print(sentFrame[i]);
-  //   Serial.print(" ");
-  // }
-  // Serial.println();
 }
 
 void Communication::sendData(uint8_t* sentFrame) {

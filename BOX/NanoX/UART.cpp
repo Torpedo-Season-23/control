@@ -53,9 +53,8 @@ long current=5;
 
 void UART_YZ::sendFrame(uint8_t* sendingFrame) {
   Serial.write('(');
-  Serial.write(sendingFrame, 8);
+  Serial.write(sendingFrame, UDP_REC_FRAME);
   Serial.write(')');
-  
 }
 
 /*

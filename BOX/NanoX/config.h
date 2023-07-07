@@ -6,7 +6,7 @@
 #define CONSOLE_PORT 7000
 
 /*--------UDP--------*/
-#define UDP_REC_FRAME 8    // 1 Accessories, 1 directions + converters on/off, 6 thrusters speeds "respectively"
+#define UDP_REC_FRAME 13    // 1 Accessories,  6 thrusters speeds * 2 bytes
 #define UDP_SEND_FRAME 8  // 6 IMU angles, 2 pressure
 /*--------UART--------*/
 #define UART_YZ_FRAME_SIZE 8

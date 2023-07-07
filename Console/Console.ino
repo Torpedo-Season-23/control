@@ -30,6 +30,8 @@ void startListening() {
     listenedBefore = true;
   }
 }
+
+
 void setup() {
   Serial.begin(115200);
   s.Init();
