@@ -24,8 +24,7 @@ int IController::getspeed() {
 
 void IController::init() {
 #if !defined(__MIPSEL__)
-  while (!Serial)
-    ;  // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
+  while (!Serial);  // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
 #endif
   if (this->Usb.Init() == -1) Serial.println("OSC did not start.");
   else Serial.print("Start");

@@ -68,11 +68,11 @@ void System::Update() {
 
 
   uint8_t sentFrame[16];
-  int16_t sensors[SENSORS];
+  // int16_t sensors[SENSORS];
   this->console.prepareData(acc, res, sentFrame, attach);
   this->console.receiveData(receivedFrame);
   this->console.sendData(sentFrame);
-  this->lcd.update(sensors , acc , this->gamepad->getspeed() , this->gamepad->getDirection());
+  // this->lcd.update(sensors , acc , this->gamepad->getspeed() , this->gamepad->getDirection());
 }
 
 
