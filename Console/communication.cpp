@@ -14,7 +14,7 @@ void Communication::receiveData(uint8_t* receivedFrame) {
     this->udp.read(receivedFrame, receivedFrameSize);
     this->udp.flush();
   }
-  if (!framesize)
+  if (!frameSize)
     Serial.println("Not received :(");
   else {
 
@@ -29,7 +29,7 @@ void Communication::receiveData(uint8_t* receivedFrame) {
     //int16_t sensors[18];
     //this->getSensors(receivedFrame, sensors);
     //delay(100);
-    //}
+    }
     this->udp.stop();
   }
 

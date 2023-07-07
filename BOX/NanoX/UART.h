@@ -1,7 +1,7 @@
 #ifndef UART_H
 #define UART_H
 #include <Arduino.h>
-#include <SoftwareSerial.h>
+// #include <SoftwareSerial.h>
 #include "config.h"
 
 

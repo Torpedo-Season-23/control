@@ -1,30 +1,19 @@
 #include "Uartz.h"
-long currentUART= millis();
-long lastTimeRead= millis();
-bool onHigh=false;
 
-
-void Uartz::startUart() {
-}
-
-void Uartz::sendFrame(){
-  uint8_t frame[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-  Serial.write('(');
-  Serial.write(frame,16);
-  Serial.write(')');
-}
+//-------for debugging------///
+// long currentUART= millis();
+// long lastTimeRead= millis();
+// bool onHigh=false;
 
 void Uartz::receiveFrame() {
-  //return;
-    //serial.begin(9600);
+ 
     
   uint8_t frame[UART_Z_FRAME_SIZE];
-  currentUART= millis();
+  // currentUART= millis();
 
  Serial.println("Starting Frame: ");
   while (true) {
-   //Serial.end();
-    //Serial.begin(9600);
+  
     byte x;
     int y= 0;
    
@@ -33,26 +22,20 @@ void Uartz::receiveFrame() {
     if (x != '(') continue;
     for (int i = 0; i < ACTUAL_DATA; i++){
       frame[i] = readByte();
-      //Seri)al.print(frame[i]);
-      //Serial.print(" ");
-      
     }
     x =readByte();
-    // Serial.print("\n---------------------Ending Frame is ");
-    //Serial.println(x);
     if (x != ')') continue;
-    Serial.println("Success!");
-    
 
+    // Serial.println("Success!");
     for (int i = 0; i < ACTUAL_DATA; i++) {
       uartFrame[i] = frame[i];
     }
     
-    lastTimeRead= millis();
+    // lastTimeRead= millis();
 
 //debuging
 #ifdef UART_PRINT_ON
-    // Serial.print("Frame is ");
+    Serial.print("Frame is ");
     for (int i = 0; i < ACTUAL_DATA; i++) {
       Serial.print(uartFrame[i]);
       Serial.print(" ");
@@ -60,18 +43,7 @@ void Uartz::receiveFrame() {
 #endif
     //serial.end();
     return;
-  }
-  // Serial.print("HERE");
-  if(millis()-lastTimeRead > 3000){
-    /*if(onHigh)
-      uartFrame[0]= 255;
-    else 
-      uartFrame[0]= 0;
-      onHigh= !onHigh;
-  }
-      
-    delay(1000);*/
-  }  
+  } 
 }
 
 void Uartz::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {

@@ -8,16 +8,12 @@
 
 //uart frame size
 #define UART_Z_FRAME_SIZE 15  // (1 gaurd | 1 Accessories | 6 * 2 Motor  | 1 gaurd )(bytes)
-#define ACTUAL_DATA 13         // (1 Accessories | 6 * 2 Motor )(bytes)
+#define ACTUAL_DATA 13        // (1 Accessories | 6 * 2 Motor )(bytes)
 
 //Nanoz data Indices
 #define MOTORS_SPEEDS_INDEX 1
 // #define DIRECTIONS_BYTE_INDEX 1
 #define ACC_BYTE_INDEX 0
-
-//uart pins
-#define RX_Z 7
-#define TX_Z 8
 
 //Motors speeds
 #define MOT_ZERO_SPEED 1500
@@ -30,4 +26,8 @@
 // #define ACC_PRINT_ON
 // #define UART_PRINT_ON
 
+
+//----------softwareSerial uart pins---------//
+// #define RX_Z 7
+// #define TX_Z 8
 #endif

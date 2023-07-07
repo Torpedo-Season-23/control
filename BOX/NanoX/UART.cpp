@@ -1,9 +1,22 @@
 #include "UART.h"
-#define WAITING_TIME 2
+// #define WAITING_TIME 2
 
-long lastUARTReceiveTime= millis();
-//SoftwareSerial serialYZ(RX_Y, TX_Y);
-long current=5;
+
+void UART_YZ::sendFrame(uint8_t* sendingFrame) {
+  Serial.write('(');
+  Serial.write(sendingFrame, UDP_REC_FRAME);
+  Serial.write(')');
+}
+
+
+//--------------SoftwareSerial--------------//
+
+
+
+// long lastUARTReceiveTime= millis();
+// //SoftwareSerial serialYZ(RX_Y, TX_Y);
+// long current=5;
+
 /*void UART_YZ::begin() {
   serialYZ.begin(9600);
 }*/
@@ -50,12 +63,6 @@ long current=5;
       data[i]= 255;
   }
 }*/
-
-void UART_YZ::sendFrame(uint8_t* sendingFrame) {
-  Serial.write('(');
-  Serial.write(sendingFrame, UDP_REC_FRAME);
-  Serial.write(')');
-}
 
 /*
 inline byte UART_YZ::readByte() {

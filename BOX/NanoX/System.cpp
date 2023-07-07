@@ -4,13 +4,11 @@
 
 void System::init() {
   this->client.init();
-  
- // uart_yz.begin();
   this->client.defaultFrame(udpReceiveFrame);
 }
 
 void System::sendData() {
-   client.sendData(udpSendFrame);
+  client.sendData(udpSendFrame);
 }
 
 void System::receiveData() {
@@ -19,5 +17,4 @@ void System::receiveData() {
 
 void System::activateUART() {
   uart_yz.sendFrame(udpReceiveFrame);
-  //uart_yz.receiveFrame(udpSendFrame);
 }

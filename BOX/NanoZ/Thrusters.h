@@ -18,7 +18,7 @@ private:
 
 class Thrusters {
   // motor pins
-  const int motorPins[MOTORS_COUNT] = { 3,5,6,9,10,11 };
+  const int motorPins[MOTORS_COUNT] = { 3, 5, 6, 9, 10, 11 };
   Thruster Motors[MOTORS_COUNT];
 
 public:
