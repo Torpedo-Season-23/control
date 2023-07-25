@@ -7,7 +7,7 @@ void CommunicationClient::init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 7));
 }
 void CommunicationClient::defaultFrame(uint8_t* frame) {
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < UDP_SEND_FRAME; i++) {
     frame[i] = 0;
   }
 }
@@ -22,7 +22,8 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
     Serial.println(success);
 
     udp.read(receivedFrame, success);
-    /*
+    
+    /* debugging
       for(int i= 0;i<8;i++){
        Serial.print(receivedFrame[i]);
        Serial.print(" ");

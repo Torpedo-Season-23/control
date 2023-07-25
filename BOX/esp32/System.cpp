@@ -1,9 +1,15 @@
 #include "System.h"
+
 void System::init() {
   this->client.init();
   this->client.defaultFrame(udpReceiveFrame);
   tools.init();
   thrusters.init();
+
+  IMU.start();
+  IMU.check();
+  leakage.init();
+  pressure.init();
 }
 
 void System::getData() {
@@ -24,6 +30,15 @@ void System::receiveData() {
   bool i = client.receiveData(udpReceiveFrame);
 }
 
+void System::prepareData() {
+
+  //for(int i=0 ; i<)
+  // IMU.getangles();
+  // pressure.getPressure();
+  // leakage.getHumidity();
+  // leakage.getTemperature();
+
+}
 
 void System::extractData(uint16_t *thrustersFrame, bool *toolsFrame) {
   //extract Accessories data

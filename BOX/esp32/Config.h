@@ -1,13 +1,11 @@
-#ifndef OUT_H
-#define OUT_H
+#ifndef CONFIG_H
+#define CONFIG_H
 #include <Arduino.h>
 
 
 #define MOTORS_COUNT 6
 #define TOOLS_COUNT 8
 
-//uart frame size
-#define UART_Z_FRAME_SIZE 15  // (1 gaurd | 1 Accessories | 6 * 2 Motor  | 1 gaurd )(bytes)
 #define ACTUAL_DATA 13        // (1 Accessories | 6 * 2 Motor )(bytes)
 
 //Nanoz data Indices
@@ -40,5 +38,20 @@
 //debuging
 // #define THRUSTERS_PRINT_ON
 // #define ACC_PRINT_ON
+
+
+/* LEAKAGE */
+#define DHTTYPE DHT11
+#define SENSORS_NUM 8
+#define DHTPIN 2
+
+/* PRESSURE */
+#define MCLK_PIN 10
+#define MISO_PIN 12
+#define MOSI_PIN 11
+#define SCLK_PIN 13
+
+
+
 
 #endif
