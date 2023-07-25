@@ -10,8 +10,6 @@ private:
   EthernetUDP udp;
   uint8_t mac[6] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05 };
 
-
-
 public:
   CommunicationClient() {
   }

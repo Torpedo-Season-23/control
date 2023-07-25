@@ -6,12 +6,11 @@ class System {
 private:
   CommunicationClient client;
   // UART_YZ uart_yz;
-  uint8_t udpReceiveFrame[UDP_REC_FRAME]{0};
+  uint8_t udpReceiveFrame[UDP_REC_FRAME] = { 0 };
   uint8_t udpSendFrame[UDP_SEND_FRAME] = { 0 };
   Thrusters thrusters;
-  Thruster thruster;
   Tools tools;
-  void extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame);
+  void extractData(uint16_t *thrustersFrame, bool *toolsFrame);
 
 public:
   System(){};

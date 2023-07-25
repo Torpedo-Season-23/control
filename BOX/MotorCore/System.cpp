@@ -25,13 +25,13 @@ void System::receiveData() {
 }
 
 
-void System::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
+void System::extractData(uint16_t *thrustersFrame, bool *toolsFrame) {
   //extract Accessories data
   for (int i = 0; i < TOOLS_COUNT; i++) {
     if (udpReceiveFrame[ACC_BYTE_INDEX] & 1 == 1) {
-      toolsFrame[i] = 1;
+      toolsFrame[i] = HIGH;
     } else {
-      toolsFrame[i] = 0;
+      toolsFrame[i] = LOW;
     }
     udpReceiveFrame[ACC_BYTE_INDEX] >>= 1;
   }
