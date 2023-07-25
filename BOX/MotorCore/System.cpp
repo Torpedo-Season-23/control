@@ -29,7 +29,7 @@ void System::extractData(uint16_t *thrustersFrame, uint8_t *toolsFrame) {
   //extract Accessories data
   for (int i = 0; i < TOOLS_COUNT; i++) {
     if (udpReceiveFrame[ACC_BYTE_INDEX] & 1 == 1) {
-      toolsFrame[i] = 255;
+      toolsFrame[i] = 1;
     } else {
       toolsFrame[i] = 0;
     }

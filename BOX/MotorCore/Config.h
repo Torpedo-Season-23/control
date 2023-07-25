@@ -29,6 +29,13 @@
 #define UDP_REC_FRAME 13  // 1 Accessories,  6 thrusters speeds * 2 bytes
 #define UDP_SEND_FRAME 8  // for communication test
 
+/*-------MUX-------*/
+#define MUX_SIG_PIN 0
+#define MUX_CH1_PIN 0
+#define MUX_CH2_PIN 0
+#define MUX_CH3_PIN 0
+#define MUX_CHANALES 3
+
 
 //debuging
 // #define THRUSTERS_PRINT_ON
