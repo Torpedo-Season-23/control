@@ -5,7 +5,7 @@
 
 class Thrusters {
   // motor pins
-  const uint8_t motorPins[MOTORS_COUNT] = { 3, 5, 6, 9, 10, 11 };
+  const uint8_t motorPins[MOTORS_COUNT] = { 14,15,16,17,18,20 };
   Servo Motors[MOTORS_COUNT];
 
 public:
