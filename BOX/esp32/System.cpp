@@ -8,8 +8,6 @@ void System::init() {
 
   IMU.start();
   IMU.check();
-  leakage.init();
-  pressure.init();
 }
 
 void System::getData() {
@@ -23,6 +21,7 @@ void System::setData() {
 
 
 void System::sendData() {
+  prepareData();
   client.sendData(udpSendFrame);
 }
 
@@ -32,11 +31,20 @@ void System::receiveData() {
 
 void System::prepareData() {
 
-  //for(int i=0 ; i<)
-  // IMU.getangles();
-  // pressure.getPressure();
-  // leakage.getHumidity();
-  // leakage.getTemperature();
+  int IMUangles[3] = {0}
+
+  IMUangles[0] = IMU.getangles()[0];
+  IMUangles[1] = IMU.getangles()[1];
+  IMUangles[2] = IMU.getangles()[2];
+
+ 
+  int j=0;
+  for (int i = 0; i < 6; i += 2) {
+
+    udpSendFrame[i] = highByte(IMUangles[j]);
+    udpSendFrame[i + 1] = lowByte(IMUangles[j]);
+    j++;
+  }
 
 }
 

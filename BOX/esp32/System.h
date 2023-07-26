@@ -12,8 +12,6 @@ private:
   uint8_t udpSendFrame[UDP_SEND_FRAME] = { 0 };
   
   TorpedoMPU IMU;
-  PressureSensor pressure;
-  LeakageSensor leakage;
 
   Thrusters thrusters;
   Tools tools;

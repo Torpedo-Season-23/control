@@ -7,7 +7,7 @@ void CommunicationClient::init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 7));
 }
 void CommunicationClient::defaultFrame(uint8_t* frame) {
-  for (int i = 0; i < UDP_SEND_FRAME; i++) {
+  for (int i = 0; i < UDP_REC_FRAME; i++) {
     frame[i] = 0;
   }
 }

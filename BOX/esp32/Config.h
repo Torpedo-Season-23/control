@@ -25,7 +25,7 @@
 
 /*--------UDP--------*/
 #define UDP_REC_FRAME 13  // 1 Accessories,  6 thrusters speeds * 2 bytes
-#define UDP_SEND_FRAME 8  // for communication test
+#define UDP_SEND_FRAME 6 // for communication test
 
 /*-------MUX-------*/
 #define MUX_SIG_PIN 0
@@ -40,12 +40,12 @@
 // #define ACC_PRINT_ON
 
 
-/* LEAKAGE */
+/* LEAKAGE */ //NOT USED
 #define DHTTYPE DHT11
 #define SENSORS_NUM 8
 #define DHTPIN 2
 
-/* PRESSURE */
+/* PRESSURE */ //NOT USED
 #define MCLK_PIN 10
 #define MISO_PIN 12
 #define MOSI_PIN 11
