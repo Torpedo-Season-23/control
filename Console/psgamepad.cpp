@@ -1,21 +1,27 @@
 #include "Arduino.h"
 #include "psgamepad.h"
 
+
+bool timer(){
+  return true;
+}
 void PSGamepad::Update() {
   this->Usb.Task();
   if (this->PS3.PS3Connected || this->PS3.PS3NavigationConnected) {
     this->update_hmotion();
     this->update_vmotion();
-    this->force_stop();
+    // this->force_stop();
     //acc frame
     if (this->PS3.getButtonClick(TRIANGLE)) {
-      if (this->flags[0] == 0) {
-        this->acc_array[0] = 1;
-        this->flags[0] = 1;
-      } else {
-        this->acc_array[0] = 0;
-        this->flags[0] = 0;
-      }
+      for(int i= 0;i<8;i++)
+        this->acc_array[i] ^= 1;
+      // if (this->flags[0] == 0) {
+      //   this->acc_array[0] = 1;
+      //   this->flags[0] = 1;
+      // } else {
+      //   this->acc_array[0] = 0;
+      //   this->flags[0] = 0;
+      // }
     }
     if (this->PS3.getButtonClick(CIRCLE)) {
       if (this->flags[1] == 0) {
@@ -98,7 +104,7 @@ void PSGamepad::update_vmotion() {
   int8_t direction = 0;
   if (this->PS3.getButtonPress(R2)) direction = -1;  //Down
   else if (this->PS3.getButtonPress(L2)) direction = 1;
-  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 400);
+  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 350);
   this->vertical_frame[1] = this->vertical_frame[0];
 }
 void PSGamepad::update_hmotion() {
@@ -122,13 +128,11 @@ void PSGamepad::update_hmotion() {
   this->Td_array[1] = Ty;
   this->Td_array[2] = -Tm;
 }
-void PSGamepad::force_stop(){
+bool PSGamepad::force_stop(){
   if (this->PS3.getButtonPress(START)){
-    this->Td_array[0]=0;
-    this->Td_array[1]=0;
-    this->Td_array[2]=0;
-    Serial.println("force stop");
+    return true;
   }
+  else return false;
   
 }
 
@@ -152,8 +156,23 @@ int8_t PSGamepad::getDirection(){
     //  Serial.print("Left");
     return LEFT;
   }
-
-  return OTHER;
+//M direction 
+  if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])  ){
+    //  Serial.print("Right");
+     return M_LEFT;
+  }
+  if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) >abs(Td_array[0])  ){
+    //  Serial.print("Left");
+    return M_RIGHT;
+  }
+//Up , Down 
+  if(vertical_frame[0] < 1500)
+    return UP;
+  if(vertical_frame[0] > 1500)
+    return DOWN;
+//Stop 
+  return STOP;
+  
 //M direction 
   // if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) > abs(Td_array[1])  ){
   //    Serial.print("Moment Left");
@@ -171,4 +190,15 @@ int8_t PSGamepad::getDirection(){
   // Serial.print(" m: ");
   // Serial.print(Td_array[2]);
   
+}
+
+bool PSGamepad::nrf(){
+  if (this->PS3.getButtonPress(START)){
+    return true;
+  }
+  else return false;
+  
+}
+void PSGamepad:: pitching(){
+  return;
 }

@@ -13,7 +13,7 @@ void Motor::setSpeed(uint16_t newSpeed){
        
     }
     long currentTime= millis();  
-    if(currentTime- this->lastUpdatedTime < 250)
+    if(currentTime- this->lastUpdatedTime < 100)
         return ;
     this->lastUpdatedTime= currentTime;
     if (newSpeed > 1500)// Forward is required.
@@ -37,7 +37,7 @@ void Motor::increaseSpeed(uint16_t newSpeed){
     }
     if(this->counter < 10)
         this->counter++;*/
-    uint16_t newCalculatedSpeed= (positiveCurrentSpeed+30 < positiveRequiredSpeed) ? positiveCurrentSpeed+30 :positiveRequiredSpeed; //New Speed is 2^(d+1)
+    uint16_t newCalculatedSpeed= (positiveCurrentSpeed+80 < positiveRequiredSpeed) ? positiveCurrentSpeed+80 :positiveRequiredSpeed; //New Speed is 2^(d+1)
     this->currentSpeed= newSpeed > MOTOR_STATIC_SPEED ? newCalculatedSpeed + MOTOR_STATIC_SPEED :MOTOR_STATIC_SPEED-newCalculatedSpeed; 
 }
 void Motor::decreaseSpeed(uint16_t newSpeed){

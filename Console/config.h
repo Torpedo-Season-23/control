@@ -9,14 +9,12 @@
 #define HIGH_SPEED_VALUE 128
 
 /*-----------------communication-----------------*/
-#define receivedFrameSize 24  //6 imu, 2 pressure, 8 leakage, 2curr 1temp, 2curr 1 temp respectively
-#define sentFrameSize 8       //1 accessories, 1 directions+conv on/off, 6 speeds respectively
-#define SENSORS 18
+#define receivedFrameSize 10  //6 imu, 2 pressure, 8 leakage, 2curr 1temp, 2curr 1 temp respectively
+#define sentFrameSize 13       //1 accessories, 1 directions+conv on/off, 6 speeds respectively
+#define SENSORS 4
 #define IMU 3
 #define PRESSURE 1
-#define CURRENT 2
-#define TEMPERATURE 2
-#define LEAKAGE 8
+#define TEMPRATURE 1
 #define THRUSTERS 6
 #define ACCESSORIES 8
 
@@ -29,17 +27,6 @@
 #define INCREAMENT_FACTOR 2
 #define log2(a) (log(a) / log(2))
 /*----------Outer Thruster Frame*/
-// typedef enum FrameMotorIndices {
-//   FRONT_LEFT = 0,
-//   UPPER_BACK,
-//   FRONT_RIGHT,
-//   BACKWARD_LEFT,
-//   BACKWARD_RIGHT,
-//   UPPER_FRONT,
-//   LAST
-// } FrameMotorIndices;
-
-
 
 //BACK LEFT : 0
 //BACK RIGHT :2
@@ -48,13 +35,13 @@
 
 
 
-#define FRONT_LEFT  5//1
-#define FRONT_RIGHT 2 //2 *
-#define BACKWARD_LEFT 3 //3*//ma3kos
-#define BACKWARD_RIGHT 1 //5*
+#define FRONT_RIGHT 0 //2 * mmmmmmmm  0
+#define BACKWARD_RIGHT 1 //5 mmmmm  1
+#define UPPER_FRONT 2 //4*         4
+#define FRONT_LEFT  3//1           2
+#define BACKWARD_LEFT 4 //3*       3
+#define UPPER_BACK 5 //0*          5
 
-#define UPPER_BACK 0 //0*
-#define UPPER_FRONT 4 //4*
 
 
 //factors 
@@ -62,7 +49,13 @@
 #define BACKWARD 1
 #define RIGHT 2
 #define LEFT 3
-#define OTHER -1
+#define STOP -1
+#define UP -2
+#define DOWN -3
+#define M_LEFT -4
+#define M_RIGHT -5
+
+
 #define DIRECTIONS 4
 //speeds for factors
 #define LOW_SPEED 0 
