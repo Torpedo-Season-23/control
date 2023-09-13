@@ -6,15 +6,17 @@ void System::init() {
   this->client.init();
   this->client.defaultFrame(udpReceiveFrame);
   this->tools.init();
-  // this->thrusters.init();
-  // this->imu->init();
+   this->thrusters.init();
+   this->imu->init();
   this->pressure->init();
-  this->init_wifi_services();
+//  this->init_wifi_services();
 }
 void System::sensorsUpdate() {
-  // this->imu->update();
+//   this->imu->update();
+//   this->imu->display();
   this->pressure->update();
-  // this->pressure->display();
+   this->pressure->display();
+  
 }
 
 void System::motorToolsUpdate() {
@@ -24,13 +26,13 @@ void System::motorToolsUpdate() {
 
 
 void System::sendData() {
-  this->prepareData();
+//  this->prepareData();
   client.sendData(udpSendFrame);
 }
 
 void System::receiveData() {
   client.receiveData(udpReceiveFrame);
-  this->extractData(this->thrusters.thrustersFrame, this->tools.getToolsFrame());
+//  this->extractData(this->thrusters.thrustersFrame, this->tools.getToolsFrame());
 }
 
 void System::setToolsFrame(bool *arr) {
@@ -38,23 +40,23 @@ void System::setToolsFrame(bool *arr) {
 }
 
 void System::init_wifi_services() {
-  WiFi.mode(WIFI_STA);
-  WiFi.softAP(ssid, password);
-  WiFi.softAPConfig(IPAddress(192, 168, 1, 190), IPAddress(192, 168, 1, 1), IPAddress(255, 255, 255, 0));
-  Serial.println("");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.softAPIP());
-  this->server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send(200, "text/plain", "Hi! I am ESP32.");
-  });
-  AsyncElegantOTA.begin(&server);  // Start ElegantOTA
-  WebSerial.begin(&server);
-  server.begin();
-  Serial.println("HTTP server started");
+//  WiFi.mode(WIFI_STA);
+//  WiFi.softAP(ssid, password);
+//  WiFi.softAPConfig(IPAddress(192, 168, 1, 190), IPAddress(192, 168, 1, 1), IPAddress(255, 255, 255, 0));
+//  Serial.println("");
+//  Serial.print("IP address: ");
+//  Serial.println(WiFi.softAPIP());
+//  this->server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+//    request->send(200, "text/plain", "Hi! I am ESP32.");
+//  });
+//  AsyncElegantOTA.begin(&server);  // Start ElegantOTA
+//  WebSerial.begin(&server);
+//  server.begin();
+//  Serial.println("HTTP server started");
 }
 void System::prepareData() {
   int sensorFrame[5] = { 0 };
-  int temp = (int)((float)(this->pressure->getTemprature() + this->imu->getTemprature()) / 2.0);
+  int temp = (int)(float)(this->imu->getTemprature());//this->pressure->getTemprature() + ) / 2.0);
   for (int i = 0; i < 3; i++) {
     sensorFrame[i] = this->imu->getAngles()[i];
   }
@@ -65,6 +67,7 @@ void System::prepareData() {
     this->udpSendFrame[i] = highByte(sensorFrame[j]);
     this->udpSendFrame[i + 1] = lowByte(sensorFrame[j]);
     j++;
+    
   }
 }
 
@@ -113,4 +116,11 @@ uint8_t *System::getUdpReceiveFrame() {
 }
 uint8_t *System::getUdpSendFrame() {
   return this->udpSendFrame;
+}
+
+
+void System::tryIMU()
+{
+   this->imu->update();
+   this->imu->display();
 }

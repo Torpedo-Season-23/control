@@ -16,7 +16,7 @@ class System {
 private:
   CommunicationClient client;
   uint8_t udpReceiveFrame[UDP_REC_FRAME] = { 0 };
-  uint8_t udpSendFrame[UDP_SEND_FRAME] = { 0 };
+  uint8_t udpSendFrame[UDP_SEND_FRAME] = { 1,2,3,4,5,6,7,8,9,10 };
   Thrusters thrusters;
   Tools tools;
   AsyncWebServer server;
@@ -47,4 +47,6 @@ public:
   uint8_t *getUdpReceiveFrame();
   uint8_t *getUdpSendFrame();
   void setToolsFrame(bool * arr);
+
+  void tryIMU();
 };

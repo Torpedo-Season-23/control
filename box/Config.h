@@ -8,10 +8,10 @@
 
 
 /*-----------------------Pressure sensor----------------------------*/
-#define SCLK 14
-#define MCLK 15
-#define MOSI 13
-#define MISO 34
+#define SCLK 15 //14 
+#define MCLK 14 //15
+#define MOSI 13 //okay
+#define MISO 34 //okay
 #define pwm_Channel 0    // PWM channel (0-15)
 #define pwm_Resolution 8  // PWM resolution (bits)
 #define pwm_Freq 30000    // Desired PWM frequency in Hz
@@ -49,7 +49,7 @@
 
 
 //debuging
-// #define THRUSTERS_PRINT_ON
+ #define THRUSTERS_PRINT_ON
 // #define ACC_PRINT_ON
 
 

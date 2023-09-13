@@ -4,7 +4,7 @@
 
 class Factor {
 
-    float factors[DIRECTIONS][SPEEDS_NUMBER][MOTORS_NUMBER] = {0};
+    float factors[DIRECTIONS][SPEEDS_NUMBER][MOTORS_NUMBER]; //= {0};
 
   public:
 

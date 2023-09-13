@@ -14,7 +14,7 @@ IMU::IMU(int rate):mpu(Wire){
 
 
 
-void IMU::init() {
+void IMU::init(){
   Wire.begin();
   byte status = this->mpu.begin();
   Serial.print(F("MPU6050 status: "));
@@ -48,13 +48,13 @@ int IMU::getTemprature() {
 
 void IMU::display() {
   Serial.print("ANGLES =    X: ");
-  Serial.print(this->angles[0]);
+  Serial.print(this->angles[2]);
   Serial.print("\tY: ");
   Serial.print(this->angles[1]);
   Serial.print("\tZ: ");
-  Serial.println(this->angles[2]);
+  Serial.println(this->angles[0]);
   Serial.print("temperature = ");
   Serial.print(this->temp);
   Serial.println(" °C");
-  Serial.println("************************************");
+//  Serial.println("************************************");
 }

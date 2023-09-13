@@ -26,7 +26,7 @@ void Communication_task(void* vparameter) {
     xSemaphoreGive(sem1);
   }
 }
-void motor_task(void* vparameter) {
+void motor_task(void* vparameter){
   for (;;) {
     xSemaphoreTake(sem, portMAX_DELAY);
     sys.motorToolsUpdate();
@@ -35,6 +35,7 @@ void motor_task(void* vparameter) {
 }
 void sensor_task(void* vparameter) {
   for (;;) {
+//    Serial.println("ana task elsensors");
     xSemaphoreTake(sem1, portMAX_DELAY);
     sys.sensorsUpdate();
     xSemaphoreGive(sem1);
@@ -82,5 +83,11 @@ void setup() {
 }
 
 void loop() {
-  vTaskDelete(NULL);
+  sys.tryIMU();
+//  vTaskDelete(NULL);
+//  sys.receiveData();
+//  sys.sensorsUpdate();
+//  sys.sendData();
+  
+
 }

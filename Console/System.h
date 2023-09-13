@@ -47,7 +47,7 @@ void System:: clearLCD(){
 }
 void System::Init() {
   this->time=millis();
-  // this->gamepad->init();
+   this->gamepad->init();
   this->console.comm_init();
   this->indexConverter.init(thruster.get_thruster_frame());
   this->lcd.init();
@@ -58,6 +58,7 @@ void System::Update() {
   bool attach = this->gamepad->force_stop();
   uint8_t receivedFrame[receivedFrameSize];
   this->gamepad->Update();
+//  Serial.println("Are you here?");
   int speed = this->gamepad->getspeed();
   int* array = this->gamepad->get_hframe();
   int* v = this->gamepad->get_vframe();
@@ -68,23 +69,39 @@ void System::Update() {
   int* res;
   res = thruster.get_thruster_frame();
 
-  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
+
+//  Serial.print("acc frame: ");
+//  for(int i=0; i<8;i++)
+//  {
+//    Serial.print(acc[i]);
+//    Serial.print(" ");
+//    }
+//    Serial.println();
+//
+//     Serial.print("thrusters frame: ");
+//  for(int i=0; i<6;i++)
+//  {
+//    Serial.print(res[i]);
+//    Serial.print(" ");
+//    }
+//    Serial.println();
+//  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
   motors.update(res);
-  int h=Serial.read()-48;
-  if (h==0){
-    for (int i=0;i<8;i++){
-    this->acs[i]=1;
-    this->arr[i]=1800;
-    }
-    Serial.println("all grippers on");
-  }
-  else if(h==1){
-    for (int i=0;i<8;i++){
-    this->acs[i]=0;
-    this->arr[i]=1500;}
-    Serial.println("all grippers off");
-  }
-  res = indexConverter.updateArray();
+//  int h=Serial.read()-48;
+//  if (h==0){
+//    for (int i=0;i<8;i++){
+//    this->acs[i]=1;
+//    this->arr[i]=1800;
+//    }
+//    Serial.println("all grippers on");
+//  }
+//  else if(h==1){
+//    for (int i=0;i<8;i++){
+//    this->acs[i]=0;
+//    this->arr[i]=1500;}
+//    Serial.println("all grippers off");
+//  }
+//  res = indexConverter.updateArray();
 
   // if (this->time-this->prev>3000){
   //     this->prev=millis();
@@ -101,7 +118,7 @@ void System::Update() {
   // }
   uint8_t sentFrame[16];
   int16_t sensors[SENSORS];
-  this->console.prepareData(this->acs, this->arr, sentFrame, attach);
+  this->console.prepareData(acc, res, sentFrame, attach);
   this->console.receiveData(receivedFrame);
   this->console.sendData(sentFrame);
   this->lcd.update(sensors , acc , this->gamepad->getspeed() , this->gamepad->getDirection());
