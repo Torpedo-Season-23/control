@@ -10,30 +10,36 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <WebSerial.h>
+#include <AsyncTCP.h>
+#include <Arduino_JSON.h>
+#include "SPIFFS.h"
 
 
 class System {
 private:
-  CommunicationClient client;
-  uint8_t udpReceiveFrame[UDP_REC_FRAME] = { 0 };
-  uint8_t udpSendFrame[UDP_SEND_FRAME] = { 1,2,3,4,5,6,7,8,9,10 };
-  Thrusters thrusters;
-  Tools tools;
-  AsyncWebServer server;
   IMU *imu;
+  Tools tools;
+  JSONVar readings;
   Pressure *pressure;
+  Thrusters thrusters;
+  AsyncWebServer server;
+  AsyncEventSource events;
+  CommunicationClient client;
   const char *ssid = "esp";
   const char *password = "12345678";
-  void extractData(uint16_t *thrustersFrame, bool *toolsFrame);
-  void init_wifi_services();
+  void init_spiffs();
   void prepareData();
+  void init_wifi_services();
+  uint8_t udpSendFrame[UDP_SEND_FRAME] = { 0 };
+  uint8_t udpReceiveFrame[UDP_REC_FRAME] = { 0 };
+  void extractData(uint16_t *thrustersFrame, bool *toolsFrame);
 public:
   System()
-    : server(80) {
+    : server(80) ,events("/events") , tools(33,32,17){
     this->imu = new IMU();
     this->pressure = new Pressure();
   }
-  ~System(){
+  ~System() {
     delete this->imu;
     delete this->pressure;
     delete this->udpSendFrame;
@@ -42,11 +48,10 @@ public:
   void init();
   void sendData();
   void receiveData();
-  void motorToolsUpdate();
   void sensorsUpdate();
+  void motorToolsUpdate();
   uint8_t *getUdpReceiveFrame();
   uint8_t *getUdpSendFrame();
-  void setToolsFrame(bool * arr);
-
-  void tryIMU();
+  void setToolsFrame(bool *arr);
+  void setThrusterFrame(int arr);
 };

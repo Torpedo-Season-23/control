@@ -37,9 +37,9 @@ void Thrusters::set_h_forces(int *array) {
     // this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1875, 1125);
     // else
     if ( i == 2 || i == 3)
-      this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1200, 1800);
+      this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1100, 1900);
     else
-      this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1800, 1200);
+      this->thruster_frame[i] = map(this->thruster_frame[i], -range, range, 1100, 1900);
 
     // Serial.println("thruster orignal");
     // for(int i=0;i<)
@@ -79,15 +79,15 @@ void Thrusters::set_v_forces(int *array) {
   else
     this->thruster_frame[5] = array[1];   
   
-  Serial.print(this->thruster_frame[4]);
-  Serial.print("  ");
+  // Serial.print(this->thruster_frame[4]);
+  // Serial.print("  ");
 
   // Serial.print(this->thruster_frame[4]);
   // Serial.print("\t");
 
-  Serial.print(this->thruster_frame[5]);
-  Serial.print("  ");
-
+  // Serial.print(this->thruster_frame[5]);
+  // Serial.print("  ");
+  // Serial.println();
   // Serial.print(this->thruster_frame[5]);
   //   Serial.print("\t");
   // free(array);

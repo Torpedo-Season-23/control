@@ -6,7 +6,7 @@ long lastTimeOnReceive = millis();
 void CommunicationClient::init() {
 
   if (Ethernet.hardwareStatus() == EthernetNoHardware) {
-    Serial.println("Ethernet shield was not found.  Sorry, can't run without hardware :(");
+    Serial.println("Ethernet shield was not found.  Sorry, can't run without hardware. :(");
     // while (true) {
     //   delay(1);  // do nothing, no point running without Ethernet hardware
     // }
@@ -17,15 +17,32 @@ void CommunicationClient::init() {
 
   Ethernet.begin(this->mac, this->ip);
   Serial.println("Ethernet Connected");
-  Serial.print("IP ADDRESS: ");
-  Serial.println(this->ip);
 
   delay(5000);
 }
 void CommunicationClient::defaultFrame(uint8_t* frame) {
-  for (int i = 0; i < UDP_REC_FRAME; i++) {
-    frame[i] = 0;
-  }
+  // frame[0]=0;
+  frame[1]=220;
+  frame[2]=5;
+  frame[3]=220;
+  frame[4]=5;
+  frame[5]=220;
+  frame[6]=5;
+  frame[7]=220;
+  frame[8]=5;
+  frame[9]=220;
+  frame[10]=5;
+  frame[11]=220;
+  frame[12]=5;
+ 
+  // frame[0]=0;
+  // for (int i = 1; i < UDP_REC_FRAME; i++) {
+  //   if(i%2==0)
+  //   frame[i] = 5;
+  //   else
+  //   frame[i] = 220;
+
+  // }
 }
 
 bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
@@ -33,30 +50,22 @@ bool CommunicationClient::receiveData(uint8_t* receivedFrame) {
   int success;
   success = udp.parsePacket();
   if (success) {
-    Serial.print("Received! Success is ");
-    Serial.println(success);
-    udp.read(receivedFrame, success);
-    for(int i=0 ; i<UDP_SEND_FRAME ; i++)
-    {
-      Serial.print(receivedFrame[i]);
-      Serial.print(" ");
-    }
-    Serial.println();
-      
-    lastTimeOnReceive = millis();
+    udp.read(receivedFrame, 14);
+    this->toolbyte=receivedFrame[0];
+    //     Serial.print("frame ");
+    // // lastTimeOnReceive = millis();
+    //  for (int i = 0; i < 13; i++)
+    //  {
+    //     Serial.print(receivedFrame[i]);
+    //     Serial.print(" ");
+    //  }
+    //  Serial.println();
   } else {
-    if (millis() - lastTimeOnReceive > 3000) {
-//      Serial.println("Haven't received for 3 seconds! No UDP Communication");
-        receivedFrame[0] = 24;
-      for (int i = 1; i < UDP_SEND_FRAME; i++)
-        receivedFrame[i] = 0;
-       for(int i=0 ; i<UDP_SEND_FRAME ; i++)
-    {
-      Serial.print(receivedFrame[i]);
-      Serial.print(" ");
-    }
-    Serial.println();
-    }
+    // if (millis() - lastTimeOnReceive > 3000) {
+    //   for (int i = 1; i < 8; i++)
+    //     receivedFrame[i] = 0;
+    //   // Serial.println("Haven't received for 3 seconds! No UDP Communication");
+    // }
   }
   udp.flush();
   return success > 0;
@@ -69,9 +78,6 @@ void CommunicationClient::sendData(uint8_t* frame) {
   //   this->init();
   //   return;
   // }
-//  Serial.println("I'm writing to send data :), ");
-//  for(int i=0 ; i<UDP_SEND_FRAME ; i++)
-//    frame[i] = i;
   int size = udp.write(frame, UDP_SEND_FRAME);
   udp.endPacket();
   udp.stop();

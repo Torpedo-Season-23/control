@@ -146,3 +146,5 @@ int Pressure::getPressure(){
 int Pressure::getTemprature(){
   return this->temp;
 }
+
+

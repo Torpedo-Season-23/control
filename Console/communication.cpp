@@ -41,17 +41,17 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   }
 
   Serial.print("IMU:  ");
-  for(int i=0;i<3;i++){
+  for(int i=0;i<IMU;i++){
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
   Serial.print("Pressure:  ");
-  for(int i=3;i<4;i++){
+  for(int i=3;i<PRESSURE;i++){
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
   Serial.print("Temp:  ");
-  for(int i=4;i<5;i++){
+  for(int i=4;i<TEMPRATURE;i++){
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
@@ -91,28 +91,43 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
       x += weights[i];
     }
   }
-//  Serial.print("x = ");
-//  Serial.println(x);
   sentFrame[0] = (uint8_t)x;
 
   // 2nd byte for thrusters' direction + converters on/off
-  x = 0;
- 
-  sentFrame[1] = (uint8_t)x;
+  // x = 0;
+  // //int weights[6] = { 1, 2, 4, 8, 16, 32};
+  // for (int i = THRUSTERS - 1; i >= 0; i--) {
+  //   if (thrusters[i] > 1500) {
+  //     x += th_weights[i];  // 1500 will be added in Box
+  //   }
+  // }
+  // //  Serial.println(sentFrame[0]);
+
+  // //delay(500);
+  // sentFrame[1] = (uint8_t)x;
 
   // 6 bytes thrusters' speed
   int j = 0;  // thrusters speed: 1100 - 1900
-  
-
+  // Serial.println(thrusters[0]);
+  // Serial.print("Thrusters:  ");
+  // Serial.print("Motors : ");
+  // for (int i = 0; i < MOTORS_NUMBER; i++) {
+  //   Serial.print(thrusters[i]);
+  //   Serial.print("  ");
+  // }
+  for (int i = 1; i < 13; i += 2) {
+    sentFrame[i] = lowByte(thrusters[j]);
+    sentFrame[i+1] = highByte(thrusters[j]);
     j++;
-//  }
-  
-   j = 0;
-   for (int i = 1; i < sentFrameSize; i += 2) { //will be changed
-     sentFrame[i] = lowByte(thrusters[j]);
-     sentFrame[i + 1] = highByte(thrusters[j]);
-     j++;
-   }
+  }
+  // Serial.println();
+
+  // int j = 0;
+  // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed
+  //   sentFrame[i] = lowByte(thrusters[j]);
+  //   sentFrame[i + 1] = highByte(thrusters[j]);
+  //   j++;
+  // }
 
 
   // Serial.print("sent frame ");
@@ -124,22 +139,18 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
 }
 
 void Communication::sendData(uint8_t* sentFrame) {
-
-//  for(int i=0 ; i<13 ; i++){
-//    Serial.print(sentFrame[i]);
-//    Serial.print(" ");
-//    }
-//    Serial.println();
   int x = this->udp.beginPacket(this->boxIP, this->boxPort);
   if (!x) {
     // Serial.println("Problem resolving the hostname or port.");
     this->comm_init();
   }
-  // for(int i=2;i<8;i++){
-  //   Serial.print(" ");
-  //   // sentFrame[i]=100;
-  //   Serial.print(sentFrame[i]);}
-  // Serial.println();
+  Serial.print("sentframe : ");
+  for(int i=0;i<13;i++){
+    Serial.print(sentFrame[i]);
+    Serial.print(" ");
+    }
+    // sentFrame[i]=100;
+  Serial.println();
 
   this->udp.write(sentFrame, sentFrameSize);
   this->udp.endPacket();

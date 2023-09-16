@@ -2,17 +2,24 @@
 
 void Thrusters::init() {
   for (int i = 0; i < MOTORS_COUNT; i++) {
-    Motors[i].setPeriodHertz(50); ;
+    Motors[i].setPeriodHertz(100); ;
     Motors[i].attach(motorPins[i]);
+  }
+  delay(2000);
+  for (int i = 0; i < MOTORS_COUNT; i++) {
     Motors[i].writeMicroseconds(MOT_ZERO_SPEED);
   }
-  delay(1000);
+  
 }
 
 
 //set speeds to Motors
 void Thrusters::update() {
+  // Serial.print("Motors : ");
   for (int i = 0; i < MOTORS_COUNT; i++) {
+  // Serial.print(thrustersFrame[i]);
+  // Serial.print(" ");
     Motors[i].writeMicroseconds(thrustersFrame[i]);
   }
+  // Serial.println();
 }

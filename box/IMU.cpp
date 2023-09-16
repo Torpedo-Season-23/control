@@ -1,22 +1,11 @@
 #include "IMU.h"
 
-IMU::IMU():mpu(Wire) {
-  
-  this->angles = new int[3];
-  this->temp = 0;
-  this->readRate=1000;
-}
-IMU::IMU(int rate):mpu(Wire){
-  this->angles = new int[3];
-  this->temp = 0;
-  this->readRate=rate;
-}
 
 
-
-void IMU::init(){
+void IMU::init() {
   Wire.begin();
-  byte status = this->mpu.begin();
+  Serial.println("here");
+  byte status = this->mpu->begin();
   Serial.print(F("MPU6050 status: "));
   Serial.println(status);
   if (status != 0) {
@@ -24,17 +13,22 @@ void IMU::init(){
   }
   Serial.println(F("Calculating offsets, do not move MPU6050"));
   delay(1000);
-  this->mpu.calcOffsets();  // gyro and accelero
+  this->mpu->calcOffsets();  // gyro and accelero
   Serial.println("Done!\n");
+  mpu->update();
+  this->offset_x=mpu->getAngleX();
+  this->offset_y=mpu->getAngleY();
+  this->offset_z=mpu->getAngleZ();
 }
 
 void IMU::update() {
-  this->mpu.update();
-  if ((millis() - this->timer) > this->readRate) {  // print data every 10ms
-    this->angles[0]=this->mpu.getAngleX();
-    this->angles[1]=this->mpu.getAngleY();
-    this->angles[2]=this->mpu.getAngleZ();
-    this->timer = millis();
+  mpu->update();
+  if((millis()-timer)>10){ // print data every 10ms
+	this->angles[0]=mpu->getAngleX()-this->offset_x;
+	this->angles[1]=mpu->getAngleY()-this->offset_y;
+	this->angles[2]=mpu->getAngleZ()-this->offset_z;
+  this->temp=this->mpu->getTemp();
+	timer = millis();  
   }
 }
 
@@ -47,14 +41,15 @@ int IMU::getTemprature() {
 }
 
 void IMU::display() {
+
   Serial.print("ANGLES =    X: ");
-  Serial.print(this->angles[2]);
+  Serial.print(this->angles[0]);
   Serial.print("\tY: ");
   Serial.print(this->angles[1]);
   Serial.print("\tZ: ");
-  Serial.println(this->angles[0]);
+  Serial.println(this->angles[2]);
   Serial.print("temperature = ");
   Serial.print(this->temp);
   Serial.println(" °C");
-//  Serial.println("************************************");
+  Serial.println("************************************");
 }

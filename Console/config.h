@@ -10,7 +10,7 @@
 
 /*-----------------communication-----------------*/
 #define receivedFrameSize 10  //6 imu, 2 pressure, 8 leakage, 2curr 1temp, 2curr 1 temp respectively
-#define sentFrameSize 13       //1 accessories, 1 directions+conv on/offy000, 6 speeds respectively
+#define sentFrameSize 13       //1 accessories, 1 directions+conv on/off, 6 speeds respectively
 #define SENSORS 4
 #define IMU 3
 #define PRESSURE 1

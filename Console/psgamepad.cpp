@@ -2,23 +2,20 @@
 #include "psgamepad.h"
 
 
-bool PSGamepad :: timer(){
+bool PSGamepad:: timer(){
   return true;
 }
 void PSGamepad::Update() {
-//  Serial.println("ana dakhalt elupdate"); //printed
   this->Usb.Task();
-//  Serial.println("ana 3addet eltask"); //printed
   if (this->PS3.PS3Connected || this->PS3.PS3NavigationConnected) {
-//    Serial.println("ana dakhalt gowa khales"); 
     this->update_hmotion();
     this->update_vmotion();
     // this->force_stop();
     //acc frame
-    if (this->PS3.getButtonClick(TRIANGLE)) {
-      Serial.println("TRIANGLE"); 
+    if (this->PS3.getButtonClick(R3)) {
       for(int i= 0;i<8;i++)
         this->acc_array[i] ^= 1;
+    }
       // if (this->flags[0] == 0) {
       //   this->acc_array[0] = 1;
       //   this->flags[0] = 1;
@@ -26,9 +23,16 @@ void PSGamepad::Update() {
       //   this->acc_array[0] = 0;
       //   this->flags[0] = 0;
       // }
+    if (this->PS3.getButtonClick(TRIANGLE)) {
+      if (this->flags[0] == 0) {
+        this->acc_array[0] = 1;
+        this->flags[0] = 1;
+      } else {
+        this->acc_array[0] = 0;
+        this->flags[0] = 0;
+      }
     }
     if (this->PS3.getButtonClick(CIRCLE)) {
-      Serial.println("CIRCLE"); 
       if (this->flags[1] == 0) {
         this->acc_array[1] = 1;
         this->flags[1] = 1;
@@ -38,7 +42,6 @@ void PSGamepad::Update() {
       }
     }
     if (this->PS3.getButtonClick(CROSS)) {
-      Serial.println("CROSS"); 
       if (this->flags[2] == 0) {
         this->acc_array[2] = 1;
         this->flags[2] = 1;
@@ -48,7 +51,6 @@ void PSGamepad::Update() {
       }
     }
     if (this->PS3.getButtonClick(SQUARE)) {
-      Serial.println("SQUARE"); 
       if (this->flags[3] == 0) {
         this->acc_array[3] = 1;
         this->flags[3] = 1;
@@ -58,7 +60,6 @@ void PSGamepad::Update() {
       }
     }
      if (this->PS3.getButtonClick(UP)) {
-      Serial.println("UP"); 
       if (this->flags[4] == 0) {
         this->acc_array[4] = 1;
         this->flags[4] = 1;
@@ -68,7 +69,6 @@ void PSGamepad::Update() {
       }
     }
      if (this->PS3.getButtonClick(RIGHT)) {
-      Serial.println("RIGHT"); 
       if (this->flags[5] == 0) {
         this->acc_array[5] = 1;
         this->flags[5] = 1;
@@ -78,7 +78,6 @@ void PSGamepad::Update() {
       }
     }
      if (this->PS3.getButtonClick(DOWN)) {
-      Serial.println("DOWN"); 
       if (this->flags[6] == 0) {
         this->acc_array[6] = 1;
         this->flags[6] = 1;
@@ -88,7 +87,6 @@ void PSGamepad::Update() {
       }
     }
      if (this->PS3.getButtonClick(LEFT)) {
-      Serial.println("LEFT"); 
       if (this->flags[7] == 0) {
         this->acc_array[7] = 1;
         this->flags[7] = 1;
@@ -103,12 +101,10 @@ void PSGamepad::Update() {
 
     //set speed
     if (this->PS3.getButtonClick(L1)) {
-      Serial.println("L1"); 
       if (this->speed > 0)
         this->speed--;
     }
     if (this->PS3.getButtonClick(R1)) {
-      Serial.println("R1"); 
       if (this->speed < 2) this->speed++;
     }
   }
@@ -117,7 +113,7 @@ void PSGamepad::update_vmotion() {
   int8_t direction = 0;
   if (this->PS3.getButtonPress(R2)) direction = -1;  //Down
   else if (this->PS3.getButtonPress(L2)) direction = 1;
-  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 350);
+  this->vertical_frame[0] = 1500 + direction * map(this->speeds[this->speed], 0, 128, 0, 400);
   this->vertical_frame[1] = this->vertical_frame[0];
 }
 void PSGamepad::update_hmotion() {
