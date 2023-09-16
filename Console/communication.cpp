@@ -144,11 +144,11 @@ void Communication::sendData(uint8_t* sentFrame) {
     // Serial.println("Problem resolving the hostname or port.");
     this->comm_init();
   }
-  Serial.print("sentframe : ");
-  for(int i=0;i<13;i++){
-    Serial.print(sentFrame[i]);
-    Serial.print(" ");
-    }
+//  Serial.print("sentframe : ");
+//  for(int i=0;i<13;i++){
+//    Serial.print(sentFrame[i]);
+//    Serial.print(" ");
+//    }
     // sentFrame[i]=100;
   Serial.println();
 

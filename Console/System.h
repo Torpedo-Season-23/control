@@ -67,7 +67,7 @@ void System::Update() {
   int* res;
   res = thruster.get_thruster_frame();
 
-  // this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
+   this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
   motors.update(res);
   // motors.print();
   // Serial.print("Tools : ");

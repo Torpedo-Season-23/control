@@ -65,30 +65,31 @@ void Thrusters::set_v_forces(int *array) {
     this->thruster_frame[5]= 1500;
     return;
     };
-  if (array[0] > 1500 && array[0] < 1750)
-    this->thruster_frame[4] = 1750;
-  else if(array[0] < 1500 & array[0] > 1250)
-    this->thruster_frame[4]= 1250;
-  else
-    this->thruster_frame[4] = array[0];
+//  if (array[0] > 1500 && array[0] < 1750)
+//    this->thruster_frame[4] = 1750;
+//  else if(array[0] < 1500 && array[0] > 1250)
+//    this->thruster_frame[4]= 1250;
+//  else
+//    this->thruster_frame[4] = array[0];
+//
+//  if (array[1] > 1500 && array[1] < 1750)
+//    this->thruster_frame[5] = 1750;
+//  else if(array[1] < 1500 && array[1] > 1250)
+//    this->thruster_frame[5]= 1250;
+//  else
+//    this->thruster_frame[5] = array[1];
 
-  if (array[1] > 1500 && array[1] < 1750)
-    this->thruster_frame[5] = 1750;
-  else if(array[1] < 1500 & array[1] > 1250)
-    this->thruster_frame[5]= 1250;
-  else
-    this->thruster_frame[5] = array[1];   
+  this->thruster_frame[UPPER_BACK] = array[1];
+  this->thruster_frame[UPPER_BACK] -= 1500;
+  this->thruster_frame[UPPER_BACK] *= -1;
+  this->thruster_frame[UPPER_BACK] += 1500;
+
+  this->thruster_frame[UPPER_FRONT] = array[0];
   
-  // Serial.print(this->thruster_frame[4]);
-  // Serial.print("  ");
+  Serial.print(this->thruster_frame[4]);
+  Serial.print("  ");
 
-  // Serial.print(this->thruster_frame[4]);
-  // Serial.print("\t");
+  Serial.println(this->thruster_frame[5]);
 
-  // Serial.print(this->thruster_frame[5]);
-  // Serial.print("  ");
-  // Serial.println();
-  // Serial.print(this->thruster_frame[5]);
-  //   Serial.print("\t");
   // free(array);
 }
