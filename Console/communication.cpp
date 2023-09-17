@@ -46,12 +46,12 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
     Serial.print("  ");
   }
   Serial.print("Pressure:  ");
-  for(int i=3;i<PRESSURE;i++){
+  for(int i=3;i<4;i++){
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
   Serial.print("Temp:  ");
-  for(int i=4;i<TEMPRATURE;i++){
+  for(int i=4;i<5;i++){
     Serial.print(sensors[i]);
     Serial.print("  ");
   }
@@ -150,7 +150,7 @@ void Communication::sendData(uint8_t* sentFrame) {
 //    Serial.print(" ");
 //    }
     // sentFrame[i]=100;
-  Serial.println();
+  // Serial.println();
 
   this->udp.write(sentFrame, sentFrameSize);
   this->udp.endPacket();

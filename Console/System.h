@@ -23,6 +23,8 @@ class System {
     IndexConverter indexConverter;
     Factor factor;
     LCD lcd;
+    float fact[4]={1};
+    int k=0;
     long time=0;
     long prev=0;
     bool is=true;
@@ -66,10 +68,22 @@ void System::Update() {
   thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
   res = thruster.get_thruster_frame();
+  
+  
+  // if(Serial.available()){
+  //   float x =Serial.parseFloat();
+  //   fact[k%4]=x;
+  //   k++;
+  // }
+  // for(int i=0;i<4;i++){Serial.print(fact[i]);
+  // Serial.print("  ");
+  // }
 
-   this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
+  // this->factor.setFactors(this->gamepad->getDirection(), thruster.speed, fact);
+  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
   motors.update(res);
   // motors.print();
+  // Serial.println();
   // Serial.print("Tools : ");
   // for (int i=0; i<8;i++){
   //   Serial.print(acc[i]);

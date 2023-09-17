@@ -86,10 +86,10 @@ void Thrusters::set_v_forces(int *array) {
 
   this->thruster_frame[UPPER_FRONT] = array[0];
   
-  Serial.print(this->thruster_frame[4]);
-  Serial.print("  ");
+  // Serial.print(this->thruster_frame[4]);
+  // Serial.print("  ");
 
-  Serial.println(this->thruster_frame[5]);
+  // Serial.println(this->thruster_frame[5]);
 
   // free(array);
 }
