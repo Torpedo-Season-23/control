@@ -70,16 +70,16 @@ void System::Update() {
   res = thruster.get_thruster_frame();
   
   
-  // if(Serial.available()){
-  //   float x =Serial.parseFloat();
-  //   fact[k%4]=x;
-  //   k++;
-  // }
-  // for(int i=0;i<4;i++){Serial.print(fact[i]);
-  // Serial.print("  ");
-  // }
+  if(Serial.available()){
+    float x =Serial.parseFloat();
+    fact[k%4]=x;
+    k++;
+  }
+  for(int i=0;i<4;i++){Serial.print(fact[i]);
+  Serial.print("  ");
+  }
 
-  // this->factor.setFactors(this->gamepad->getDirection(), thruster.speed, fact);
+  this->factor.setFactors(this->gamepad->getDirection(), thruster.speed, fact);
   this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
   motors.update(res);
   // motors.print();
@@ -89,7 +89,7 @@ void System::Update() {
   //   Serial.print(acc[i]);
   //   Serial.print(" ");
   // }
-  // Serial.println();
+  Serial.println();
   // int h=Serial.read()-48;
   // if (h==0){
   //   for (int i=0;i<8;i++){

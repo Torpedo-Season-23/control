@@ -6,6 +6,17 @@ int* IController::get_hframe() {
 int* IController::get_vframe() {
   return this->vertical_frame;
 }
+void IController::set_hframe(int *arr){
+  for(int i=0;i<3;i++){
+    this->Td_array[i]=arr[i];
+  }
+}
+void IController::set_vframe(int *arr){
+  for(int i=0;i<2;i++){
+    this->vertical_frame[i]=arr[i];
+  }
+
+}
 
 // void IController::set_hframe(int array){this->Td_array=array}
 // void IController::set_vframe(int *array){this->vertical_frame=array}

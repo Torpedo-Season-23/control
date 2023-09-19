@@ -40,21 +40,21 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
     j += 2;
   }
 
-  Serial.print("IMU:  ");
-  for(int i=0;i<IMU;i++){
-    Serial.print(sensors[i]);
-    Serial.print("  ");
-  }
-  Serial.print("Pressure:  ");
-  for(int i=3;i<4;i++){
-    Serial.print(sensors[i]);
-    Serial.print("  ");
-  }
-  Serial.print("Temp:  ");
-  for(int i=4;i<5;i++){
-    Serial.print(sensors[i]);
-    Serial.print("  ");
-  }
+  // Serial.print("IMU:  ");
+  // for(int i=0;i<IMU;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.print("Pressure:  ");
+  // for(int i=3;i<4;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.print("Temp:  ");
+  // for(int i=4;i<5;i++){
+  //   Serial.print(sensors[i]);
+  //   Serial.print("  ");
+  // }
   // Serial.print("Converter1:  ");
   // for(int i=12;i<3;i++){
   //   Serial.print(sensors[i]);
@@ -65,7 +65,7 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   //   Serial.print(sensors[i]);
   //   Serial.print("  ");
   // }
-  Serial.println();
+  // Serial.println();
 
 
   //  Serial.print("Sensors reading: ");

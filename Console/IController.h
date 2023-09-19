@@ -33,6 +33,8 @@ public:
   int* get_hframe();
   int* get_vframe();
   int* get_accframe();
+  void set_hframe(int *arr);
+  void set_vframe(int *arr);
   uint8_t isAutonomous;
   long timeOfAutonomous;
   int getspeed();
