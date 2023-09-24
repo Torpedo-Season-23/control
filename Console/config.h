@@ -35,10 +35,10 @@
 
 
 
-#define FRONT_LEFT  0//1           2
-#define FRONT_RIGHT 3 //2 * mmmmmmmm  0
-#define BACKWARD_LEFT 2 //4*         4
-#define BACKWARD_RIGHT 1 //5 mmmmm  1
+#define FRONT_LEFT 0  //1           2
+#define FRONT_RIGHT 3  //2 * mmmmmmmm  0
+#define BACKWARD_LEFT 1 //4*         4
+#define BACKWARD_RIGHT 2 //5 mmmmm  1
 
 
 #define UPPER_FRONT 4 //3*       3

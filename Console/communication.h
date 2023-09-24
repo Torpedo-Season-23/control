@@ -15,7 +15,7 @@ private:
 public:
   Communication(): consoleIP(192, 168, 1, 9),boxIP(192, 168, 1, 7){}
   void comm_init();
-  void receiveData(uint8_t* receivedFrame);
+  void receiveData(uint8_t* receivedFrame,int16_t* sensors);
   void getSensors(uint8_t* receivedFrame, int16_t* sensors);
   void prepareData(int* accessories, int* thrusters, uint8_t* sentFrame, bool attach);
   void sendData(uint8_t* sentFrame);

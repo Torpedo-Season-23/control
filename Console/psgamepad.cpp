@@ -11,6 +11,7 @@ void PSGamepad::Update() {
     this->update_hmotion();
     this->update_vmotion();
     // this->force_stop();
+    this->pitching();
     //acc frame
     if (this->PS3.getButtonClick(R3)) {
       for(int i= 0;i<8;i++)
@@ -59,42 +60,42 @@ void PSGamepad::Update() {
         this->flags[3] = 0;
       }
     }
-     if (this->PS3.getButtonClick(UP)) {
-      if (this->flags[4] == 0) {
-        this->acc_array[4] = 1;
-        this->flags[4] = 1;
-      } else {
-        this->acc_array[4] = 0;
-        this->flags[4] = 0;
-      }
-    }
-     if (this->PS3.getButtonClick(RIGHT)) {
-      if (this->flags[5] == 0) {
-        this->acc_array[5] = 1;
-        this->flags[5] = 1;
-      } else {
-        this->acc_array[5] = 0;
-        this->flags[5] = 0;
-      }
-    }
-     if (this->PS3.getButtonClick(DOWN)) {
-      if (this->flags[6] == 0) {
-        this->acc_array[6] = 1;
-        this->flags[6] = 1;
-      } else {
-        this->acc_array[6] = 0;
-        this->flags[6] = 0;
-      }
-    }
-     if (this->PS3.getButtonClick(LEFT)) {
-      if (this->flags[7] == 0) {
-        this->acc_array[7] = 1;
-        this->flags[7] = 1;
-      } else {
-        this->acc_array[7] = 0;
-        this->flags[7] = 0;
-      }
-    }
+    //  if (this->PS3.getButtonClick(UP)) {
+    //   if (this->flags[4] == 0) {
+    //     this->acc_array[4] = 1;
+    //     this->flags[4] = 1;
+    //   } else {
+    //     this->acc_array[4] = 0;
+    //     this->flags[4] = 0;
+    //   }
+    // }
+    //  if (this->PS3.getButtonClick(RIGHT)) {
+    //   if (this->flags[5] == 0) {
+    //     this->acc_array[5] = 1;
+    //     this->flags[5] = 1;
+    //   } else {
+    //     this->acc_array[5] = 0;
+    //     this->flags[5] = 0;
+    //   }
+    // }
+    //  if (this->PS3.getButtonClick(DOWN)) {
+    //   if (this->flags[6] == 0) {
+    //     this->acc_array[6] = 1;
+    //     this->flags[6] = 1;
+    //   } else {
+    //     this->acc_array[6] = 0;
+    //     this->flags[6] = 0;
+    //   }
+    // }
+    //  if (this->PS3.getButtonClick(LEFT)) {
+    //   if (this->flags[7] == 0) {
+    //     this->acc_array[7] = 1;
+    //     this->flags[7] = 1;
+    //   } else {
+    //     this->acc_array[7] = 0;
+    //     this->flags[7] = 0;
+    //   }
+    // }
     
     //set led
     this->PS3.setLedOn(LED1);
@@ -126,10 +127,17 @@ void PSGamepad::update_hmotion() {
 
   Tx = map(Tx, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(Ty, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
-  Tm = map(Tm, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
+  if(Tm>200||Tm<50){
+  Tm = map(Tm, 0, 255, -this->speeds[1], this->speeds[1]);
+  }
+  else{
+    Tm = 0;
+  }
   if (Ty == -1) Ty = 0;
   sum =abs (Tx) +abs (Ty) +abs (Tm);
   factor = this->speeds[this->speed] / sum;
+  if(Tx==0 && Ty==0)
+  factor = this->speeds[0] / sum;
   Tx *= factor;
   Ty *= factor;
   Tm *= factor;  
@@ -209,5 +217,17 @@ bool PSGamepad::nrf(){
   
 }
 void PSGamepad:: pitching(){
-  return;
+  int pitch=0;
+//  pitch = this->lf310.lf310Data.Rz ;
+  
+  // pitch = map(pitch, 0, 255, -128,128);
+  // Serial.println(PS3.getButtonPress(DOWN));
+  if( PS3.getButtonPress(LEFT)){
+    this->vertical_frame[0] = 1500 + map(this->speeds[this->speed], 0, 128, 0, 400);
+    this->vertical_frame[1] = 1500 -map(this->speeds[this->speed], 0, 128, 0, 400);
+  }
+  else if(PS3.getButtonPress(RIGHT)){
+    this->vertical_frame[0] = 1500 - map(this->speeds[this->speed], 0, 128, 0, 400);
+    this->vertical_frame[1] = 1500 + map(this->speeds[this->speed], 0, 128, 0, 400);
+  }
 }

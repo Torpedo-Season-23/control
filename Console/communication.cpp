@@ -7,7 +7,7 @@ void Communication::comm_init() {
   Ethernet.begin(this->mac, IPAddress(192, 168, 1, 9));
 }
 
-void Communication::receiveData(uint8_t* receivedFrame) {
+void Communication::receiveData(uint8_t* receivedFrame, int16_t* sensors) {
   this->udp.begin(7000);
   int frameSize = this->udp.parsePacket();
   //  Serial.println(frameSize);/
@@ -23,7 +23,7 @@ void Communication::receiveData(uint8_t* receivedFrame) {
     // {Serial.print(receivedFrame[i]);
     // Serial.print(" ");}
     // Serial.println("--------");
-    int16_t sensors[5];
+    // int16_t sensors[5];
     this->getSensors(receivedFrame, sensors);
     //delay(100);
   }
@@ -55,6 +55,7 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
   //   Serial.print(sensors[i]);
   //   Serial.print("  ");
   // }
+  // Serial.println();
   // Serial.print("Converter1:  ");
   // for(int i=12;i<3;i++){
   //   Serial.print(sensors[i]);
@@ -115,12 +116,12 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   //   Serial.print(thrusters[i]);
   //   Serial.print("  ");
   // }
+  // Serial.println();
   for (int i = 1; i < 13; i += 2) {
     sentFrame[i] = lowByte(thrusters[j]);
     sentFrame[i+1] = highByte(thrusters[j]);
     j++;
   }
-  // Serial.println();
 
   // int j = 0;
   // for (int i = 1; i < sentFrameSize; i += 2) { //will be changed

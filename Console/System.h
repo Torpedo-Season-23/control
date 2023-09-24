@@ -10,50 +10,54 @@
 #include "IndexConverter.h"
 #include "factors.h"
 #include "LCD.h"
+#include "PID.h"
 
 
 
 
 class System {
-  private:
-    Thrusters thruster;
-    Motors motors;
-    IController* gamepad;
-    Communication console;
-    IndexConverter indexConverter;
-    Factor factor;
-    LCD lcd;
-    float fact[4]={1};
-    int k=0;
-    long time=0;
-    long prev=0;
-    bool is=true;
-    int arr[6];
-    int acs[8];
-  public:
-    System(IController* gamepad) {
-      this->gamepad = gamepad;
-    }
-    void Init();
-    void Update();
-    void updateRTC();
-    void clearLCD();
+private:
+  Thrusters thruster;
+  Motors motors;
+  IController* gamepad;
+  Communication console;
+  IndexConverter indexConverter;
+  Factor factor;
+  LCD lcd;
+  PID pid;
+  float fact[3] = {1, 1 ,1};
+  int k = 0;
+  long time = 0;
+  long prev = 0;
+  bool is = true;
+  int arr[6];
+  int acs[8];
+  void swap(int *arr);
+public:
+  System(IController* gamepad):pid(gamepad,40,0,1 ) {
+    this->gamepad = gamepad;
+  }
+  void Init();
+  void Update();
+  void updateRTC();
+  void clearLCD();
+
 };
 
 
-void System::updateRTC(){
+void System::updateRTC() {
   this->lcd.updateRTC();
 }
-void System:: clearLCD(){
+void System::clearLCD() {
   this->lcd.clear();
 }
 void System::Init() {
-  this->time=millis();
+  this->time = millis();
   this->gamepad->init();
   this->console.comm_init();
   this->indexConverter.init(thruster.get_thruster_frame());
   this->lcd.init();
-  for(int i=0;i<6;i++)this->arr[i]=1500;
+  for (int i = 0; i < 6; i++) this->arr[i] = 1500;
 }
 void System::Update() {
   bool attach = this->gamepad->force_stop();
@@ -64,24 +68,44 @@ void System::Update() {
   int* v = this->gamepad->get_vframe();
   int* acc = this->gamepad->get_accframe();
   thruster.speed = this->gamepad->getspeed();
+  int16_t sensors[5];
+  this->console.receiveData(receivedFrame,sensors);
+  // Serial.print("Pressure:  ");
+  // for(int i=3;i<4;i++){
+    // if(sensors[3]<1700)
+    // Serial.println(sensors[3]);
+  //   Serial.print("  ");
+  // }
+  if (Serial.available()) {
+    float x = Serial.parseFloat();
+    // if(x!=0){
+    fact[k % 3] = x;
+    k++;
+  }
+  // Serial.println();
+  // pid.setPIDFactors(fact);
+  // pid.updateDepth(sensors[3]);
+
   thruster.set_h_forces(this->gamepad->get_hframe());
   thruster.set_v_forces(this->gamepad->get_vframe());
   int* res;
   res = thruster.get_thruster_frame();
-  
-  
-  if(Serial.available()){
-    float x =Serial.parseFloat();
-    fact[k%4]=x;
-    k++;
-  }
-  for(int i=0;i<4;i++){Serial.print(fact[i]);
-  Serial.print("  ");
-  }
 
-  this->factor.setFactors(this->gamepad->getDirection(), thruster.speed, fact);
-  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed , res);
+
+  // Serial.print("Motors : ");
+  // for (int i = 4; i < 6; i++) {
+  //   Serial.print(res[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.print("pressure : ");
+  // Serial.println();
+
+  // this->factor.setFactors(this->gamepad->getDirection(), thruster.speed, fact);
+  this->factor.getFactor(this->gamepad->getDirection(), thruster.speed, res);
   motors.update(res);
+  swap(res);
+  // this->indexConverter.init(res);
+  // res = indexConverter.updateArray();
   // motors.print();
   // Serial.println();
   // Serial.print("Tools : ");
@@ -89,7 +113,7 @@ void System::Update() {
   //   Serial.print(acc[i]);
   //   Serial.print(" ");
   // }
-  Serial.println();
+  // Serial.println();
   // int h=Serial.read()-48;
   // if (h==0){
   //   for (int i=0;i<8;i++){
@@ -104,7 +128,6 @@ void System::Update() {
   //   this->arr[i]=1500;}
   //   Serial.println("all grippers off");
   // }
-  // res = indexConverter.updateArray();
 
   // if (this->time-this->prev>3000){
   //     this->prev=millis();
@@ -120,14 +143,17 @@ void System::Update() {
   //     }
   // }
   uint8_t sentFrame[13];
-  int16_t sensors[SENSORS];
-  this->console.prepareData(acc,res, sentFrame, attach);
-  this->console.receiveData(receivedFrame);
+  
+  this->console.prepareData(acc, res, sentFrame, attach);
   this->console.sendData(sentFrame);
   // this->lcd.update(sensors , acc , this->gamepad->getspeed() , this->gamepad->getDirection());
 }
 
 
-
+void System::swap(int *arr){
+  int temp= arr[0];
+  arr[0]=arr[4];
+  arr[4]=temp;
+}
 
 #endif

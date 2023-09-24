@@ -79,12 +79,12 @@ void Thrusters::set_v_forces(int *array) {
 //  else
 //    this->thruster_frame[5] = array[1];
 
-  this->thruster_frame[UPPER_BACK] = array[1];
-  this->thruster_frame[UPPER_BACK] -= 1500;
-  this->thruster_frame[UPPER_BACK] *= -1;
-  this->thruster_frame[UPPER_BACK] += 1500;
+  this->thruster_frame[4] = array[1];
+  this->thruster_frame[4] -= 1500;
+  this->thruster_frame[4] *= -1;
+  this->thruster_frame[4] += 1500;
 
-  this->thruster_frame[UPPER_FRONT] = array[0];
+  this->thruster_frame[5] = array[0];
   
   // Serial.print(this->thruster_frame[4]);
   // Serial.print("  ");
