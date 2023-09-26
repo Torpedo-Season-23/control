@@ -17,11 +17,23 @@ void PID::update(float sensor_value) {
   Serial.println(this->error);
   m = max(array[0], array[1]);
   x = m * tan(this->error);
+
+  // Serial.println(x);
   sum = abs(array[0]) + abs(array[1]) + abs(x);
   factor = m / sum;
-  array[0] *= factor;
-  array[0] *= factor;
-  array[0] = x * factor;
+  // array[0] *= factor;
+  // array[1] *= factor;
+  // array[2] = x * factor;
+  // array[0]=128;
+  // array[1]=0;
+  // array[2]=0;
+  if(this->error>64){
+    this->error=64;
+  }
+  if(this->error<-64){
+    this->error=-64;
+  }
+  array[2]=this->error;
   this->controller->set_hframe(array);
 }
 

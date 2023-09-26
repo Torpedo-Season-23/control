@@ -127,12 +127,12 @@ void PSGamepad::update_hmotion() {
 
   Tx = map(Tx, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(Ty, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
-  if(Tm>200||Tm<50){
-  Tm = map(Tm, 0, 255, -this->speeds[1], this->speeds[1]);
-  }
-  else{
-    Tm = 0;
-  }
+  // if(Tm>200||Tm<50){
+  Tm = map(Tm, 0, 255, -this->mspeeds[this->speed], this->mspeeds[this->speed]);
+  // }
+  // else{
+  //   Tm = 0;
+  // }
   if (Ty == -1) Ty = 0;
   sum =abs (Tx) +abs (Ty) +abs (Tm);
   factor = this->speeds[this->speed] / sum;

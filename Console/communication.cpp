@@ -39,6 +39,7 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
     sensors[i] = (int)receivedFrame[j + 1] + receivedFrame[j] * 256;
     j += 2;
   }
+  sensors[2]%=360;
 
   // Serial.print("IMU:  ");
   // for(int i=0;i<IMU;i++){

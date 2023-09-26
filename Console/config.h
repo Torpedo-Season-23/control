@@ -4,6 +4,7 @@
 
 /*---------------Speeds---------------*/
 #define SPEEDS_NUMBER 3
+#define LOW_SPEED_VALUE_mom 30
 #define LOW_SPEED_VALUE 42
 #define NORMAL_SPEED_VALUE 85
 #define HIGH_SPEED_VALUE 128
