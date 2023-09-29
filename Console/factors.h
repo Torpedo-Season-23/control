@@ -56,13 +56,13 @@ public:
     this->factors[FORWARD][LOW_SPEED][BACKWARD_RIGHT1] = 1;
     //forward normal
 
-    this->factors[FORWARD][NORMAL_SPEED][FRONT_LEFT1] = 0.76;
+    this->factors[FORWARD][NORMAL_SPEED][FRONT_LEFT1] = 0.85;
     this->factors[FORWARD][NORMAL_SPEED][FRONT_RIGHT1] = 1;
     this->factors[FORWARD][NORMAL_SPEED][BACKWARD_LEFT1] = -0.73;
     this->factors[FORWARD][NORMAL_SPEED][BACKWARD_RIGHT1] = 1;
 
     //forward High
-    this->factors[FORWARD][HIGH_SPEED][FRONT_LEFT1] = 0.68;
+    this->factors[FORWARD][HIGH_SPEED][FRONT_LEFT1] = 0.7;
     this->factors[FORWARD][HIGH_SPEED][FRONT_RIGHT1] = 1;
     this->factors[FORWARD][HIGH_SPEED][BACKWARD_LEFT1] = -0.65;
     this->factors[FORWARD][HIGH_SPEED][BACKWARD_RIGHT1] = 1;
@@ -74,19 +74,19 @@ public:
 
     //backward Low
     this->factors[BACKWARD][LOW_SPEED][FRONT_LEFT1] = 0.99;
-    this->factors[BACKWARD][LOW_SPEED][FRONT_RIGHT1] = 0.9;
+    this->factors[BACKWARD][LOW_SPEED][FRONT_RIGHT1] = 0.95;
     this->factors[BACKWARD][LOW_SPEED][BACKWARD_LEFT1] = -0.9;
     this->factors[BACKWARD][LOW_SPEED][BACKWARD_RIGHT1] = 0.87;
 
     //backward Normal
-    this->factors[BACKWARD][NORMAL_SPEED][FRONT_LEFT1] = 0.94;
-    this->factors[BACKWARD][NORMAL_SPEED][FRONT_RIGHT1] = 0.8;
-    this->factors[BACKWARD][NORMAL_SPEED][BACKWARD_LEFT1] = -0.86;
+    this->factors[BACKWARD][NORMAL_SPEED][FRONT_LEFT1] = 0.85;
+    this->factors[BACKWARD][NORMAL_SPEED][FRONT_RIGHT1] = 0.9;
+    this->factors[BACKWARD][NORMAL_SPEED][BACKWARD_LEFT1] = -0.5;
     this->factors[BACKWARD][NORMAL_SPEED][BACKWARD_RIGHT1] = 1;
     //backward High
     this->factors[BACKWARD][HIGH_SPEED][FRONT_LEFT1] = 0.71;
     this->factors[BACKWARD][HIGH_SPEED][FRONT_RIGHT1] = 1;
-    this->factors[BACKWARD][HIGH_SPEED][BACKWARD_LEFT1] = -0.66;
+    this->factors[BACKWARD][HIGH_SPEED][BACKWARD_LEFT1] = -0.6;
     this->factors[BACKWARD][HIGH_SPEED][BACKWARD_RIGHT1] = 1;
 
     //     #define FRONT_LEFT1 0      //1           2
@@ -97,18 +97,18 @@ public:
     this->factors[RIGHT][LOW_SPEED][FRONT_LEFT1] = -0.65;
     this->factors[RIGHT][LOW_SPEED][FRONT_RIGHT1] = -0.9;
     this->factors[RIGHT][LOW_SPEED][BACKWARD_LEFT1] = 0.98;
-    this->factors[RIGHT][LOW_SPEED][BACKWARD_RIGHT1] = -0.88;
+    this->factors[RIGHT][LOW_SPEED][BACKWARD_RIGHT1] = -0.8;
 
     //Right Normal
     this->factors[RIGHT][NORMAL_SPEED][FRONT_LEFT1] = -0.6;
     this->factors[RIGHT][NORMAL_SPEED][FRONT_RIGHT1] = -0.88;
-    this->factors[RIGHT][NORMAL_SPEED][BACKWARD_LEFT1] = 1;
-    this->factors[RIGHT][NORMAL_SPEED][BACKWARD_RIGHT1] = -0.65;
+    this->factors[RIGHT][NORMAL_SPEED][BACKWARD_LEFT1] = 0.96;
+    this->factors[RIGHT][NORMAL_SPEED][BACKWARD_RIGHT1] = -0.63;
 
     //Right High
     this->factors[RIGHT][HIGH_SPEED][FRONT_LEFT1] = -0.5;
     this->factors[RIGHT][HIGH_SPEED][FRONT_RIGHT1] = -0.88;
-    this->factors[RIGHT][HIGH_SPEED][BACKWARD_LEFT1] = 1;
+    this->factors[RIGHT][HIGH_SPEED][BACKWARD_LEFT1] = 0.85;
     this->factors[RIGHT][HIGH_SPEED][BACKWARD_RIGHT1] = -0.65;
 
     // #define FRONT_LEFT1 0      //1           2
@@ -122,16 +122,16 @@ public:
     this->factors[LEFT][LOW_SPEED][BACKWARD_LEFT1] = 0.93;
     this->factors[LEFT][LOW_SPEED][BACKWARD_RIGHT1] = -0.95;
     //left Normal
-    this->factors[LEFT][NORMAL_SPEED][FRONT_LEFT1] = -0.94;
+    this->factors[LEFT][NORMAL_SPEED][FRONT_LEFT1] = -0.9;
     this->factors[LEFT][NORMAL_SPEED][FRONT_RIGHT1] = -0.7;
     this->factors[LEFT][NORMAL_SPEED][BACKWARD_LEFT1] = 0.83;
     this->factors[LEFT][NORMAL_SPEED][BACKWARD_RIGHT1] = -0.95;
 
     //left High
-    this->factors[LEFT][HIGH_SPEED][FRONT_LEFT1] = -0.85;
-    this->factors[LEFT][HIGH_SPEED][FRONT_RIGHT1] = -0.7;
-    this->factors[LEFT][HIGH_SPEED][BACKWARD_LEFT1] = 0.83;
-    this->factors[LEFT][HIGH_SPEED][BACKWARD_RIGHT1] = -0.95;
+    this->factors[LEFT][HIGH_SPEED][FRONT_LEFT1] = -0.75;
+    this->factors[LEFT][HIGH_SPEED][FRONT_RIGHT1] = -0.6;
+    this->factors[LEFT][HIGH_SPEED][BACKWARD_LEFT1] = 0.8;
+    this->factors[LEFT][HIGH_SPEED][BACKWARD_RIGHT1] = -0.89;
 
   }
 

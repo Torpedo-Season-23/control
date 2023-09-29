@@ -91,18 +91,18 @@ void System::Update() {
   res = thruster.get_thruster_frame();
 
 
-  if (Serial.available()) {
-    float x = Serial.parseFloat();
-    // if(x!=0){
-    fact[k % 4] = x;
-    k++;
-  }
-  // // Serial.print("Motors : ");
-  for (int i = 0; i < 4; i++) {
-    Serial.print(fact[i]);
-    Serial.print("  ");
-  }
-  Serial.println();
+  // if (Serial.available()) {
+  //   float x = Serial.parseFloat();
+  //   // if(x!=0){
+  //   fact[k % 4] = x;
+  //   k++;
+  // }
+  // // // Serial.print("Motors : ");
+  // for (int i = 0; i < 4; i++) {
+  //   Serial.print(fact[i]);
+  //   Serial.print("  ");
+  // }
+  // Serial.println();
   // Serial.print("pressure : ");
   // Serial.println();
 
