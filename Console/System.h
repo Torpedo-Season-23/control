@@ -36,7 +36,7 @@ private:
   void swap(int* arr);
 public:
   System(IController* gamepad)
-    : pidv(gamepad, 40, 0, 1),pidh(gamepad, 10, 0, 0)  {
+    : pidv(gamepad, 40, 0, 0), pidh(gamepad, 0.7, 0, 0) {
     this->gamepad = gamepad;
   }
   void Init();
@@ -71,15 +71,15 @@ void System::Update() {
   thruster.speed = this->gamepad->getspeed();
   int16_t sensors[5];
   this->console.receiveData(receivedFrame, sensors);
-  // Serial.print("yaw:  ");
+  Serial.print("yaw:  ");
   // for(int i=3;i<4;i++){
   // if(sensors[3]<1700)
-  // Serial.println(sensors[2]);
-  //   Serial.print("  ");
+  Serial.println(sensors[2]);
+  Serial.print("  ");
   // }
-  // Serial.println();
+  Serial.println();
   // pid.setPIDFactors(fact);
-  // pid.updateDepth(sensors[3]);
+  // pidv.updateDepth(sensors[3]);
   // pidh.update(sensors[2]);
 
 
