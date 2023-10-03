@@ -117,6 +117,11 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
   //   Serial.print(thrusters[i]);
   //   Serial.print("  ");
   // }
+  // Serial.print("Tools :  ");
+  // for (int i = 0; i < ACCESSORIES; i++) {
+  //   Serial.print(accessories[i]);
+  //   Serial.print("  ");
+  // }
   // Serial.println();
   for (int i = 1; i < 13; i += 2) {
     sentFrame[i] = lowByte(thrusters[j]);

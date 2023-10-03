@@ -2,7 +2,7 @@
 #include "psgamepad.h"
 
 
-bool PSGamepad:: timer(){
+bool PSGamepad::timer() {
   return true;
 }
 void PSGamepad::Update() {
@@ -10,21 +10,15 @@ void PSGamepad::Update() {
   if (this->PS3.PS3Connected || this->PS3.PS3NavigationConnected) {
     this->update_hmotion();
     this->update_vmotion();
-    // this->force_stop();
     this->pitching();
+
+
     //acc frame
     if (this->PS3.getButtonClick(R3)) {
-      for(int i= 0;i<8;i++)
+      for (int i = 0; i < 8; i++)
         this->acc_array[i] ^= 1;
     }
-      // if (this->flags[0] == 0) {
-      //   this->acc_array[0] = 1;
-      //   this->flags[0] = 1;
-      // } else {
-      //   this->acc_array[0] = 0;
-      //   this->flags[0] = 0;
-      // }
-    if (this->PS3.getButtonClick(TRIANGLE)) {
+    if (this->PS3.getButtonClick(CROSS)) {
       if (this->flags[0] == 0) {
         this->acc_array[0] = 1;
         this->flags[0] = 1;
@@ -42,7 +36,7 @@ void PSGamepad::Update() {
         this->flags[1] = 0;
       }
     }
-    if (this->PS3.getButtonClick(CROSS)) {
+    if (this->PS3.getButtonClick(SQUARE)) {
       if (this->flags[2] == 0) {
         this->acc_array[2] = 1;
         this->flags[2] = 1;
@@ -51,7 +45,7 @@ void PSGamepad::Update() {
         this->flags[2] = 0;
       }
     }
-    if (this->PS3.getButtonClick(SQUARE)) {
+    if (this->PS3.getButtonClick(TRIANGLE)) {
       if (this->flags[3] == 0) {
         this->acc_array[3] = 1;
         this->flags[3] = 1;
@@ -96,7 +90,7 @@ void PSGamepad::Update() {
     //     this->flags[7] = 0;
     //   }
     // }
-    
+
     //set led
     this->PS3.setLedOn(LED1);
 
@@ -123,7 +117,7 @@ void PSGamepad::update_hmotion() {
   float factor, sum;
   Tx = PS3.getAnalogHat(LeftHatX);
   Ty = 255 - PS3.getAnalogHat(LeftHatY);
-  Tm =PS3.getAnalogHat(RightHatX);
+  Tm = PS3.getAnalogHat(RightHatX);
 
   Tx = map(Tx, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
   Ty = map(Ty, 0, 255, -this->speeds[this->speed], this->speeds[this->speed]);
@@ -134,63 +128,61 @@ void PSGamepad::update_hmotion() {
   //   Tm = 0;
   // }
   if (Ty == -1) Ty = 0;
-  sum =abs (Tx) +abs (Ty) +abs (Tm);
+  sum = abs(Tx) + abs(Ty) + abs(Tm);
   factor = this->speeds[this->speed] / sum;
-  if(Tx==0 && Ty==0)
-  factor = this->speeds[0] / sum;
+  if (Tx == 0 && Ty == 0)
+    factor = this->speeds[0] / sum;
   Tx *= factor;
   Ty *= factor;
-  Tm *= factor;  
+  Tm *= factor;
   this->Td_array[0] = Tx;
   this->Td_array[1] = Ty;
   this->Td_array[2] = -Tm;
 }
-bool PSGamepad::force_stop(){
-  if (this->PS3.getButtonPress(START)){
+bool PSGamepad::force_stop() {
+  if (this->PS3.getButtonPress(START)) {
     return true;
-  }
-  else return false;
-  
+  } else return false;
 }
 
 
-int8_t PSGamepad::getDirection(){
-//Y direction 
-  if(Td_array[1] > 21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])  ){
+int8_t PSGamepad::getDirection() {
+  //Y direction
+  if (Td_array[1] > 21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])) {
     //  Serial.print("Forward");
     return FORWARD;
   }
-  if(Td_array[1] < -21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) >abs(Td_array[2])  ){
+  if (Td_array[1] < -21 && abs(Td_array[1]) > abs(Td_array[0]) && abs(Td_array[1]) > abs(Td_array[2])) {
     //  Serial.print("Backward");
-     return BACKWARD;     
+    return BACKWARD;
   }
-//X direction 
-  if(Td_array[0] > 21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])  ){
+  //X direction
+  if (Td_array[0] > 21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])) {
     //  Serial.print("Right");
-     return RIGHT;
+    return RIGHT;
   }
-  if(Td_array[0] < -21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) >abs(Td_array[2])  ){
+  if (Td_array[0] < -21 && abs(Td_array[0]) > abs(Td_array[1]) && abs(Td_array[0]) > abs(Td_array[2])) {
     //  Serial.print("Left");
     return LEFT;
   }
-//M direction 
-  if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])  ){
+  //M direction
+  if (Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])) {
     //  Serial.print("Right");
-     return M_LEFT;
+    return M_LEFT;
   }
-  if(Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) >abs(Td_array[0])  ){
+  if (Td_array[2] < -21 && abs(Td_array[2]) > abs(Td_array[1]) && abs(Td_array[2]) > abs(Td_array[0])) {
     //  Serial.print("Left");
     return M_RIGHT;
   }
-//Up , Down 
-  if(vertical_frame[0] < 1500)
+  //Up , Down
+  if (vertical_frame[0] < 1500)
     return UP;
-  if(vertical_frame[0] > 1500)
+  if (vertical_frame[0] > 1500)
     return DOWN;
-//Stop 
+  //Stop
   return STOP;
-  
-//M direction 
+
+  //M direction
   // if(Td_array[2] > 21 && abs(Td_array[2]) > abs(Td_array[0]) && abs(Td_array[2]) > abs(Td_array[1])  ){
   //    Serial.print("Moment Left");
   // }
@@ -198,35 +190,31 @@ int8_t PSGamepad::getDirection(){
   //    Serial.print("Moment Right");
   // }
 
-  
-  
+
+
   // Serial.print("x: ");
   // Serial.print(Td_array[0]);
   // Serial.print(" y: ");
   // Serial.print(Td_array[1]);
   // Serial.print(" m: ");
   // Serial.print(Td_array[2]);
-  
 }
 
-bool PSGamepad::nrf(){
-  if (this->PS3.getButtonPress(START)){
+bool PSGamepad::nrf() {
+  if (this->PS3.getButtonPress(START)) {
     return true;
-  }
-  else return false;
-  
+  } else return false;
 }
-void PSGamepad:: pitching(){
-  int pitch=0;
-//  pitch = this->lf310.lf310Data.Rz ;
-  
+void PSGamepad::pitching() {
+  int pitch = 0;
+  //  pitch = this->lf310.lf310Data.Rz ;
+
   // pitch = map(pitch, 0, 255, -128,128);
   // Serial.println(PS3.getButtonPress(DOWN));
-  if( PS3.getButtonPress(LEFT)){
+  if (PS3.getButtonPress(LEFT)) {
     this->vertical_frame[0] = 1500 + map(this->speeds[this->speed], 0, 128, 0, 400);
-    this->vertical_frame[1] = 1500 -map(this->speeds[this->speed], 0, 128, 0, 400);
-  }
-  else if(PS3.getButtonPress(RIGHT)){
+    this->vertical_frame[1] = 1500 - map(this->speeds[this->speed], 0, 128, 0, 400);
+  } else if (PS3.getButtonPress(RIGHT)) {
     this->vertical_frame[0] = 1500 - map(this->speeds[this->speed], 0, 128, 0, 400);
     this->vertical_frame[1] = 1500 + map(this->speeds[this->speed], 0, 128, 0, 400);
   }

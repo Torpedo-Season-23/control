@@ -1,7 +1,7 @@
 #include "System.h"
 
 
-PSGamepad controller;
+Xbox controller;
 System s(&controller);
 void setup() {
   Serial.begin(115200);

@@ -21,19 +21,22 @@ void PID::update(float sensor_value) {
   // Serial.println(x);
   sum = abs(array[0]) + abs(array[1]) + abs(x);
   factor = m / sum;
+  if (this->error > 64) {
+    this->error = 64;
+  }
+  if (this->error < -64) {
+    this->error = -64;
+  }
+
+  if (array[1]) {
+    array[2] = this->error;
+  }
   // array[0] *= factor;
   // array[1] *= factor;
   // array[2] = x * factor;
   // array[0]=128;
   // array[1]=0;
   // array[2]=0;
-  if(this->error>64){
-    this->error=64;
-  }
-  if(this->error<-64){
-    this->error=-64;
-  }
-  array[2]=this->error;
   this->controller->set_hframe(array);
 }
 
@@ -45,9 +48,9 @@ void PID::setPIDFactors(float* arr) {
 
 void PID::updateDepth(float sensor_value) {
   int* array = this->controller->get_vframe();
-  if(array[0]!=1500||array[0]!=1500){
-    this->error=0;
-    if(sensor_value<1300)this->setSetpoint(sensor_value);
+  if (array[0] != 1500 || array[0] != 1500) {
+    this->error = 0;
+    if (sensor_value < 1300) this->setSetpoint(sensor_value);
     return;
   }
   this->input = sensor_value;
@@ -58,8 +61,8 @@ void PID::updateDepth(float sensor_value) {
   if (this->error > 400) {
     this->error = 400;
   }
-  array[0]=this->error+1500;
-  array[1]=this->error+1500;
+  array[0] = this->error + 1500;
+  array[1] = this->error + 1500;
   Serial.print("setpoint : ");
   Serial.print(this->setpoint);
   Serial.print("    ");
@@ -76,7 +79,6 @@ void PID::updateDepth(float sensor_value) {
 
   Serial.println();
   this->controller->set_vframe(array);
-
 }
 
 
@@ -85,15 +87,12 @@ void PID::compute() {
   this->deltatime = now - this->prev_time;
   if (this->deltatime == 0) {
     this->error = 0;
-  }
-  else if (abs(this->input-this->setpoint)<5){
-    this->error=0;
-  } 
-  else if(abs(this->input)>1300){
+  } else if (abs(this->input - this->setpoint) < 5) {
+    this->error = 0;
+  } else if (abs(this->input) > 1300) {
     this->error = 0;
 
-  } 
-  else {
+  } else {
     this->sumError += (this->setpoint - this->input) * (this->deltatime);
     this->error = this->Kp * (this->setpoint - this->input) + this->Ki * (this->sumError) + this->Kd * ((this->setpoint - this->input - this->lastError) / this->deltatime);
     this->lastError = this->setpoint - this->input;

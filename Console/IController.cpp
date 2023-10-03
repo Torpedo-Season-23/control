@@ -23,6 +23,9 @@ void IController::set_vframe(int *arr){
 int* IController::get_accframe() {
   return this->acc_array;
 }
+bool IController::isPID(){
+  return this->flags[5];
+}
 int IController::getspeed() {
   if (this->speed == 0)
     return 100;
