@@ -13,6 +13,7 @@ void Communication::receiveData(uint8_t* receivedFrame, int16_t* sensors) {
   //  Serial.println(frameSize);/
   if (frameSize > 0) {
     this->udp.read(receivedFrame, receivedFrameSize);
+    
     this->udp.flush();
   }
   if (frameSize == 0) {
@@ -34,6 +35,7 @@ void Communication::getSensors(uint8_t* receivedFrame, int16_t* sensors) {  //mo
 
 
   int j = 0;
+  this->receivedFrame=receivedFrame;
   // IMU and Pressure readings
   for (int i = 0; i < IMU + PRESSURE +TEMPRATURE; i++) {
     sensors[i] = (int)receivedFrame[j + 1] + receivedFrame[j] * 256;
@@ -148,18 +150,14 @@ void Communication::prepareData(int* accessories, int* thrusters, uint8_t* sentF
 void Communication::sendData(uint8_t* sentFrame) {
   int x = this->udp.beginPacket(this->boxIP, this->boxPort);
   if (!x) {
-    // Serial.println("Problem resolving the hostname or port.");
     this->comm_init();
   }
-//  Serial.print("sentframe : ");
-//  for(int i=0;i<13;i++){
-//    Serial.print(sentFrame[i]);
-//    Serial.print(" ");
-//    }
-    // sentFrame[i]=100;
-  // Serial.println();
-
   this->udp.write(sentFrame, sentFrameSize);
   this->udp.endPacket();
+
+  int y = this->udp.beginPacket(this->lapIp, this->lapPort);
+  this->udp.write(this->receivedFrame, receivedFrameSize);
+  this->udp.endPacket();
+
   this->udp.stop();
 }

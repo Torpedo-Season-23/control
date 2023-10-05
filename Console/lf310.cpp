@@ -1,8 +1,8 @@
 #include "lf310.h"
 #define LIGHTS_INDEX 3
-#define RIGHT_GRIPPER 1
+#define RIGHT_GRIPPER 2
 #define BACK_LEFT_GRIPPER 0
-#define BACK_RIGHT_GRIPPER 2
+#define BACK_RIGHT_GRIPPER 1
 #define LINE_FOLLOWER_MODE 4
 #define PID_MODE 5
 
@@ -210,11 +210,16 @@ void Xbox::update_hmotion() {
   if (Tx < 30 && Tx > -30) Tx = 0;
   if (Ty < 30 && Ty > -30) Ty = 0;
   if (Tm < 30 && Tm > -30) Tm = 0;
-  if(((Tx>30)&&Tx-Ty>10)||((Tx<-30)&&Ty-Tx>10)){
-    Ty=0;
+  if (((Tx > 30) && Tx - Ty > 10) || ((Tx < -30) && Ty - Tx > 10)) {
+    Ty = 0;
   }
-  if(((Ty>30)&&Ty-Tx>10)||((Ty<-30)&&Tx-Ty>10) ){
-    Tx=0;
+  if (((Ty > 30) && Ty - Tx > 10) || ((Ty < -30) && Tx - Ty > 10)) {
+    Tx = 0;
+  }
+  if (Tm) {
+    moment = true;
+  } else {
+    moment = false;
   }
 
   sum = abs(Tx) + abs(Ty) + abs(Tm);
@@ -293,16 +298,10 @@ int8_t Xbox::getDirection() {
   // Serial.print(Td_array[2]);
 }
 
+
+
 bool Xbox::nrf() {
-  if (NRFTrue) return true;
-
-  if (this->lf310.buttonClickState.Startbutton) {
-    this->lf310.buttonClickState.Startbutton = 0;
-    NRFTrue = true;
-
-    return true;
-  }
-  return false;
+  return this->moment;
 }
 void Xbox::pitching() {
 

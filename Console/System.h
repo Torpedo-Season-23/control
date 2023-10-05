@@ -26,7 +26,7 @@ private:
   LCD lcd;
   PID pidv;
   PID pidh;
-  float fact[4] = { 1, 1, 1,1 };
+  float fact[4] = { 1, 1, 1 };
   int k = 0;
   long time = 0;
   long prev = 0;
@@ -36,7 +36,7 @@ private:
   void swap(int* arr);
 public:
   System(IController* gamepad)
-    : pidv(gamepad, 0.5, 0, 20), pidh(gamepad, 0.5, 0, 3) {
+    : pidv(gamepad, 0.5, 0, 20), pidh(gamepad, 0.5, 0, 10) {
     this->gamepad = gamepad;
   }
   void Init();
@@ -82,8 +82,12 @@ void System::Update() {
     // Serial.println();
     // pid.setPIDFactors(fact);
     // pidv.updateDepth(sensors[3]);
+    float arr[4] = { -0.7, 1, 0.7, -1 };
+    if (this->gamepad->getDirection() == 2 || this->gamepad->getDirection() == 3)
+      this->factor.setFactors(this->gamepad->getDirection(), thruster.speed, arr);
     pidh.update(sensors[2]);
-    // pidh.setPIDFactors(fact);
+
+    pidh.setPIDFactors(fact);
   }
 
 
@@ -94,14 +98,14 @@ void System::Update() {
   res = thruster.get_thruster_frame();
 
 
-  // if (Serial.available()) {
-  //   float x = Serial.parseFloat();
-  //   // if(x!=0){
-  //   fact[k % 4] = x;
-  //   k++;
-  // }
-  // // // // Serial.print("Motors : ");
-  // for (int i = 0; i < 4; i++) {
+  if (Serial.available()) {
+    float x = Serial.parseFloat();
+    // if(x!=0){
+    fact[k % 3] = x;
+    k++;
+  }
+  // // // // // Serial.print("Motors : ");
+  // for (int i = 0; i < 3; i++) {
   //   Serial.print(fact[i]);
   //   Serial.print("  ");
   // }

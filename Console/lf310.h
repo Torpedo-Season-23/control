@@ -85,6 +85,7 @@ private:
   LF310 lf310;
   void update_vmotion();
   void update_hmotion();
+  bool moment;
 public:
   Xbox()
     : lf310(&Usb) {}

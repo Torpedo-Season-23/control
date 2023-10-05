@@ -52,14 +52,15 @@
 #define BACKWARD 1
 #define RIGHT 2
 #define LEFT 3
+#define MOMENT 4
 #define STOP -1
-#define UP -2
-#define DOWN -3
-#define M_LEFT -4
-#define M_RIGHT -5
+#define UP 5
+#define DOWN 5
+#define M_LEFT 4
+#define M_RIGHT 4
 
 
-#define DIRECTIONS 4
+#define DIRECTIONS 6
 //speeds for factors
 #define LOW_SPEED 0 
 #define NORMAL_SPEED 1

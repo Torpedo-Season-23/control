@@ -42,6 +42,7 @@ public:
   virtual bool nrf() = 0;
   virtual void pitching() = 0;
   virtual bool timer() = 0;
-  bool isPID() ;
+  bool isPID();
+  // virtual bool isMomented() = 0;
 };
 #endif

@@ -8,7 +8,8 @@ void PID::update(float sensor_value) {
   int x, sum, factor, m;
   int* array = this->controller->get_hframe();
   this->input = sensor_value;
-  if (array[2] != 0) {
+  if (this->controller->nrf()) {
+    Serial.println("here");
     this->setSetpoint(sensor_value);
     return;
   }
@@ -28,15 +29,26 @@ void PID::update(float sensor_value) {
     this->error = -64;
   }
 
-  if (array[1]) {
-    array[2] = this->error;
-  }
+  // if (array[1]) {
+
+  float sum1 = m + this->error;
+  float factor1 = m / sum1;
+
+  // array[2] = factor1*this->error;
+  // if(array[0]){
+  //   array[0]=factor1*array[0];
+  // }
+  // else if(array[1]){
+  //   array[1]=factor1*array[1];
+  // }
+  // }
   // array[0] *= factor;
   // array[1] *= factor;
   // array[2] = x * factor;
   // array[0]=128;
   // array[1]=0;
   // array[2]=0;
+  array[2]=this->error;
   this->controller->set_hframe(array);
 }
 
